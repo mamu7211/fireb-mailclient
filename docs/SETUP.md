@@ -43,6 +43,7 @@ Once running, these services are available:
 | Aspire Dashboard | https://localhost:18888 | Logs, traces, metrics, health |
 | Blazor Frontend | https://localhost:7100 | The mail client UI |
 | API Backend | https://localhost:7200 | REST API |
+| PostgreSQL | localhost:5432 | Database |
 | Mailpit Web UI | http://localhost:8025 | View test emails |
 | Mailpit SMTP | localhost:1025 | Send test emails |
 
@@ -144,7 +145,7 @@ If default ports are in use, check which process occupies them:
 
 ```bash
 # Linux
-ss -tlnp | grep -E '(7100|7200|8025|11434|18888)'
+ss -tlnp | grep -E '(5432|7100|7200|8025|11434|18888)'
 ```
 
 Stop conflicting processes or modify `launchSettings.json` in the respective projects.

@@ -54,6 +54,7 @@ dotnet format
 ## Development Services (via Aspire)
 
 - **Aspire Dashboard:** https://localhost:18888
+- **PostgreSQL:** Managed by Aspire, localhost:5432
 - **Mailpit (dev mail server):** http://localhost:8025 (UI), localhost:1025 (SMTP)
 - **Ollama:** Managed by Aspire, model `mistral` pulled automatically (~4GB on first run)
 

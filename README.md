@@ -40,6 +40,8 @@ MailClient is a self-hosted, modern web-based mail client designed for NAS syste
 ```bash
 git clone git@github.com:mamu7211/mailclient.git
 cd mailclient
+dotnet workload install aspire
+dotnet restore MailClient.sln
 dotnet run --project src/MailClient.AppHost
 ```
 
