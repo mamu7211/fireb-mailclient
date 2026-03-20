@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MailClient.Shared\MailClient.Shared.csproj" />
-    <ProjectReference Include="..\MailClient.ServiceDefaults\MailClient.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Feirb.Shared\Feirb.Shared.csproj" />
+    <ProjectReference Include="..\Feirb.ServiceDefaults\Feirb.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

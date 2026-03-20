@@ -10,13 +10,13 @@ var ollama = builder.AddOllama("ollama")
 
 var mailpit = builder.AddMailPit("mailpit");
 
-var api = builder.AddProject<Projects.MailClient_Api>("api")
+var api = builder.AddProject<Projects.Feirb_Api>("api")
     .WithReference(postgres)
     .WithReference(ollama)
     .WithReference(mailpit)
     .WaitFor(postgres);
 
-builder.AddProject<Projects.MailClient_Web>("web")
+builder.AddProject<Projects.Feirb_Web>("web")
     .WithReference(api)
     .WaitFor(api);
 

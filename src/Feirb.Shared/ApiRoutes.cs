@@ -1,4 +1,4 @@
-namespace MailClient.Shared;
+namespace Feirb.Shared;
 
 /// <summary>
 /// Shared API route constants used by both API and Web projects.

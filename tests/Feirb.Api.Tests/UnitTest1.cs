@@ -1,4 +1,4 @@
-﻿namespace MailClient.Web.Tests;
+﻿namespace Feirb.Api.Tests;
 
 public class UnitTest1
 {

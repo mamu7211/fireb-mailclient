@@ -1,8 +1,8 @@
 <Project Sdk="Aspire.AppHost.Sdk/13.1.1">
 
   <ItemGroup>
-    <ProjectReference Include="..\MailClient.Api\MailClient.Api.csproj" />
-    <ProjectReference Include="..\MailClient.Web\MailClient.Web.csproj" />
+    <ProjectReference Include="..\Feirb.Api\Feirb.Api.csproj" />
+    <ProjectReference Include="..\Feirb.Web\Feirb.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

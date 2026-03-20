@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MailClient.AppHost\MailClient.AppHost.csproj" />
+    <ProjectReference Include="..\..\src\Feirb.AppHost\Feirb.AppHost.csproj" />
   </ItemGroup>
 
 </Project>

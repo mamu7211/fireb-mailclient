@@ -5,6 +5,6 @@ builder.AddServiceDefaults();
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
-app.MapGet("/", () => "MailClient API");
+app.MapGet("/", () => "Feirb API");
 
 app.Run();
