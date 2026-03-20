@@ -1,0 +1,107 @@
+# MailClient
+
+A smart mail client for your NAS, powered by AI.
+
+## Project Overview
+
+MailClient is a self-hosted mail client designed for NAS systems. It provides a modern web-based interface for managing email with integrated AI features powered by Ollama/mistral for mail summarization, smart reply drafts, and automatic categorization.
+
+## Tech Stack
+
+- **Runtime:** .NET 10 / C# 14
+- **Orchestration:** .NET Aspire
+- **Frontend:** Blazor WebAssembly
+- **Backend:** ASP.NET Core Minimal APIs
+- **Mail:** MailKit (IMAP/SMTP) + MimeKit (MIME handling)
+- **AI:** Ollama with mistral model via OllamaSharp
+- **Database:** SQLite via Entity Framework Core
+- **UI Framework:** Bootstrap 5
+- **Testing:** xUnit + FluentAssertions
+
+## Solution Structure
+
+```
+src/
+  MailClient.AppHost/          # Aspire orchestration (entry point)
+  MailClient.ServiceDefaults/  # Shared service config (OpenTelemetry, health, resilience)
+  MailClient.Api/              # ASP.NET Minimal API backend
+  MailClient.Web/              # Blazor WASM frontend
+  MailClient.Shared/           # DTOs, interfaces, enums
+tests/
+  MailClient.Api.Tests/        # API unit & integration tests
+  MailClient.Web.Tests/        # Frontend tests
+```
+
+## Build & Run
+
+```bash
+# Build everything
+dotnet build MailClient.sln
+
+# Run via Aspire (starts all services)
+dotnet run --project src/MailClient.AppHost
+
+# Run tests
+dotnet test
+
+# Check formatting
+dotnet format --verify-no-changes
+
+# Apply formatting
+dotnet format
+```
+
+## Development Services (via Aspire)
+
+- **Aspire Dashboard:** https://localhost:18888
+- **Mailpit (dev mail server):** http://localhost:8025 (UI), localhost:1025 (SMTP)
+- **Ollama:** Managed by Aspire, model `mistral` pulled automatically (~4GB on first run)
+
+## Conventions
+
+### Code Style
+
+- C# 14 / .NET 10, nullable reference types enabled everywhere
+- File-scoped namespaces
+- Primary constructors preferred
+- Minimal APIs — no controllers
+- Record types for all DTOs in `MailClient.Shared`
+- All async methods suffixed with `Async`
+- Expression-bodied members for single-line implementations
+- See `.editorconfig` for full formatting rules
+
+### Testing
+
+- xUnit as test framework, FluentAssertions for assertions
+- Test naming: `MethodName_Scenario_ExpectedResult`
+- Unit tests mirror `src/` project structure in `tests/`
+- Integration tests use Aspire's `DistributedApplicationTestingBuilder`
+
+### Git
+
+- Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`
+- Scopes: `(api)`, `(web)`, `(apphost)`, `(shared)`, `(design)`
+- Branch naming: `feature/`, `fix/`, `docs/`, `chore/`
+- Target branch: `main`
+
+### API Design
+
+- Minimal API endpoints grouped by feature in separate static classes
+- Endpoint groups: `/api/mail`, `/api/folders`, `/api/settings`, `/api/ai`
+- Return `Results<T>` types for explicit HTTP response modeling
+- All request/response DTOs in `MailClient.Shared`
+
+## LLM Integration
+
+- **Client:** OllamaSharp, registered via DI
+- **Model:** `mistral` (configurable via Aspire/appsettings)
+- **Aspire:** `CommunityToolkit.Aspire.Hosting.Ollama` for container management
+- **Features:**
+  - Mail summarization
+  - Smart reply draft generation
+  - Automatic mail categorization
+
+## Future Plans
+
+- Google Stitch integration via MCP (Model Context Protocol)
+- Stitch2Blazor skill for generating Blazor components from designs
