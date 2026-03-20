@@ -14,7 +14,7 @@ MailClient is a self-hosted mail client designed for NAS systems. It provides a 
 - **Backend:** ASP.NET Core Minimal APIs
 - **Mail:** MailKit (IMAP/SMTP) + MimeKit (MIME handling)
 - **AI:** Ollama with mistral model via OllamaSharp
-- **Database:** SQLite via Entity Framework Core
+- **Database:** PostgreSQL via Entity Framework Core (Aspire-managed container)
 - **UI Framework:** Bootstrap 5
 - **Testing:** xUnit + FluentAssertions
 

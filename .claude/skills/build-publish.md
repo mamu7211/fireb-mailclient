@@ -41,6 +41,7 @@ After building/publishing:
 ## NAS Deployment Notes
 
 - Ensure Docker is available on the target NAS
-- SQLite database file needs a persistent volume mount
+- PostgreSQL data needs a persistent volume mount
 - Ollama model data needs a persistent volume mount
 - Configure actual IMAP/SMTP settings in production appsettings
+- Set PostgreSQL connection string for production

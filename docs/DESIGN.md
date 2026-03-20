@@ -26,12 +26,12 @@ graph TB
     subgraph ".NET Aspire AppHost"
         API[MailClient.Api<br/>Minimal APIs]
         OLLAMA[Ollama Container<br/>mistral model]
+        DB[(PostgreSQL<br/>EF Core)]
         MAILPIT[Mailpit<br/>dev only]
     end
 
     subgraph "External"
         IMAP[Mail Server<br/>IMAP/SMTP]
-        DB[(SQLite<br/>EF Core)]
     end
 
     WASM -->|HTTP/JSON| API
@@ -54,9 +54,10 @@ The .NET Aspire orchestration project and the main entry point for development.
 - Configures Ollama container via `CommunityToolkit.Aspire.Hosting.Ollama`
 
 **Key configuration:**
+- PostgreSQL database via `builder.AddPostgres("db")`
 - Ollama with `mistral` model and persistent data volume
 - Mailpit for development mail testing
-- Service references between API and Ollama
+- Service references between API, PostgreSQL, and Ollama
 
 ### MailClient.ServiceDefaults
 
@@ -82,7 +83,7 @@ ASP.NET Core Minimal API backend. The central hub connecting the frontend to mai
 - `IMailService` / `MailService` — MailKit-based IMAP/SMTP operations
 - `IAiService` / `AiService` — OllamaSharp-based LLM interactions
 - `IMailAccountService` / `MailAccountService` — Account credential management
-- `MailClientDbContext` — EF Core context for SQLite
+- `MailClientDbContext` — EF Core context for PostgreSQL
 
 ### MailClient.Web
 
@@ -222,7 +223,7 @@ Application-level user preferences.
 | **.NET Aspire** | Orchestrates multi-service topology, provides service discovery, dev dashboard, health monitoring out of the box |
 | **Blazor WASM** | .NET end-to-end — shared types between frontend and backend, no JavaScript framework needed, offline potential |
 | **Minimal APIs** | Lightweight, less ceremony than controllers, ideal for the small-to-medium API surface of a mail client |
-| **SQLite** | Single-file database, no server process needed, ideal for NAS deployment, sufficient for personal mail volumes |
+| **PostgreSQL** | Powerful full-text search for mail content, handles concurrent access well, managed as Aspire container, robust and battle-tested |
 | **MailKit/MimeKit** | The gold standard for .NET mail — robust IMAP/SMTP support, proper MIME handling, actively maintained |
 | **OllamaSharp** | Typed .NET client for Ollama, supports streaming, model management, integrates cleanly with DI |
 | **Bootstrap 5** | Proven, responsive, large component ecosystem, works with CDN or static files — no build toolchain required |

@@ -5,7 +5,7 @@
 | Tool | Version | Purpose |
 |------|---------|---------|
 | [.NET SDK](https://dotnet.microsoft.com/download) | 10.0.100+ | Build and run the solution |
-| [Docker](https://www.docker.com/) | Latest | Aspire containers (Ollama, Mailpit) |
+| [Docker](https://www.docker.com/) | Latest | Aspire containers (PostgreSQL, Ollama, Mailpit) |
 | [Git](https://git-scm.com/) | Latest | Version control |
 
 **Recommended IDE (pick one):**
@@ -28,10 +28,11 @@ dotnet run --project src/MailClient.AppHost
 ```
 
 On first run, Aspire will:
-1. Start the API and Web projects
-2. Pull and start the Ollama Docker container
-3. Download the `mistral` model (~4GB — this takes a while on first run)
-4. Start Mailpit for development email testing
+1. Start a PostgreSQL container for the database
+2. Start the API and Web projects
+3. Pull and start the Ollama Docker container
+4. Download the `mistral` model (~4GB — this takes a while on first run)
+5. Start Mailpit for development email testing
 
 ## Development Services
 
@@ -158,12 +159,15 @@ If the mistral model fails to download automatically:
 docker exec -it <ollama-container-name> ollama pull mistral
 ```
 
-### Reset SQLite Database
+### Reset PostgreSQL Database
 
-Delete the database file and restart — EF Core migrations will recreate it:
+The PostgreSQL container is managed by Aspire. To reset the database:
 
 ```bash
-rm src/MailClient.Api/mailclient.db
+# Stop the application, then remove the Postgres volume
+docker volume rm mailclient-postgres-data
+
+# Restart — EF Core migrations will recreate the schema
 dotnet run --project src/MailClient.AppHost
 ```
 
