@@ -12,7 +12,7 @@ MailClient is a self-hosted, modern web-based mail client designed for NAS syste
 ## Features
 
 - **Full Mail Support** — Read, compose, reply, and manage emails via IMAP/SMTP using MailKit
-- **AI-Powered** — Mail summarization, smart reply drafts, and categorization via Ollama/mistral
+- **AI-Powered** — Mail summarization, smart reply drafts, and categorization via Ollama/Qwen3
 - **Modern UI** — Responsive Blazor WebAssembly frontend with Bootstrap 5
 - **Self-Hosted** — Runs entirely on your NAS, no cloud dependency
 - **Observable** — Built-in dashboards, health checks, and distributed tracing via .NET Aspire
@@ -25,7 +25,7 @@ MailClient is a self-hosted, modern web-based mail client designed for NAS syste
 | Backend | ASP.NET Core 10 Minimal APIs |
 | Orchestration | .NET Aspire |
 | Mail | MailKit + MimeKit |
-| AI | Ollama (mistral) via OllamaSharp |
+| AI | Ollama (qwen3:4b) via OllamaSharp |
 | Database | PostgreSQL via EF Core |
 | UI | Bootstrap 5 |
 
@@ -51,7 +51,7 @@ This starts all services via Aspire:
 - **API Backend:** https://localhost:7200
 - **Mailpit (dev):** http://localhost:8025
 
-> **Note:** On first run, the Ollama mistral model (~4GB) will be downloaded automatically.
+> **Note:** On first run, the Ollama qwen3:4b model (~2.6GB) will be downloaded automatically.
 
 ## Project Structure
 

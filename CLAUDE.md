@@ -4,7 +4,7 @@ A smart mail client for your NAS, powered by AI.
 
 ## Project Overview
 
-MailClient is a self-hosted mail client designed for NAS systems. It provides a modern web-based interface for managing email with integrated AI features powered by Ollama/mistral for mail summarization, smart reply drafts, and automatic categorization.
+MailClient is a self-hosted mail client designed for NAS systems. It provides a modern web-based interface for managing email with integrated AI features powered by Ollama/Qwen3 for mail summarization, smart reply drafts, and automatic categorization.
 
 ## Tech Stack
 
@@ -13,7 +13,7 @@ MailClient is a self-hosted mail client designed for NAS systems. It provides a 
 - **Frontend:** Blazor WebAssembly
 - **Backend:** ASP.NET Core Minimal APIs
 - **Mail:** MailKit (IMAP/SMTP) + MimeKit (MIME handling)
-- **AI:** Ollama with mistral model via OllamaSharp
+- **AI:** Ollama with qwen3:4b model via OllamaSharp
 - **Database:** PostgreSQL via Entity Framework Core (Aspire-managed container)
 - **UI Framework:** Bootstrap 5
 - **Testing:** xUnit + FluentAssertions
@@ -56,7 +56,7 @@ dotnet format
 - **Aspire Dashboard:** https://localhost:18888
 - **PostgreSQL:** Managed by Aspire, localhost:5432
 - **Mailpit (dev mail server):** http://localhost:8025 (UI), localhost:1025 (SMTP)
-- **Ollama:** Managed by Aspire, model `mistral` pulled automatically (~4GB on first run)
+- **Ollama:** Managed by Aspire, model `qwen3:4b` pulled automatically (~2.6GB on first run)
 
 ## Conventions
 
@@ -95,7 +95,7 @@ dotnet format
 ## LLM Integration
 
 - **Client:** OllamaSharp, registered via DI
-- **Model:** `mistral` (configurable via Aspire/appsettings)
+- **Model:** `qwen3:4b` (configurable via Aspire/appsettings)
 - **Aspire:** `CommunityToolkit.Aspire.Hosting.Ollama` for container management
 - **Features:**
   - Mail summarization

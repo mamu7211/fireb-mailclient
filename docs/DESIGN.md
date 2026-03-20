@@ -25,7 +25,7 @@ graph TB
 
     subgraph Aspire[.NET Aspire AppHost]
         API[MailClient.Api\nMinimal APIs]
-        OLLAMA[Ollama Container\nmistral model]
+        OLLAMA[Ollama Container\nqwen3:4b model]
         DB[(PostgreSQL)]
         MAILPIT[Mailpit\ndev only]
     end

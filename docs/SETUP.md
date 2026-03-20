@@ -31,7 +31,7 @@ On first run, Aspire will:
 1. Start a PostgreSQL container for the database
 2. Start the API and Web projects
 3. Pull and start the Ollama Docker container
-4. Download the `mistral` model (~4GB — this takes a while on first run)
+4. Download the `qwen3:4b` model (~2.6GB — this takes a while on first run)
 5. Start Mailpit for development email testing
 
 ## Development Services
@@ -95,9 +95,9 @@ dotnet format
 Aspire manages the Ollama container automatically. For faster development, you can pre-pull the model:
 
 ```bash
-# Optional: pre-pull mistral model
+# Optional: pre-pull qwen3:4b model
 docker run -d --name ollama -v ollama_data:/root/.ollama -p 11434:11434 ollama/ollama
-docker exec ollama ollama pull mistral
+docker exec ollama ollama pull qwen3:4b
 docker stop ollama && docker rm ollama
 ```
 
@@ -152,12 +152,12 @@ Stop conflicting processes or modify `launchSettings.json` in the respective pro
 
 ### Ollama model not found
 
-If the mistral model fails to download automatically:
+If the qwen3:4b model fails to download automatically:
 
 ```bash
 # Check Ollama container logs via Aspire dashboard
 # Or manually pull:
-docker exec -it <ollama-container-name> ollama pull mistral
+docker exec -it <ollama-container-name> ollama pull qwen3:4b
 ```
 
 ### Reset PostgreSQL Database

@@ -26,4 +26,4 @@ Start the MailClient application via .NET Aspire. This is the primary way to run
    - No port conflicts on 7100, 7200, 8025, 11434, 18888
    - .NET 10 SDK is installed (`dotnet --version`)
 
-4. On first run, note that the Ollama mistral model download (~4GB) may take several minutes.
+4. On first run, note that the Ollama qwen3:4b model download (~2.6GB) may take several minutes.
