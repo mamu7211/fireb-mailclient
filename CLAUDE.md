@@ -106,6 +106,16 @@ dotnet format
   - Smart reply draft generation
   - Automatic mail categorization
 
+## Internationalization (i18n)
+
+- **Supported locales:** `en-US` (default/fallback), `de-DE`, `fr-FR`, `it-IT`
+- **UI strings:** `src/Feirb.Web/Resources/SharedResources.resx` + locale variants
+- **API strings:** `src/Feirb.Api/Resources/ApiMessages.resx` + locale variants
+- **Usage:** `@inject IStringLocalizer<SharedResources> L` in Blazor components, `IStringLocalizer<ApiMessages>` in API endpoints
+- **Culture detection:** localStorage (`BlazorCulture`) → browser culture → `en-US` fallback
+- **Adding a new locale:** Create `.{locale}.resx` files in both `Resources/` directories, add culture code to `supportedCultures` in `Feirb.Api/Program.cs`, add option to `LanguageSwitcher.razor`
+- **Adding a new string:** Add key to all `.resx` files (default + all locales), use `L["Key"]` in components or `localizer["Key"]` in API endpoints
+
 ## Future Plans
 
 - Google Stitch integration via MCP (Model Context Protocol)
