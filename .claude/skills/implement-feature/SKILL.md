@@ -20,42 +20,48 @@ Start working on a feature tracked by a GitHub issue.
 
 3. **Read the feature spec** to understand deliverables and acceptance criteria.
 
-4. **Ensure main is up to date:**
+4. **Check for uncommitted changes** before switching branches:
+   ```bash
+   git status
+   ```
+   - If there are uncommitted changes, stop and ask the user what to do (commit, stash, or discard).
+
+5. **Ensure main is up to date:**
    ```bash
    git checkout main
    git pull origin main
    ```
 
-5. **Create a feature branch** using the issue number and a slug derived from the issue title:
+6. **Create a feature branch from main** using the issue number and a slug derived from the issue title:
    ```bash
    git checkout -b feature/#{issue_number}-{slug}
    ```
    Example: `feature/#4-auth-infrastructure`
 
-6. **Plan the implementation** based on the feature spec:
+7. **Plan the implementation** based on the feature spec:
    - Identify files to create/modify
    - Determine the order of changes (data model → service → API → UI → tests)
    - Check for existing patterns in the codebase to follow
 
-7. **Implement the feature** following project conventions from CLAUDE.md:
+8. **Implement the feature** following project conventions from CLAUDE.md:
    - File-scoped namespaces, primary constructors, record DTOs
    - Minimal APIs grouped by feature
    - xUnit + FluentAssertions for tests
    - Async methods suffixed with `Async`
 
-8. **Verify the implementation:**
+9. **Verify the implementation:**
    ```bash
    dotnet build Feirb.sln
    dotnet test Feirb.sln --verbosity normal
    dotnet format Feirb.sln --verify-no-changes
    ```
 
-9. **Commit with conventional commits** referencing the issue:
-   ```
-   feat(api): add JWT authentication service (#4)
-   ```
+10. **Commit with conventional commits** referencing the issue:
+    ```
+    feat(api): add JWT authentication service (#4)
+    ```
 
-10. **Push and create a PR** that closes the issue:
+11. **Push and create a PR** that closes the issue:
     ```bash
     git push -u origin feature/#{issue_number}-{slug}
     gh pr create --title "..." --body "... Closes #{issue_number}"
