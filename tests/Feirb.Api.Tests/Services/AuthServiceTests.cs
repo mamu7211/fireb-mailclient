@@ -155,6 +155,34 @@ public class AuthServiceTests
         token1.Should().NotBe(token2);
     }
 
+    [Fact]
+    public void GenerateTokens_AdminUser_AccessTokenContainsAdminRoleClaim()
+    {
+        var user = CreateTestUser();
+        user.IsAdmin = true;
+
+        var result = _sut.GenerateTokens(user);
+
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(result.AccessToken);
+
+        token.Claims.Should().Contain(c => c.Type == ClaimTypes.Role && c.Value == "Admin");
+    }
+
+    [Fact]
+    public void GenerateTokens_NonAdminUser_AccessTokenDoesNotContainAdminRoleClaim()
+    {
+        var user = CreateTestUser();
+        user.IsAdmin = false;
+
+        var result = _sut.GenerateTokens(user);
+
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(result.AccessToken);
+
+        token.Claims.Should().NotContain(c => c.Type == ClaimTypes.Role && c.Value == "Admin");
+    }
+
     private static User CreateTestUser() => new()
     {
         Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
