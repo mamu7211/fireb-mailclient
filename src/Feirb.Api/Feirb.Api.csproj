@@ -21,8 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Feirb.Shared\Feirb.Shared.csproj" />
     <ProjectReference Include="..\Feirb.ServiceDefaults\Feirb.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Feirb.Web\Feirb.Web.csproj" />
   </ItemGroup>
 
 </Project>

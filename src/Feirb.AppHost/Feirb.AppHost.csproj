@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Feirb.Api\Feirb.Api.csproj" />
-    <ProjectReference Include="..\Feirb.Web\Feirb.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

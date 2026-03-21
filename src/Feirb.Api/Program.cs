@@ -62,8 +62,10 @@ app.UseAuthorization();
 app.MapOpenApi();
 app.MapScalarApiReference();
 
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+
 app.MapDefaultEndpoints();
-app.MapGet("/", () => "Feirb API");
 
 // Require authorization on all /api/* endpoints by default
 var apiGroup = app.MapGroup("/api").RequireAuthorization();
@@ -71,6 +73,8 @@ var apiGroup = app.MapGroup("/api").RequireAuthorization();
 // Auth endpoints are anonymous
 var authGroup = app.MapGroup(ApiRoutes.Auth).AllowAnonymous();
 authGroup.MapAuthEndpoints();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
 
