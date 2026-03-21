@@ -5,10 +5,12 @@ using Feirb.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.Services.AddOpenApi();
 
 // Database
 builder.AddNpgsqlDbContext<FeirbDbContext>("mailclientdb");
@@ -52,6 +54,9 @@ using (var scope = app.Services.CreateScope())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.MapDefaultEndpoints();
 app.MapGet("/", () => "Feirb API");

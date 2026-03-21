@@ -17,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="OllamaSharp" Version="5.4.24" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.13.13" />
   </ItemGroup>
 
   <ItemGroup>
