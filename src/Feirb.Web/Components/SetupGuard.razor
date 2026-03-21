@@ -1,0 +1,35 @@
+@using Feirb.Shared.Setup
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+@if (_checked)
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private bool _checked;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var status = await Http.GetFromJsonAsync<SetupStatusResponse>("/api/setup/status");
+            if (status is { IsComplete: false })
+            {
+                var uri = new Uri(Navigation.Uri);
+                if (!uri.AbsolutePath.Equals("/setup", StringComparison.OrdinalIgnoreCase))
+                    Navigation.NavigateTo("/setup");
+            }
+        }
+        catch
+        {
+            // If setup status check fails, continue normally
+        }
+
+        _checked = true;
+    }
+}
