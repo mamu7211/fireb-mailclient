@@ -136,6 +136,25 @@ public class AuthServiceTests
         result.Should().BeNull();
     }
 
+    [Fact]
+    public void GenerateResetToken_ReturnsNonEmptyHexString()
+    {
+        var token = _sut.GenerateResetToken();
+
+        token.Should().NotBeNullOrEmpty();
+        token.Should().HaveLength(64); // 32 bytes = 64 hex chars
+        token.Should().MatchRegex("^[0-9a-f]+$");
+    }
+
+    [Fact]
+    public void GenerateResetToken_CalledTwice_ProducesDifferentTokens()
+    {
+        var token1 = _sut.GenerateResetToken();
+        var token2 = _sut.GenerateResetToken();
+
+        token1.Should().NotBe(token2);
+    }
+
     private static User CreateTestUser() => new()
     {
         Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),

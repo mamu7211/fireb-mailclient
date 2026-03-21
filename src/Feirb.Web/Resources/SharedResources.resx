@@ -147,4 +147,46 @@
   <data name="SuccessRegistered" xml:space="preserve">
     <value>Account created successfully! Please log in.</value>
   </data>
+  <data name="PageTitleRequestReset" xml:space="preserve">
+    <value>Reset Password - Feirb</value>
+  </data>
+  <data name="RequestResetHeading" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="RequestResetSubheading" xml:space="preserve">
+    <value>Enter your email to receive a reset link</value>
+  </data>
+  <data name="ButtonSendResetLink" xml:space="preserve">
+    <value>Send Reset Link</value>
+  </data>
+  <data name="ResetRequestSentMessage" xml:space="preserve">
+    <value>If an account with that email exists, a reset link has been sent.</value>
+  </data>
+  <data name="BackToLogin" xml:space="preserve">
+    <value>Back to login</value>
+  </data>
+  <data name="PageTitleResetPassword" xml:space="preserve">
+    <value>Set New Password - Feirb</value>
+  </data>
+  <data name="ResetPasswordHeading" xml:space="preserve">
+    <value>Set New Password</value>
+  </data>
+  <data name="ResetPasswordSubheading" xml:space="preserve">
+    <value>Choose a new password for your account</value>
+  </data>
+  <data name="LabelNewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="PlaceholderNewPassword" xml:space="preserve">
+    <value>Min. 8 characters</value>
+  </data>
+  <data name="ButtonResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ErrorResetFailed" xml:space="preserve">
+    <value>Password reset failed. The link may be invalid or expired.</value>
+  </data>
+  <data name="SuccessPasswordReset" xml:space="preserve">
+    <value>Password reset successfully! Please log in.</value>
+  </data>
 </root>

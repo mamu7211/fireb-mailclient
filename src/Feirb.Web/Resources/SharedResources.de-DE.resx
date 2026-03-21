@@ -147,4 +147,46 @@
   <data name="SuccessRegistered" xml:space="preserve">
     <value>Konto erfolgreich erstellt! Bitte melde dich an.</value>
   </data>
+  <data name="PageTitleRequestReset" xml:space="preserve">
+    <value>Passwort zurücksetzen - Feirb</value>
+  </data>
+  <data name="RequestResetHeading" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="RequestResetSubheading" xml:space="preserve">
+    <value>Gib deine E-Mail-Adresse ein, um einen Link zum Zurücksetzen zu erhalten</value>
+  </data>
+  <data name="ButtonSendResetLink" xml:space="preserve">
+    <value>Link senden</value>
+  </data>
+  <data name="ResetRequestSentMessage" xml:space="preserve">
+    <value>Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.</value>
+  </data>
+  <data name="BackToLogin" xml:space="preserve">
+    <value>Zurück zur Anmeldung</value>
+  </data>
+  <data name="PageTitleResetPassword" xml:space="preserve">
+    <value>Neues Passwort setzen - Feirb</value>
+  </data>
+  <data name="ResetPasswordHeading" xml:space="preserve">
+    <value>Neues Passwort setzen</value>
+  </data>
+  <data name="ResetPasswordSubheading" xml:space="preserve">
+    <value>Wähle ein neues Passwort für dein Konto</value>
+  </data>
+  <data name="LabelNewPassword" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="PlaceholderNewPassword" xml:space="preserve">
+    <value>Mind. 8 Zeichen</value>
+  </data>
+  <data name="ButtonResetPassword" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="ErrorResetFailed" xml:space="preserve">
+    <value>Passwort zurücksetzen fehlgeschlagen. Der Link ist möglicherweise ungültig oder abgelaufen.</value>
+  </data>
+  <data name="SuccessPasswordReset" xml:space="preserve">
+    <value>Passwort erfolgreich zurückgesetzt! Bitte melde dich an.</value>
+  </data>
 </root>

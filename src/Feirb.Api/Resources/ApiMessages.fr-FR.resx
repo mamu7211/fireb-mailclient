@@ -51,4 +51,13 @@
   <data name="InvalidRefreshToken" xml:space="preserve">
     <value>Le jeton d'actualisation est invalide ou expiré.</value>
   </data>
+  <data name="ResetRequestAccepted" xml:space="preserve">
+    <value>Si un compte avec cet e-mail existe, un lien de réinitialisation a été envoyé.</value>
+  </data>
+  <data name="InvalidOrExpiredResetToken" xml:space="preserve">
+    <value>Le jeton de réinitialisation est invalide ou a expiré.</value>
+  </data>
+  <data name="PasswordResetSuccess" xml:space="preserve">
+    <value>Votre mot de passe a été réinitialisé avec succès.</value>
+  </data>
 </root>

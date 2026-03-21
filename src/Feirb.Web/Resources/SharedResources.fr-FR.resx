@@ -147,4 +147,46 @@
   <data name="SuccessRegistered" xml:space="preserve">
     <value>Compte créé avec succès ! Veuillez vous connecter.</value>
   </data>
+  <data name="PageTitleRequestReset" xml:space="preserve">
+    <value>Réinitialiser le mot de passe - Feirb</value>
+  </data>
+  <data name="RequestResetHeading" xml:space="preserve">
+    <value>Réinitialiser le mot de passe</value>
+  </data>
+  <data name="RequestResetSubheading" xml:space="preserve">
+    <value>Entrez votre e-mail pour recevoir un lien de réinitialisation</value>
+  </data>
+  <data name="ButtonSendResetLink" xml:space="preserve">
+    <value>Envoyer le lien</value>
+  </data>
+  <data name="ResetRequestSentMessage" xml:space="preserve">
+    <value>Si un compte avec cet e-mail existe, un lien de réinitialisation a été envoyé.</value>
+  </data>
+  <data name="BackToLogin" xml:space="preserve">
+    <value>Retour à la connexion</value>
+  </data>
+  <data name="PageTitleResetPassword" xml:space="preserve">
+    <value>Nouveau mot de passe - Feirb</value>
+  </data>
+  <data name="ResetPasswordHeading" xml:space="preserve">
+    <value>Nouveau mot de passe</value>
+  </data>
+  <data name="ResetPasswordSubheading" xml:space="preserve">
+    <value>Choisissez un nouveau mot de passe pour votre compte</value>
+  </data>
+  <data name="LabelNewPassword" xml:space="preserve">
+    <value>Nouveau mot de passe</value>
+  </data>
+  <data name="PlaceholderNewPassword" xml:space="preserve">
+    <value>Min. 8 caractères</value>
+  </data>
+  <data name="ButtonResetPassword" xml:space="preserve">
+    <value>Réinitialiser le mot de passe</value>
+  </data>
+  <data name="ErrorResetFailed" xml:space="preserve">
+    <value>Échec de la réinitialisation. Le lien est peut-être invalide ou expiré.</value>
+  </data>
+  <data name="SuccessPasswordReset" xml:space="preserve">
+    <value>Mot de passe réinitialisé avec succès ! Veuillez vous connecter.</value>
+  </data>
 </root>
