@@ -6,6 +6,7 @@ namespace Feirb.Api.Data;
 public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +20,17 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.Username).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.PasswordHash).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<PasswordResetToken>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.Token).IsUnique();
+            entity.Property(e => e.Token).HasMaxLength(128);
+            entity.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

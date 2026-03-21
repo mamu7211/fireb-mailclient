@@ -51,4 +51,13 @@
   <data name="InvalidRefreshToken" xml:space="preserve">
     <value>Il token di aggiornamento non è valido o è scaduto.</value>
   </data>
+  <data name="ResetRequestAccepted" xml:space="preserve">
+    <value>Se esiste un account con questa e-mail, è stato inviato un link per il ripristino.</value>
+  </data>
+  <data name="InvalidOrExpiredResetToken" xml:space="preserve">
+    <value>Il token di ripristino non è valido o è scaduto.</value>
+  </data>
+  <data name="PasswordResetSuccess" xml:space="preserve">
+    <value>La password è stata ripristinata con successo.</value>
+  </data>
 </root>

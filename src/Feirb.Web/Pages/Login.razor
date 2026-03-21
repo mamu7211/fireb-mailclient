@@ -27,6 +27,11 @@
                 <div class="alert alert-success py-2" role="alert">@L["SuccessRegistered"]</div>
             }
 
+            @if (_showResetMessage)
+            {
+                <div class="alert alert-success py-2" role="alert">@L["SuccessPasswordReset"]</div>
+            }
+
             @if (!string.IsNullOrEmpty(_errorMessage))
             {
                 <div class="alert alert-danger py-2" role="alert">@_errorMessage</div>
@@ -72,11 +77,13 @@
     private string? _errorMessage;
     private bool _isSubmitting;
     private bool _showRegisteredMessage;
+    private bool _showResetMessage;
 
     protected override void OnInitialized()
     {
         var uri = new Uri(Navigation.Uri);
         _showRegisteredMessage = uri.Query.Contains("registered=true");
+        _showResetMessage = uri.Query.Contains("reset=true");
     }
 
     private async Task HandleLoginAsync()
@@ -84,6 +91,7 @@
         _isSubmitting = true;
         _errorMessage = null;
         _showRegisteredMessage = false;
+        _showResetMessage = false;
 
         var request = new LoginRequest(_model.Username!, _model.Password!);
         var response = await Http.PostAsJsonAsync("/api/auth/login", request);

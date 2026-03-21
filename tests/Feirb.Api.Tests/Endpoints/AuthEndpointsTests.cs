@@ -215,4 +215,141 @@ public class AuthEndpointsTests : IDisposable
         user!.RefreshToken.Should().NotBeNullOrEmpty();
         user.RefreshTokenExpiresAt.Should().BeAfter(DateTime.UtcNow);
     }
+
+    // --- Password Reset tests ---
+
+    [Fact]
+    public async Task RequestReset_ExistingEmail_ReturnsOkAsync()
+    {
+        await _client.PostAsJsonAsync("/api/auth/register",
+            new RegisterRequest("resetuser", "reset@example.com", "Password123!"));
+
+        var response = await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("reset@example.com"));
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task RequestReset_NonexistentEmail_StillReturnsOkAsync()
+    {
+        var response = await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("nonexistent@example.com"));
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task RequestReset_CreatesTokenInDatabaseAsync()
+    {
+        await _client.PostAsJsonAsync("/api/auth/register",
+            new RegisterRequest("tokencheck", "tokencheck@example.com", "Password123!"));
+
+        await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("tokencheck@example.com"));
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<FeirbDbContext>();
+        var token = await db.PasswordResetTokens.FirstOrDefaultAsync();
+
+        token.Should().NotBeNull();
+        token!.Token.Should().NotBeNullOrEmpty();
+        token.ExpiresAt.Should().BeAfter(DateTime.UtcNow);
+        token.IsUsed.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task ResetPassword_ValidToken_ReturnsOkAndUpdatesPasswordAsync()
+    {
+        await _client.PostAsJsonAsync("/api/auth/register",
+            new RegisterRequest("pwreset", "pwreset@example.com", "OldPassword123!"));
+
+        await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("pwreset@example.com"));
+
+        string resetToken;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<FeirbDbContext>();
+            var tokenEntity = await db.PasswordResetTokens.FirstAsync();
+            resetToken = tokenEntity.Token;
+        }
+
+        var response = await _client.PostAsJsonAsync("/api/auth/reset-password",
+            new ResetPasswordRequest(resetToken, "NewPassword456!"));
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        // Verify login with new password works
+        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login",
+            new LoginRequest("pwreset", "NewPassword456!"));
+        loginResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        // Verify old password no longer works
+        var oldLoginResponse = await _client.PostAsJsonAsync("/api/auth/login",
+            new LoginRequest("pwreset", "OldPassword123!"));
+        oldLoginResponse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task ResetPassword_InvalidToken_ReturnsBadRequestAsync()
+    {
+        var response = await _client.PostAsJsonAsync("/api/auth/reset-password",
+            new ResetPasswordRequest("invalid-token", "NewPassword456!"));
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task ResetPassword_UsedToken_ReturnsBadRequestAsync()
+    {
+        await _client.PostAsJsonAsync("/api/auth/register",
+            new RegisterRequest("usedtoken", "usedtoken@example.com", "Password123!"));
+
+        await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("usedtoken@example.com"));
+
+        string resetToken;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<FeirbDbContext>();
+            var tokenEntity = await db.PasswordResetTokens.FirstAsync();
+            resetToken = tokenEntity.Token;
+        }
+
+        // Use the token once
+        await _client.PostAsJsonAsync("/api/auth/reset-password",
+            new ResetPasswordRequest(resetToken, "NewPassword456!"));
+
+        // Try to use it again
+        var response = await _client.PostAsJsonAsync("/api/auth/reset-password",
+            new ResetPasswordRequest(resetToken, "AnotherPassword789!"));
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task ResetPassword_InvalidatesRefreshTokenAsync()
+    {
+        var tokens = await RegisterAndLoginAsync("invalidaterefresh", "invalidaterefresh@example.com");
+
+        await _client.PostAsJsonAsync("/api/auth/request-reset",
+            new RequestResetRequest("invalidaterefresh@example.com"));
+
+        string resetToken;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<FeirbDbContext>();
+            var tokenEntity = await db.PasswordResetTokens.FirstAsync();
+            resetToken = tokenEntity.Token;
+        }
+
+        await _client.PostAsJsonAsync("/api/auth/reset-password",
+            new ResetPasswordRequest(resetToken, "NewPassword456!"));
+
+        // Old refresh token should no longer work
+        var refreshResponse = await _client.PostAsJsonAsync("/api/auth/refresh",
+            new RefreshRequest(tokens.RefreshToken));
+        refreshResponse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
 }

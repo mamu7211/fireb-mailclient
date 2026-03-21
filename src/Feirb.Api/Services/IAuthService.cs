@@ -9,4 +9,5 @@ public interface IAuthService
     bool VerifyPassword(string password, string passwordHash);
     TokenResponse GenerateTokens(User user);
     Guid? ValidateAccessTokenAsync(string token);
+    string GenerateResetToken();
 }

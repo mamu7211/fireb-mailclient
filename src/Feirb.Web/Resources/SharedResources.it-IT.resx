@@ -147,4 +147,46 @@
   <data name="SuccessRegistered" xml:space="preserve">
     <value>Account creato con successo! Effettua l'accesso.</value>
   </data>
+  <data name="PageTitleRequestReset" xml:space="preserve">
+    <value>Reimposta password - Feirb</value>
+  </data>
+  <data name="RequestResetHeading" xml:space="preserve">
+    <value>Reimposta password</value>
+  </data>
+  <data name="RequestResetSubheading" xml:space="preserve">
+    <value>Inserisci la tua e-mail per ricevere un link di ripristino</value>
+  </data>
+  <data name="ButtonSendResetLink" xml:space="preserve">
+    <value>Invia link</value>
+  </data>
+  <data name="ResetRequestSentMessage" xml:space="preserve">
+    <value>Se esiste un account con questa e-mail, è stato inviato un link per il ripristino.</value>
+  </data>
+  <data name="BackToLogin" xml:space="preserve">
+    <value>Torna all'accesso</value>
+  </data>
+  <data name="PageTitleResetPassword" xml:space="preserve">
+    <value>Nuova password - Feirb</value>
+  </data>
+  <data name="ResetPasswordHeading" xml:space="preserve">
+    <value>Nuova password</value>
+  </data>
+  <data name="ResetPasswordSubheading" xml:space="preserve">
+    <value>Scegli una nuova password per il tuo account</value>
+  </data>
+  <data name="LabelNewPassword" xml:space="preserve">
+    <value>Nuova password</value>
+  </data>
+  <data name="PlaceholderNewPassword" xml:space="preserve">
+    <value>Min. 8 caratteri</value>
+  </data>
+  <data name="ButtonResetPassword" xml:space="preserve">
+    <value>Reimposta password</value>
+  </data>
+  <data name="ErrorResetFailed" xml:space="preserve">
+    <value>Ripristino della password non riuscito. Il link potrebbe essere non valido o scaduto.</value>
+  </data>
+  <data name="SuccessPasswordReset" xml:space="preserve">
+    <value>Password ripristinata con successo! Effettua l'accesso.</value>
+  </data>
 </root>

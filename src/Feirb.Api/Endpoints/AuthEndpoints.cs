@@ -16,6 +16,9 @@ public static class AuthEndpoints
         group.MapPost("/register", RegisterAsync);
         group.MapPost("/login", LoginAsync);
         group.MapPost("/refresh", RefreshAsync);
+        group.MapPost("/request-reset", RequestResetAsync);
+        group.MapGet("/validate-reset-token/{token}", ValidateResetTokenAsync);
+        group.MapPost("/reset-password", ResetPasswordAsync);
         return group;
     }
 
@@ -90,5 +93,74 @@ public static class AuthEndpoints
         await db.SaveChangesAsync();
 
         return Results.Ok(tokens);
+    }
+
+    private static async Task<IResult> RequestResetAsync(
+        RequestResetRequest request,
+        FeirbDbContext db,
+        IAuthService authService,
+        ILogger<Program> logger,
+        IStringLocalizer<ApiMessages> localizer)
+    {
+        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+        if (user is not null)
+        {
+            var token = authService.GenerateResetToken();
+
+            db.PasswordResetTokens.Add(new Data.Entities.PasswordResetToken
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                Token = token,
+                ExpiresAt = DateTime.UtcNow.AddHours(1),
+                IsUsed = false,
+                CreatedAt = DateTime.UtcNow,
+            });
+            await db.SaveChangesAsync();
+
+            logger.LogInformation("Password reset token for {Email}: {Token}", user.Email, token);
+        }
+
+        // Always return OK to not reveal whether the email exists
+        return Results.Ok(new { message = localizer["ResetRequestAccepted"].Value });
+    }
+
+    private static async Task<IResult> ValidateResetTokenAsync(
+        string token,
+        FeirbDbContext db)
+    {
+        var resetToken = await db.PasswordResetTokens
+            .FirstOrDefaultAsync(t => t.Token == token);
+
+        if (resetToken is null || resetToken.IsUsed || resetToken.ExpiresAt < DateTime.UtcNow)
+            return Results.NotFound();
+
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> ResetPasswordAsync(
+        ResetPasswordRequest request,
+        FeirbDbContext db,
+        IAuthService authService,
+        IStringLocalizer<ApiMessages> localizer)
+    {
+        var resetToken = await db.PasswordResetTokens
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Token == request.Token);
+
+        if (resetToken is null || resetToken.IsUsed || resetToken.ExpiresAt < DateTime.UtcNow)
+            return Results.BadRequest(new { message = localizer["InvalidOrExpiredResetToken"].Value });
+
+        resetToken.User.PasswordHash = authService.HashPassword(request.NewPassword);
+        resetToken.User.UpdatedAt = DateTime.UtcNow;
+        // Invalidate any existing refresh tokens
+        resetToken.User.RefreshToken = null;
+        resetToken.User.RefreshTokenExpiresAt = null;
+        resetToken.IsUsed = true;
+
+        await db.SaveChangesAsync();
+
+        return Results.Ok(new { message = localizer["PasswordResetSuccess"].Value });
     }
 }

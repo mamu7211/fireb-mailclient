@@ -80,6 +80,14 @@ public class AuthService(IOptions<JwtSettings> jwtSettings) : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
+    public string GenerateResetToken()
+    {
+        var randomBytes = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomBytes);
+        return Convert.ToHexStringLower(randomBytes);
+    }
+
     private static string GenerateRefreshToken()
     {
         var randomBytes = new byte[64];

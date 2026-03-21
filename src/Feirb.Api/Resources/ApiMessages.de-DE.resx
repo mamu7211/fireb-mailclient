@@ -51,4 +51,13 @@
   <data name="InvalidRefreshToken" xml:space="preserve">
     <value>Aktualisierungstoken ist ungültig oder abgelaufen.</value>
   </data>
+  <data name="ResetRequestAccepted" xml:space="preserve">
+    <value>Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.</value>
+  </data>
+  <data name="InvalidOrExpiredResetToken" xml:space="preserve">
+    <value>Der Token zum Zurücksetzen ist ungültig oder abgelaufen.</value>
+  </data>
+  <data name="PasswordResetSuccess" xml:space="preserve">
+    <value>Dein Passwort wurde erfolgreich zurückgesetzt.</value>
+  </data>
 </root>
