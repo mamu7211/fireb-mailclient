@@ -1,4 +1,4 @@
-﻿namespace Feirb.Web.Tests;
+namespace Feirb.Web.Tests;
 
 public class UnitTest1
 {
