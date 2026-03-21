@@ -41,6 +41,9 @@ builder.Services.AddAuthorization();
 // Data Protection API for credential encryption
 builder.Services.AddDataProtection();
 
+// Localization
+builder.Services.AddLocalization();
+
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -55,6 +58,12 @@ using (var scope = app.Services.CreateScope())
     else
         await db.Database.EnsureCreatedAsync();
 }
+
+var supportedCultures = new[] { "en-US", "de-DE", "fr-FR", "it-IT", "de", "fr", "it" };
+app.UseRequestLocalization(options =>
+    options.SetDefaultCulture("en-US")
+        .AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures));
 
 app.UseAuthentication();
 app.UseAuthorization();

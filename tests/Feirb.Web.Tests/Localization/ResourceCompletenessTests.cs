@@ -1,0 +1,78 @@
+using System.Globalization;
+using System.Resources;
+using FluentAssertions;
+
+namespace Feirb.Web.Tests.Localization;
+
+public class ResourceCompletenessTests
+{
+    private static readonly string[] _expectedKeys =
+    [
+        "AppName",
+        "NavHome",
+        "HomeTagline",
+        "PageTitleHome",
+        "PageTitleRegister",
+        "RegisterHeading",
+        "RegisterSubheading",
+        "LabelUsername",
+        "LabelEmail",
+        "LabelPassword",
+        "LabelConfirmPassword",
+        "PlaceholderUsername",
+        "PlaceholderEmail",
+        "PlaceholderPassword",
+        "PlaceholderConfirmPassword",
+        "ButtonCreateAccount",
+        "AlreadyHaveAccount",
+        "LinkLogIn",
+        "ErrorPasswordsDoNotMatch",
+        "ErrorUsernameOrEmailTaken",
+        "ErrorRegistrationFailed",
+        "NotFoundTitle",
+        "NotFoundMessage",
+        "LanguageSwitcherLabel",
+    ];
+
+    /// <summary>Keys that may be identical across languages (brand names, universal terms).</summary>
+    private static readonly HashSet<string> _skipDiffCheck = ["AppName", "PageTitleHome", "NavHome", "LabelPassword"];
+
+    private static readonly ResourceManager _resourceManager = new(
+        "Feirb.Web.Resources.SharedResources",
+        typeof(Feirb.Web.Resources.SharedResources).Assembly);
+
+    [Fact]
+    public void SharedResources_EnUs_AllKeysHaveValues()
+    {
+        var culture = new CultureInfo("en-US");
+
+        foreach (var key in _expectedKeys)
+        {
+            var value = _resourceManager.GetString(key, culture);
+            value.Should().NotBeNullOrWhiteSpace($"key '{key}' should have a non-empty value in en-US");
+        }
+    }
+
+    [Theory]
+    [InlineData("de-DE")]
+    [InlineData("fr-FR")]
+    [InlineData("it-IT")]
+    public void SharedResources_AllKeysHaveTranslations(string cultureName)
+    {
+        var culture = new CultureInfo(cultureName);
+        var fallback = new CultureInfo("en-US");
+
+        foreach (var key in _expectedKeys)
+        {
+            var value = _resourceManager.GetString(key, culture);
+            value.Should().NotBeNullOrWhiteSpace($"key '{key}' should have a non-empty value in {cultureName}");
+
+            if (!_skipDiffCheck.Contains(key))
+            {
+                var fallbackValue = _resourceManager.GetString(key, fallback);
+                value.Should().NotBe(fallbackValue,
+                    $"key '{key}' in {cultureName} should differ from en-US fallback (actual translation expected)");
+            }
+        }
+    }
+}

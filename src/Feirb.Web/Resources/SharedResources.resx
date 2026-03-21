@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Feirb</value>
+  </data>
+  <data name="NavHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HomeTagline" xml:space="preserve">
+    <value>A smart mail client for your NAS, powered by AI.</value>
+  </data>
+  <data name="PageTitleHome" xml:space="preserve">
+    <value>Feirb</value>
+  </data>
+  <data name="PageTitleRegister" xml:space="preserve">
+    <value>Register - Feirb</value>
+  </data>
+  <data name="RegisterHeading" xml:space="preserve">
+    <value>Create Account</value>
+  </data>
+  <data name="RegisterSubheading" xml:space="preserve">
+    <value>Join Feirb to manage your mail</value>
+  </data>
+  <data name="LabelUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="LabelEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="LabelPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="LabelConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="PlaceholderUsername" xml:space="preserve">
+    <value>Choose a username</value>
+  </data>
+  <data name="PlaceholderEmail" xml:space="preserve">
+    <value>you@example.com</value>
+  </data>
+  <data name="PlaceholderPassword" xml:space="preserve">
+    <value>Min. 8 characters</value>
+  </data>
+  <data name="PlaceholderConfirmPassword" xml:space="preserve">
+    <value>Repeat your password</value>
+  </data>
+  <data name="ButtonCreateAccount" xml:space="preserve">
+    <value>Create Account</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="LinkLogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="ErrorPasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match.</value>
+  </data>
+  <data name="ErrorUsernameOrEmailTaken" xml:space="preserve">
+    <value>Username or email is already taken.</value>
+  </data>
+  <data name="ErrorRegistrationFailed" xml:space="preserve">
+    <value>Registration failed. Please try again.</value>
+  </data>
+  <data name="NotFoundTitle" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="NotFoundMessage" xml:space="preserve">
+    <value>Sorry, the content you are looking for does not exist.</value>
+  </data>
+  <data name="LanguageSwitcherLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+</root>

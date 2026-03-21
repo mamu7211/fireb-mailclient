@@ -1,0 +1,48 @@
+@inject IJSRuntime Js
+@inject NavigationManager Navigation
+
+<div class="dropdown">
+    <button class="btn btn-sm @ButtonClass dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        @GetDisplayName(_currentCulture)
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        @foreach (var culture in Cultures)
+        {
+            <li>
+                <button class="dropdown-item @(culture.Name == _currentCulture ? "active" : "")"
+                        @onclick="() => SetCultureAsync(culture.Name)">
+                    @culture.DisplayName
+                </button>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public string ButtonClass { get; set; } = "btn-outline-light";
+
+    private string _currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
+
+    private static readonly CultureOption[] Cultures =
+    [
+        new("en-US", "English"),
+        new("de-DE", "Deutsch"),
+        new("fr-FR", "Français"),
+        new("it-IT", "Italiano"),
+    ];
+
+    private static string GetDisplayName(string cultureName) =>
+        cultureName[..2].ToUpperInvariant();
+
+    private async Task SetCultureAsync(string cultureName)
+    {
+        if (cultureName == _currentCulture)
+            return;
+
+        await Js.InvokeVoidAsync("blazorCulture.set", cultureName);
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
+
+    private sealed record CultureOption(string Name, string DisplayName);
+}

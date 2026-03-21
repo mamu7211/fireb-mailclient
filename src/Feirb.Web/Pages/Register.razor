@@ -2,13 +2,17 @@
 @using Feirb.Shared.Auth
 @inject HttpClient Http
 @inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResources> L
 
-<PageTitle>Register - Feirb</PageTitle>
+<PageTitle>@L["PageTitleRegister"]</PageTitle>
 
-<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+<div class="d-flex align-items-center justify-content-center position-relative" style="min-height: 100vh;">
+    <div class="position-absolute top-0 end-0 p-3">
+        <Feirb.Web.Components.LanguageSwitcher ButtonClass="btn-outline-secondary" />
+    </div>
     <div class="card p-4 p-md-5" style="width: 100%; max-width: 440px;">
-        <h2 class="mb-1 text-center fw-bold">Create Account</h2>
-        <p class="text-center text-muted mb-4">Join Feirb to manage your mail</p>
+        <h2 class="mb-1 text-center fw-bold">@L["RegisterHeading"]</h2>
+        <p class="text-center text-muted mb-4">@L["RegisterSubheading"]</p>
 
         @if (!string.IsNullOrEmpty(_errorMessage))
         {
@@ -19,29 +23,29 @@
             <DataAnnotationsValidator />
 
             <div class="mb-3">
-                <label for="username" class="form-label small fw-medium">Username</label>
-                <InputText id="username" class="form-control form-control-lg" placeholder="Choose a username" @bind-Value="_model.Username" />
+                <label for="username" class="form-label small fw-medium">@L["LabelUsername"]</label>
+                <InputText id="username" class="form-control form-control-lg" placeholder="@L["PlaceholderUsername"]" @bind-Value="_model.Username" />
                 <ValidationMessage For="() => _model.Username" />
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label small fw-medium">Email</label>
-                <InputText id="email" class="form-control form-control-lg" type="email" placeholder="you@example.com" @bind-Value="_model.Email" />
+                <label for="email" class="form-label small fw-medium">@L["LabelEmail"]</label>
+                <InputText id="email" class="form-control form-control-lg" type="email" placeholder="@L["PlaceholderEmail"]" @bind-Value="_model.Email" />
                 <ValidationMessage For="() => _model.Email" />
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label small fw-medium">Password</label>
-                <InputText id="password" class="form-control form-control-lg" type="password" placeholder="Min. 8 characters" @bind-Value="_model.Password" />
+                <label for="password" class="form-label small fw-medium">@L["LabelPassword"]</label>
+                <InputText id="password" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderPassword"]" @bind-Value="_model.Password" />
                 <ValidationMessage For="() => _model.Password" />
             </div>
 
             <div class="mb-4">
-                <label for="confirmPassword" class="form-label small fw-medium">Confirm Password</label>
-                <InputText id="confirmPassword" class="form-control form-control-lg" type="password" placeholder="Repeat your password" @bind-Value="_model.ConfirmPassword" />
+                <label for="confirmPassword" class="form-label small fw-medium">@L["LabelConfirmPassword"]</label>
+                <InputText id="confirmPassword" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderConfirmPassword"]" @bind-Value="_model.ConfirmPassword" />
                 @if (_model.ConfirmPassword is not null && _model.Password != _model.ConfirmPassword)
                 {
-                    <div class="validation-message">Passwords do not match.</div>
+                    <div class="validation-message">@L["ErrorPasswordsDoNotMatch"]</div>
                 }
             </div>
 
@@ -50,12 +54,12 @@
                 {
                     <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                 }
-                Create Account
+                @L["ButtonCreateAccount"]
             </button>
         </EditForm>
 
         <p class="mt-4 text-center text-muted mb-0">
-            Already have an account? <a href="/login">Log in</a>
+            @L["AlreadyHaveAccount"] <a href="/login">@L["LinkLogIn"]</a>
         </p>
     </div>
 </div>
@@ -69,7 +73,7 @@
     {
         if (_model.Password != _model.ConfirmPassword)
         {
-            _errorMessage = "Passwords do not match.";
+            _errorMessage = L["ErrorPasswordsDoNotMatch"];
             return;
         }
 
@@ -86,11 +90,11 @@
         else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
         {
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-            _errorMessage = error?.Message ?? "Username or email is already taken.";
+            _errorMessage = error?.Message ?? L["ErrorUsernameOrEmailTaken"];
         }
         else
         {
-            _errorMessage = "Registration failed. Please try again.";
+            _errorMessage = L["ErrorRegistrationFailed"];
         }
 
         _isSubmitting = false;
