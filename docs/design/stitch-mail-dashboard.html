@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Feirb - Web Mail Client</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#006852",
+              "inverse-on-surface": "#9c9ab6",
+              "outline-variant": "#acaac6",
+              "on-primary-container": "#4d001d",
+              "primary-dim": "#a00044",
+              "surface-bright": "#f8f5ff",
+              "inverse-surface": "#0c0c21",
+              "on-tertiary-container": "#5e4f00",
+              "surface-container-high": "#e2dfff",
+              "primary-container": "#ff7195",
+              "on-background": "#2d2d43",
+              "tertiary": "#6b5b00",
+              "tertiary-container": "#fedf49",
+              "tertiary-fixed": "#fedf49",
+              "error-dim": "#9f0519",
+              "secondary-fixed": "#00fcca",
+              "surface-variant": "#dbd9ff",
+              "surface-tint": "#b6004f",
+              "surface-container-low": "#f2efff",
+              "secondary-container": "#00fcca",
+              "primary-fixed": "#ff7195",
+              "outline": "#75748e",
+              "tertiary-fixed-dim": "#efd13b",
+              "secondary-fixed-dim": "#00edbd",
+              "tertiary-dim": "#5d4f00",
+              "surface-dim": "#d2d1fa",
+              "on-secondary-fixed-variant": "#006650",
+              "on-error": "#ffefee",
+              "on-tertiary": "#fff3c8",
+              "surface-container": "#e8e5ff",
+              "inverse-primary": "#ff4c83",
+              "surface-container-highest": "#dbd9ff",
+              "on-tertiary-fixed-variant": "#695900",
+              "primary-fixed-dim": "#ff5486",
+              "on-primary": "#ffeff0",
+              "on-tertiary-fixed": "#483d00",
+              "error": "#b31b25",
+              "on-surface": "#2d2d43",
+              "surface": "#f8f5ff",
+              "on-primary-fixed": "#000000",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#005b47",
+              "on-secondary": "#c5ffe9",
+              "error-container": "#fb5151",
+              "secondary-dim": "#005b47",
+              "on-secondary-fixed": "#004737",
+              "on-error-container": "#570008",
+              "on-surface-variant": "#5a5972",
+              "on-primary-fixed-variant": "#5e0025",
+              "background": "#f8f5ff",
+              "primary": "#b6004f"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background antialiased">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 px-4 z-40 bg-white border-r border-slate-200 w-64 shadow-[8px_0_24px_rgba(0,0,0,0.04)] font-['Inter'] text-sm font-medium">
+<!-- User Profile Header -->
+<div class="flex items-center gap-3 mb-8 px-2">
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Professional portrait of a woman smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPYueJGnd3UjK3zF4xeJw2Ox_kHp7JJCS8GmyMDpkp3TsyIZBtmuFbFmD3G8IjYEC0LmdG9DGXjIWz-293-FQ0XZnFsFfaD6gy0izx__7MDvOf2zjmicrP_zswL8dOfkn-A5YAKqJDCyorXFCKNwZbZFSaKdNN_F1sIJ7dYJXR5Cvk_TQwWxlUtS5wNbpAq1q-uS5Dnz50gmOey8WQ5cBJHgH1Qu_K7OJ_tn5ewefjHdLkeutfhTGyg4z6Jp9WfopqS5iHY8BJOq79"/>
+<div class="flex flex-col">
+<span class="text-on-surface font-semibold truncate">Alex Rivera</span>
+<span class="text-on-surface-variant text-xs truncate">alex@feirb.com</span>
+</div>
+</div>
+<!-- Compose CTA -->
+<button class="mb-6 w-full py-3 px-4 bg-primary text-white rounded-full flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined text-sm">edit</span>
+<span>Compose</span>
+</button>
+<!-- Navigation Sections -->
+<nav class="flex-1 overflow-y-auto space-y-6">
+<!-- Inbox Active State -->
+<div>
+<p class="px-2 text-[10px] uppercase tracking-wider text-outline mb-2">Main</p>
+<ul class="space-y-1">
+<li class="flex items-center gap-3 px-3 py-2 text-primary border-r-4 border-primary bg-primary/5 cursor-pointer transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inbox</span>
+<span>Inbox</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">send</span>
+<span>Sent</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">draft</span>
+<span>Drafts</span>
+</li>
+</ul>
+</div>
+<!-- Categories -->
+<div>
+<p class="px-2 text-[10px] uppercase tracking-wider text-outline mb-2">Accounts</p>
+<ul class="space-y-1">
+<li class="group flex items-center justify-between px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Work</span>
+</div>
+<span class="text-[10px] bg-surface-container px-1.5 py-0.5 rounded">12</span>
+</li>
+<li class="group flex items-center justify-between px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+<span>Personal</span>
+</div>
+</li>
+<li class="group flex items-center justify-between px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span>
+<span>Shared</span>
+</div>
+</li>
+</ul>
+</div>
+<!-- Footer Links -->
+<div>
+<ul class="space-y-1">
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all">
+<span class="material-symbols-outlined">delete</span>
+<span>Trash</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all">
+<span class="material-symbols-outlined">archive</span>
+<span>Archive</span>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Fixed Bottom Settings -->
+<div class="mt-auto pt-6 border-t border-slate-100">
+<ul class="space-y-1">
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</li>
+<li class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-slate-50 cursor-pointer transition-all">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Admin</span>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-8">
+<!-- Top Search Bar / Header Area -->
+<header class="flex justify-between items-center mb-10">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-primary rounded-full pl-12 pr-4 py-2.5 text-sm" placeholder="Search emails, people, files..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-8">
+<!-- Email Volume Chart Section (Bento Style) -->
+<section class="col-span-12 lg:col-span-7 bg-white p-8 rounded-lg shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex flex-col">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-xl font-bold text-on-surface">Email Volume</h2>
+<p class="text-sm text-outline">Activity over the last 7 days</p>
+</div>
+<div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Work
+                        </div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span> Personal
+                        </div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span> Shared
+                        </div>
+</div>
+</div>
+<!-- Custom Stacked Bar Chart Representation -->
+<div class="flex-1 flex items-end justify-between gap-4 h-64 mt-4">
+<!-- Day 1 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 40%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 20%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 10%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Mon</span>
+</div>
+<!-- Day 2 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 55%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 15%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 25%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Tue</span>
+</div>
+<!-- Day 3 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 30%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 45%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 15%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Wed</span>
+</div>
+<!-- Day 4 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 60%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 10%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 5%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Thu</span>
+</div>
+<!-- Day 5 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 45%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 25%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 20%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Fri</span>
+</div>
+<!-- Day 6 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 20%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 15%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 10%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Sat</span>
+</div>
+<!-- Day 7 -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full space-y-1 flex flex-col-reverse h-full">
+<div class="bg-primary rounded-t-sm w-full" style="height: 15%"></div>
+<div class="bg-secondary-fixed-dim w-full" style="height: 10%"></div>
+<div class="bg-surface-variant rounded-b-sm w-full" style="height: 5%"></div>
+</div>
+<span class="mt-3 text-xs text-outline font-medium">Sun</span>
+</div>
+</div>
+</section>
+<!-- Quick Actions / Stats -->
+<section class="col-span-12 lg:col-span-5 grid grid-cols-2 gap-4">
+<div class="bg-primary-container/20 p-6 rounded-lg border border-primary/10 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary text-3xl">star</span>
+<div>
+<h4 class="text-2xl font-bold text-on-primary-container">42</h4>
+<p class="text-sm text-on-primary-container/70">Starred Messages</p>
+</div>
+</div>
+<div class="bg-secondary-container/20 p-6 rounded-lg border border-secondary-container/10 flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary text-3xl">mark_email_unread</span>
+<div>
+<h4 class="text-2xl font-bold text-on-secondary-container">12</h4>
+<p class="text-sm text-on-secondary-container/70">Unread Work</p>
+</div>
+</div>
+<div class="col-span-2 bg-[#FFE04A]/10 p-6 rounded-lg border border-[#FFE04A]/20 flex items-center gap-6">
+<div class="w-16 h-16 rounded-full bg-[#FFE04A] flex items-center justify-center text-on-tertiary-container shadow-sm">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-on-tertiary-container">Smart Cleanup</h4>
+<p class="text-sm text-on-tertiary-container/70">Archive 240 promotional emails in one click.</p>
+<button class="mt-2 text-xs font-bold text-primary underline">Run now</button>
+</div>
+</div>
+</section>
+<!-- Latest Important Messages Section -->
+<section class="col-span-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold text-on-surface">Latest Important Messages</h2>
+<button class="text-sm font-semibold text-primary flex items-center gap-1">
+                        View all <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Message Card 1 -->
+<div class="bg-white p-6 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.03)] border border-slate-50 hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<img alt="Sender Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a male professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1cdtJoEU28GvrreEuYg0xgzuE9a1RiPXHJuAE0fwhh96S1AEcSiDgIDMkpUedCoY7rSn_AbAu6pjfYdqx_DhKyWl6JUWSu-nAE6cwDoKL8KsU2XGnPACsBG3spqebRg4lBvzDii84y1xRO_TR_BnF9j3IYwvK7GFlPtaQr8RnEI65Q5Qm5_XWZbyKX7HGNR8ba88nyWjUQWpMw-IlIxnII12d5qpQB2rnT9UAeJX419srdslWSYLsvuBddrYxdCCYfhJVCKxKWRnk"/>
+<div>
+<h4 class="font-bold text-sm text-on-surface">Jordan Smith</h4>
+<p class="text-[10px] text-outline">Work • 10m ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<h5 class="text-sm font-semibold mb-2 truncate">Quarterly Budget Review - Q3 2024</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2">Hi Alex, please find the attached documents regarding our projected budget for the next quarter. We need to finalize this by Friday.</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] text-on-surface-variant font-medium">Budget</span>
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] text-on-surface-variant font-medium">Finance</span>
+</div>
+</div>
+<!-- Message Card 2 -->
+<div class="bg-white p-6 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.03)] border border-slate-50 hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-fixed-dim"></div>
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<img alt="Sender Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a woman with a friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-mzkNkHJ2-TO3Xzho2-E8HZTASWv3N7F0c0oA2CyB07sqJLobwK_s2Q7ox2H4vFwc87jqZsKRtcD8-k7NMpc7Eb09VK2IdffDqZT5DUPCH8E7Lfpx1YNczu_4lL95eptz-2YMR9b31q3ervmouhgixrbzeFK_6Wgz9siFLwenVet_UXmsrQWaJfk_WUzkE_9_rOdcyp4UGjZs-1CrsmG6UIpcq1PX0jP9hbZnxYTd6BIAv1ww1QNKaazX0R-wsv2PCvP0I0hYURx1"/>
+<div>
+<h4 class="font-bold text-sm text-on-surface">Sarah Connor</h4>
+<p class="text-[10px] text-outline">Personal • 2h ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">star</span>
+</div>
+<h5 class="text-sm font-semibold mb-2 truncate">Weekend Travel Itinerary</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2">Hey! I've put together the plans for our mountain trip. Take a look and let me know if you want to change any of the stops.</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] text-on-surface-variant font-medium">Travel</span>
+</div>
+</div>
+<!-- Message Card 3 -->
+<div class="bg-white p-6 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.03)] border border-slate-50 hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-xs">FB</div>
+<div>
+<h4 class="font-bold text-sm text-on-surface">Feirb Team</h4>
+<p class="text-[10px] text-outline">Work • 5h ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<h5 class="text-sm font-semibold mb-2 truncate">New Security Features Enabled</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2">We have successfully updated your account security protocols. You now have access to hardware key authentication.</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] text-on-surface-variant font-medium">Security</span>
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] text-on-surface-variant font-medium">System</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Contextual FAB (Suppressing as per guidelines on Dashboard/Detail logic, but following the rule: render if primary action aligns with Home/Dashboard) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 rounded-2xl bg-primary text-white shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95 md:hidden">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</body></html>
