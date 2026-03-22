@@ -9,6 +9,8 @@
 | 3 | [User Management](03-user-management.md) | #20 | Admin page for managing user accounts |
 | 4 | [Password Reset Mail](04-password-reset-mail.md) | #21 | Send reset link via SMTP instead of console log |
 | 5 | [Main Page](05-main-page.md) | #22 | Authenticated landing page with right-side navbar |
+| 6 | [Breadcrumb & Navigation](06-breadcrumb-navigation.md) | #38 | Breadcrumb component, drill-down navigation, settings/admin page hierarchy |
+| 7 | [Profile Editing](07-profile-editing.md) | #39 | Personal Information & Security & Password pages with API |
 
 ## Dependencies
 
@@ -18,3 +20,5 @@
 - Feature 3 depends on Feature 2 (admin role required)
 - Feature 4 depends on Feature 1 (SMTP configuration from setup)
 - Feature 5 depends on Feature 2 (admin navigation entries)
+- Feature 6 depends on Feature 5 (main page layout exists)
+- Feature 7 depends on Feature 6 (breadcrumb and navigation components)
