@@ -11,6 +11,7 @@
 | 5 | [Main Page](05-main-page.md) | #22 | Authenticated landing page with right-side navbar |
 | 6 | [Breadcrumb & Navigation](06-breadcrumb-navigation.md) | #38 | Breadcrumb component, drill-down navigation, settings/admin page hierarchy |
 | 7 | [Profile Editing](07-profile-editing.md) | #39 | Personal Information & Security & Password pages with API |
+| 8 | [Dashboard Landing](08-dashboard-landing.md) | #40 | Dashboard stub at `/`, mail route stubs, sidebar updates |
 
 ## Dependencies
 
@@ -22,3 +23,4 @@
 - Feature 5 depends on Feature 2 (admin navigation entries)
 - Feature 6 depends on Feature 5 (main page layout exists)
 - Feature 7 depends on Feature 6 (breadcrumb and navigation components)
+- Feature 8 should be implemented before Feature 6 (Dashboard is the breadcrumb root)
