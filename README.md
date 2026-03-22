@@ -61,6 +61,20 @@ This starts all services via Aspire:
 
 > **Note:** On first run, the Ollama qwen3:4b model (~2.6GB) will be downloaded automatically.
 
+### Development Quickstart with Seeded Data
+
+To skip the initial setup wizard and start with a preconfigured admin user and SMTP settings, set the `FEIRB_SEED_DATA` environment variable:
+
+```bash
+FEIRB_SEED_DATA=true dotnet run --project src/Feirb.AppHost
+```
+
+This seeds the database with:
+- **Admin user:** `admin@feirb.local` / `admin` (password)
+- **SMTP settings:** Mailpit on `localhost:1025` (no TLS, no auth), from address `noreply@feirb.local`
+
+The seeding is idempotent — it checks whether the data already exists and skips if so.
+
 ## Documentation
 
 - **[Architecture](docs/ARCHITECTURE.md)** — System design, project structure, and technical decisions
