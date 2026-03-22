@@ -13,6 +13,7 @@
 | 7 | [Profile Editing](07-profile-editing.md) | #39 | Personal Information & Security & Password pages with API |
 | 8 | [Dashboard Landing](08-dashboard-landing.md) | #40 | Dashboard stub at `/`, mail route stubs, sidebar updates |
 | 9 | [Mailbox Configuration](09-mailbox-configuration.md) | #42 | Per-user IMAP/SMTP mailbox setup with connection testing |
+| 10 | [Outgoing SMTP Settings](10-outgoing-smtp-settings.md) | #56 | Admin page to edit system SMTP after setup |
 
 ## Dependencies
 
@@ -26,3 +27,4 @@
 - Feature 7 depends on Feature 6 (breadcrumb and navigation components)
 - Feature 8 should be implemented before Feature 6 (Dashboard is the breadcrumb root)
 - Feature 9 depends on Feature 6 (drill-down navigation, toolbar) and #41 (Data Protection fix)
+- Feature 10 depends on Feature 1 (SmtpSettings entity created during setup)

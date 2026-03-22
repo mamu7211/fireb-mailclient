@@ -42,6 +42,7 @@ Start working on a feature tracked by a GitHub issue.
    - Identify files to create/modify
    - Determine the order of changes (data model → service → API → UI → tests)
    - Check for existing patterns in the codebase to follow
+   - Check for existing stub/placeholder pages at the same routes — delete them before creating replacements to avoid ambiguous route errors
 
 8. **Implement the feature** following project conventions from CLAUDE.md:
    - File-scoped namespaces, primary constructors, record DTOs
