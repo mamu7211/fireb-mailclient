@@ -1,0 +1,27 @@
+@page "/admin"
+@attribute [Authorize(Policy = "RequireAdmin")]
+@inject IStringLocalizer<SharedResources> L
+
+<PageTitle>@L["PageTitleAdmin"]</PageTitle>
+
+<h1 class="mb-4">@L["NavAdmin"]</h1>
+
+<div class="d-flex flex-column gap-3">
+    <NavigationItem
+        Icon="group"
+        Title="@L["AdminUserMgmtTitle"]"
+        Subtitle="@L["AdminUserMgmtSubtitle"]"
+        Href="/admin/user-management" />
+
+    <NavigationItem
+        Icon="settings"
+        Title="@L["AdminSystemSettingsTitle"]"
+        Subtitle="@L["AdminSystemSettingsSubtitle"]"
+        Href="/admin/system-settings" />
+
+    <NavigationItem
+        Icon="smart_toy"
+        Title="@L["AdminLlmSettingsTitle"]"
+        Subtitle="@L["AdminLlmSettingsSubtitle"]"
+        Href="/admin/llm-settings" />
+</div>

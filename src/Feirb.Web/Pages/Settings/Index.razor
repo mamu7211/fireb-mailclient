@@ -1,0 +1,23 @@
+@page "/settings"
+@attribute [Authorize]
+@inject IStringLocalizer<SharedResources> L
+
+<PageTitle>@L["PageTitleSettings"]</PageTitle>
+
+<h1 class="mb-4">@L["NavSettings"]</h1>
+
+<div class="d-flex flex-column gap-3">
+    <h5 class="text-muted mb-0">@L["SettingsAccountTitle"]</h5>
+
+    <NavigationItem
+        Icon="person"
+        Title="@L["SettingsPersonalInfoTitle"]"
+        Subtitle="@L["SettingsPersonalInfoSubtitle"]"
+        Href="/settings/personal-information" />
+
+    <NavigationItem
+        Icon="lock"
+        Title="@L["SettingsSecurityTitle"]"
+        Subtitle="@L["SettingsSecuritySubtitle"]"
+        Href="/settings/security" />
+</div>

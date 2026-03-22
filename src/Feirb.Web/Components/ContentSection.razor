@@ -1,0 +1,22 @@
+<div class="content-section">
+    <div class="content-section-header">
+        <span class="material-symbols-outlined content-section-icon">@Icon</span>
+        <div class="content-section-text">
+            <span class="content-section-title">@Title</span>
+            @if (!string.IsNullOrEmpty(Subtitle))
+            {
+                <span class="content-section-subtitle">@Subtitle</span>
+            }
+        </div>
+    </div>
+    <div class="content-section-body">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Icon { get; set; } = default!;
+    [Parameter, EditorRequired] public string Title { get; set; } = default!;
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
