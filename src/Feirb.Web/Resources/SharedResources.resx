@@ -708,6 +708,9 @@
   <data name="LoadingSmtpSettings" xml:space="preserve">
     <value>Loading SMTP settings...</value>
   </data>
+  <data name="BreadcrumbMail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
   <data name="NavDashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
