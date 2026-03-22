@@ -9,7 +9,6 @@ namespace Feirb.Api.Endpoints;
 
 public static class SystemSettingsEndpoints
 {
-    private const string _smtpPasswordPurpose = "SmtpPassword";
 
     public static RouteGroupBuilder MapSystemSettingsEndpoints(this RouteGroupBuilder group)
     {
@@ -56,7 +55,7 @@ public static class SystemSettingsEndpoints
 
         if (!string.IsNullOrEmpty(request.Password))
         {
-            var protector = dataProtection.CreateProtector(_smtpPasswordPurpose);
+            var protector = dataProtection.CreateProtector(DataProtectionPurposes.SmtpPassword);
             settings.EncryptedPassword = protector.Protect(request.Password);
         }
 

@@ -1,5 +1,6 @@
 @page "/admin/system-settings/outgoing-smtp"
 @attribute [Authorize(Policy = "RequireAdmin")]
+@using System.ComponentModel.DataAnnotations
 @using Feirb.Shared.Admin
 @using Feirb.Shared.Settings
 @inject HttpClient Http
@@ -197,13 +198,14 @@ else if (_model is not null)
 
     private async Task TestSmtpAsync()
     {
+        if (string.IsNullOrWhiteSpace(_model?.Host)) return;
         _isTestingSmtp = true;
         _smtpTestResult = null;
         try
         {
             var request = new TestSmtpMailboxRequest(
-                _model?.Host ?? "", _model?.Port ?? 587, _model?.Username, _model?.Password,
-                _model?.UseTls ?? true, _model?.RequiresAuth ?? true);
+                _model.Host, _model.Port, _model.Username, _model.Password,
+                _model.UseTls, _model.RequiresAuth);
             var response = await Http.PostAsJsonAsync("/api/mail/test/smtp", request);
             _smtpTestResult = await response.Content.ReadFromJsonAsync<TestConnectionResponse>();
         }
@@ -232,11 +234,11 @@ else if (_model is not null)
 
     private sealed class SmtpFormModel
     {
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(256)]
+        [Required]
+        [StringLength(256)]
         public string? Host { get; set; }
 
-        [System.ComponentModel.DataAnnotations.Range(1, 65535)]
+        [Range(1, 65535)]
         public int Port { get; set; } = 587;
 
         public string? Username { get; set; }
@@ -247,11 +249,11 @@ else if (_model is not null)
 
         public bool RequiresAuth { get; set; } = true;
 
-        [System.ComponentModel.DataAnnotations.EmailAddress]
-        [System.ComponentModel.DataAnnotations.StringLength(256)]
+        [EmailAddress]
+        [StringLength(256)]
         public string? FromAddress { get; set; }
 
-        [System.ComponentModel.DataAnnotations.StringLength(256)]
+        [StringLength(256)]
         public string? FromName { get; set; }
     }
 
