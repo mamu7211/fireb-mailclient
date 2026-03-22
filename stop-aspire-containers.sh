@@ -38,6 +38,31 @@ mapfile -t CONTAINERS < <($RT ps -a --format "{{.Names}}" | grep -E "^feirb-" ||
 if [ ${#CONTAINERS[@]} -eq 0 ]; then
     echo -e "  ${YELLOW}⚠  Keine Feirb-Container gefunden.${RESET}"
     echo ""
+
+    # Check for orphaned volumes
+    mapfile -t ORPHAN_VOLS < <($RT volume ls --format "{{.Name}}" | grep -E "^feirb\." || true)
+    if [ ${#ORPHAN_VOLS[@]} -gt 0 ]; then
+        echo -e "  ${BOLD}Verwaiste Volumes:${RESET}"
+        echo ""
+        for vol in "${ORPHAN_VOLS[@]}"; do
+            echo -e "       ${GRAY}└── $vol${RESET}"
+        done
+        echo ""
+        read -rp "  Verwaiste Volumes löschen? [j/N] " vol_choice
+        echo ""
+        if [[ "$vol_choice" =~ ^[jJyY]$ ]]; then
+            for vol in "${ORPHAN_VOLS[@]}"; do
+                echo -e "  ${RED}✗${RESET}  Lösche Volume ${DIM}$vol${RESET}"
+                $RT volume rm "$vol" 2>/dev/null || true
+            done
+            echo ""
+            echo -e "  ${GREEN}✓  Verwaiste Volumes wurden entfernt.${RESET}"
+        else
+            echo -e "  ${YELLOW}Abgebrochen.${RESET}"
+        fi
+        echo ""
+    fi
+
     exit 0
 fi
 
@@ -48,8 +73,11 @@ get_volumes() {
     local mounted
     mounted=$($RT inspect "$1" --format '{{range .Mounts}}{{if eq .Type "volume"}}{{.Name}} {{end}}{{end}}' 2>/dev/null || true)
     # Zusätzlich feirb.apphost-* Volumes die zum Service-Namen passen
+    # Extrahiere den Service-Namen (z.B. feirb-postgres-xxx → feirb-postgres)
+    local service_name
+    service_name=$(echo "$1" | sed -E 's/-[a-z0-9]{8,}$//')
     local orphaned
-    orphaned=$($RT volume ls --format "{{.Name}}" | grep -E "^feirb\.apphost-.*-${1%%-*}" || true)
+    orphaned=$($RT volume ls --format "{{.Name}}" | grep -F "$service_name" || true)
     echo "$mounted $orphaned" | tr ' ' '\n' | sort -u | tr '\n' ' '
 }
 
