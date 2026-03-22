@@ -684,4 +684,28 @@
   <data name="ErrorLogoutAllFailed" xml:space="preserve">
     <value>Abmelden aller Sitzungen fehlgeschlagen. Bitte versuchen Sie es erneut.</value>
   </data>
+  <data name="SectionSender" xml:space="preserve">
+    <value>Absender</value>
+  </data>
+  <data name="LabelFromAddress" xml:space="preserve">
+    <value>Absenderadresse</value>
+  </data>
+  <data name="LabelFromName" xml:space="preserve">
+    <value>Absendername</value>
+  </data>
+  <data name="PlaceholderFromAddress" xml:space="preserve">
+    <value>noreply@example.com</value>
+  </data>
+  <data name="PlaceholderFromName" xml:space="preserve">
+    <value>Feirb Mailsystem</value>
+  </data>
+  <data name="SuccessSmtpSettingsUpdated" xml:space="preserve">
+    <value>SMTP-Einstellungen erfolgreich aktualisiert.</value>
+  </data>
+  <data name="ErrorSmtpSettingsFailed" xml:space="preserve">
+    <value>Beim Verarbeiten der SMTP-Einstellungen ist ein Fehler aufgetreten.</value>
+  </data>
+  <data name="LoadingSmtpSettings" xml:space="preserve">
+    <value>SMTP-Einstellungen werden geladen...</value>
+  </data>
 </root>

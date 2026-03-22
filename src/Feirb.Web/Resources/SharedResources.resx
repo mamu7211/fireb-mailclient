@@ -684,4 +684,28 @@
   <data name="ErrorLogoutAllFailed" xml:space="preserve">
     <value>Failed to log out all sessions. Please try again.</value>
   </data>
+  <data name="SectionSender" xml:space="preserve">
+    <value>Sender</value>
+  </data>
+  <data name="LabelFromAddress" xml:space="preserve">
+    <value>From Address</value>
+  </data>
+  <data name="LabelFromName" xml:space="preserve">
+    <value>From Name</value>
+  </data>
+  <data name="PlaceholderFromAddress" xml:space="preserve">
+    <value>noreply@example.com</value>
+  </data>
+  <data name="PlaceholderFromName" xml:space="preserve">
+    <value>Feirb Mail System</value>
+  </data>
+  <data name="SuccessSmtpSettingsUpdated" xml:space="preserve">
+    <value>SMTP settings updated successfully.</value>
+  </data>
+  <data name="ErrorSmtpSettingsFailed" xml:space="preserve">
+    <value>An error occurred while processing SMTP settings.</value>
+  </data>
+  <data name="LoadingSmtpSettings" xml:space="preserve">
+    <value>Loading SMTP settings...</value>
+  </data>
 </root>

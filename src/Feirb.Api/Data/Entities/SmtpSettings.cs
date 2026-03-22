@@ -9,6 +9,8 @@ public class SmtpSettings
     public string? EncryptedPassword { get; set; }
     public bool UseTls { get; set; }
     public bool RequiresAuth { get; set; }
+    public string? FromAddress { get; set; }
+    public string? FromName { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

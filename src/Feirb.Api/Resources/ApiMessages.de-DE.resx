@@ -96,4 +96,7 @@
   <data name="AllSessionsLoggedOut" xml:space="preserve">
     <value>Alle Sitzungen wurden abgemeldet.</value>
   </data>
+  <data name="SmtpSettingsNotFound" xml:space="preserve">
+    <value>System-SMTP-Einstellungen nicht gefunden.</value>
+  </data>
 </root>

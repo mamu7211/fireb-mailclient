@@ -56,6 +56,8 @@ public static class SetupEndpoints
             EncryptedPassword = request.SmtpPassword is not null ? protector.Protect(request.SmtpPassword) : null,
             UseTls = request.SmtpUseTls,
             RequiresAuth = request.SmtpRequiresAuth,
+            FromAddress = request.Email,
+            FromName = request.Username,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
         };

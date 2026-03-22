@@ -31,6 +31,8 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.Host).HasMaxLength(256);
             entity.Property(e => e.Username).HasMaxLength(256);
             entity.Property(e => e.EncryptedPassword).HasMaxLength(1024);
+            entity.Property(e => e.FromAddress).HasMaxLength(256);
+            entity.Property(e => e.FromName).HasMaxLength(256);
         });
 
         modelBuilder.Entity<PasswordResetToken>(entity =>
