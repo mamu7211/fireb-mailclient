@@ -1,0 +1,83 @@
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResources> L
+@implements IDisposable
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+        @foreach (var (segment, index) in _segments.Select((s, i) => (s, i)))
+        {
+            var isLast = index == _segments.Count - 1;
+            @if (isLast)
+            {
+                <li class="breadcrumb-item active" aria-current="page">@segment.Label</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item">
+                    <a href="@segment.Href">@segment.Label</a>
+                </li>
+            }
+        }
+    </ol>
+</nav>
+
+@code {
+    private List<BreadcrumbSegment> _segments = [];
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        BuildSegments();
+    }
+
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        BuildSegments();
+        StateHasChanged();
+    }
+
+    private void BuildSegments()
+    {
+        _segments = [new BreadcrumbSegment(L["BreadcrumbDashboard"], "/")];
+
+        var relativePath = Navigation.ToBaseRelativePath(Navigation.Uri);
+        if (string.IsNullOrEmpty(relativePath))
+            return;
+
+        var parts = relativePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        var currentPath = "";
+
+        foreach (var part in parts)
+        {
+            currentPath = string.IsNullOrEmpty(currentPath) ? part : $"{currentPath}/{part}";
+            var label = ResolveLabel(currentPath, part);
+            _segments.Add(new BreadcrumbSegment(label, $"/{currentPath}"));
+        }
+    }
+
+    private string ResolveLabel(string fullPath, string segment) =>
+        fullPath switch
+        {
+            "settings" => L["BreadcrumbSettings"],
+            "settings/personal-information" => L["BreadcrumbPersonalInformation"],
+            "settings/security" => L["BreadcrumbSecurity"],
+            "admin" => L["BreadcrumbAdmin"],
+            "admin/user-management" => L["BreadcrumbUserManagement"],
+            "admin/system-settings" => L["BreadcrumbSystemSettings"],
+            "admin/system-settings/outgoing-smtp" => L["BreadcrumbOutgoingSmtp"],
+            "admin/system-settings/jobs" => L["BreadcrumbJobs"],
+            "admin/llm-settings" => L["BreadcrumbLlmSettings"],
+            "admin/llm-settings/system-prompt" => L["BreadcrumbSystemPrompt"],
+            "admin/llm-settings/scheduling" => L["BreadcrumbScheduling"],
+            "inbox" => L["NavInbox"],
+            "sent" => L["NavSent"],
+            "drafts" => L["NavDrafts"],
+            "trash" => L["NavTrash"],
+            "archive" => L["NavArchive"],
+            _ => segment
+        };
+
+    public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
+
+    private sealed record BreadcrumbSegment(string Label, string Href);
+}

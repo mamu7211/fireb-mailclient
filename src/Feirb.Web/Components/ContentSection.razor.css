@@ -1,0 +1,38 @@
+.content-section {
+    background: white;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    overflow: hidden;
+}
+
+.content-section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.content-section-icon {
+    font-size: 1.5rem;
+    color: var(--bs-primary);
+}
+
+.content-section-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-section-title {
+    font-weight: 600;
+    color: var(--bs-body-color);
+}
+
+.content-section-subtitle {
+    font-size: 0.875rem;
+    color: var(--bs-secondary-color);
+}
+
+.content-section-body {
+    padding: 1.25rem;
+}

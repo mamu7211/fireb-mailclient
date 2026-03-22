@@ -1,0 +1,24 @@
+@inject NavigationManager Navigation
+
+<div class="nav-item-card" @onclick="Navigate" role="button" tabindex="0">
+    <div class="nav-item-left">
+        <span class="material-symbols-outlined nav-item-icon">@Icon</span>
+        <div class="nav-item-text">
+            <span class="nav-item-title">@Title</span>
+            @if (!string.IsNullOrEmpty(Subtitle))
+            {
+                <span class="nav-item-subtitle">@Subtitle</span>
+            }
+        </div>
+    </div>
+    <span class="material-symbols-outlined nav-item-chevron">chevron_right</span>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Icon { get; set; } = default!;
+    [Parameter, EditorRequired] public string Title { get; set; } = default!;
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter, EditorRequired] public string Href { get; set; } = default!;
+
+    private void Navigate() => Navigation.NavigateTo(Href);
+}

@@ -396,4 +396,106 @@
   <data name="LoadingUsers" xml:space="preserve">
     <value>Chargement des utilisateurs...</value>
   </data>
+  <data name="BreadcrumbDashboard" xml:space="preserve">
+    <value>Tableau de bord</value>
+  </data>
+  <data name="BreadcrumbSettings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="BreadcrumbAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="BreadcrumbUserManagement" xml:space="preserve">
+    <value>Gestion des utilisateurs</value>
+  </data>
+  <data name="BreadcrumbSystemSettings" xml:space="preserve">
+    <value>Paramètres système</value>
+  </data>
+  <data name="BreadcrumbLlmSettings" xml:space="preserve">
+    <value>Paramètres LLM</value>
+  </data>
+  <data name="BreadcrumbPersonalInformation" xml:space="preserve">
+    <value>Informations personnelles</value>
+  </data>
+  <data name="BreadcrumbSecurity" xml:space="preserve">
+    <value>Sécurité &amp; Mot de passe</value>
+  </data>
+  <data name="BreadcrumbOutgoingSmtp" xml:space="preserve">
+    <value>SMTP sortant</value>
+  </data>
+  <data name="BreadcrumbJobs" xml:space="preserve">
+    <value>Tâches</value>
+  </data>
+  <data name="BreadcrumbSystemPrompt" xml:space="preserve">
+    <value>Invite système</value>
+  </data>
+  <data name="BreadcrumbScheduling" xml:space="preserve">
+    <value>Planification</value>
+  </data>
+  <data name="PageTitleSettings" xml:space="preserve">
+    <value>Paramètres - Feirb</value>
+  </data>
+  <data name="PageTitleAdmin" xml:space="preserve">
+    <value>Admin - Feirb</value>
+  </data>
+  <data name="SettingsAccountTitle" xml:space="preserve">
+    <value>Paramètres du compte</value>
+  </data>
+  <data name="SettingsPersonalInfoTitle" xml:space="preserve">
+    <value>Informations personnelles</value>
+  </data>
+  <data name="SettingsPersonalInfoSubtitle" xml:space="preserve">
+    <value>Modifier votre nom et adresse e-mail</value>
+  </data>
+  <data name="SettingsSecurityTitle" xml:space="preserve">
+    <value>Sécurité &amp; Mot de passe</value>
+  </data>
+  <data name="SettingsSecuritySubtitle" xml:space="preserve">
+    <value>Modifier votre mot de passe et les paramètres de sécurité</value>
+  </data>
+  <data name="AdminUserMgmtTitle" xml:space="preserve">
+    <value>Gestion des utilisateurs</value>
+  </data>
+  <data name="AdminUserMgmtSubtitle" xml:space="preserve">
+    <value>Gérer les utilisateurs et les permissions</value>
+  </data>
+  <data name="AdminSystemSettingsTitle" xml:space="preserve">
+    <value>Paramètres système</value>
+  </data>
+  <data name="AdminSystemSettingsSubtitle" xml:space="preserve">
+    <value>Configurer le serveur de messagerie et les tâches en arrière-plan</value>
+  </data>
+  <data name="AdminLlmSettingsTitle" xml:space="preserve">
+    <value>Paramètres LLM</value>
+  </data>
+  <data name="AdminLlmSettingsSubtitle" xml:space="preserve">
+    <value>Configurer le modèle IA et la planification</value>
+  </data>
+  <data name="AdminOutgoingSmtpTitle" xml:space="preserve">
+    <value>SMTP sortant</value>
+  </data>
+  <data name="AdminOutgoingSmtpSubtitle" xml:space="preserve">
+    <value>Configurer les paramètres du serveur de messagerie sortant</value>
+  </data>
+  <data name="AdminJobsTitle" xml:space="preserve">
+    <value>Tâches</value>
+  </data>
+  <data name="AdminJobsSubtitle" xml:space="preserve">
+    <value>Gérer les tâches de traitement en arrière-plan</value>
+  </data>
+  <data name="AdminSystemPromptTitle" xml:space="preserve">
+    <value>Invite système</value>
+  </data>
+  <data name="AdminSystemPromptSubtitle" xml:space="preserve">
+    <value>Configurer l'invite système de l'IA</value>
+  </data>
+  <data name="AdminSchedulingTitle" xml:space="preserve">
+    <value>Planification</value>
+  </data>
+  <data name="AdminSchedulingSubtitle" xml:space="preserve">
+    <value>Configurer le planning de traitement IA</value>
+  </data>
+  <data name="StubComingSoon" xml:space="preserve">
+    <value>Cette page est en cours de construction.</value>
+  </data>
 </root>

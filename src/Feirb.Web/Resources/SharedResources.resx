@@ -396,4 +396,106 @@
   <data name="LoadingUsers" xml:space="preserve">
     <value>Loading users...</value>
   </data>
+  <data name="BreadcrumbDashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="BreadcrumbSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="BreadcrumbAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="BreadcrumbUserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="BreadcrumbSystemSettings" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
+  <data name="BreadcrumbLlmSettings" xml:space="preserve">
+    <value>LLM Settings</value>
+  </data>
+  <data name="BreadcrumbPersonalInformation" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="BreadcrumbSecurity" xml:space="preserve">
+    <value>Security &amp; Password</value>
+  </data>
+  <data name="BreadcrumbOutgoingSmtp" xml:space="preserve">
+    <value>Outgoing SMTP</value>
+  </data>
+  <data name="BreadcrumbJobs" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="BreadcrumbSystemPrompt" xml:space="preserve">
+    <value>System Prompt</value>
+  </data>
+  <data name="BreadcrumbScheduling" xml:space="preserve">
+    <value>Scheduling</value>
+  </data>
+  <data name="PageTitleSettings" xml:space="preserve">
+    <value>Settings - Feirb</value>
+  </data>
+  <data name="PageTitleAdmin" xml:space="preserve">
+    <value>Admin - Feirb</value>
+  </data>
+  <data name="SettingsAccountTitle" xml:space="preserve">
+    <value>Account Settings</value>
+  </data>
+  <data name="SettingsPersonalInfoTitle" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="SettingsPersonalInfoSubtitle" xml:space="preserve">
+    <value>Update your name and email address</value>
+  </data>
+  <data name="SettingsSecurityTitle" xml:space="preserve">
+    <value>Security &amp; Password</value>
+  </data>
+  <data name="SettingsSecuritySubtitle" xml:space="preserve">
+    <value>Change your password and security settings</value>
+  </data>
+  <data name="AdminUserMgmtTitle" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="AdminUserMgmtSubtitle" xml:space="preserve">
+    <value>Manage users and permissions</value>
+  </data>
+  <data name="AdminSystemSettingsTitle" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
+  <data name="AdminSystemSettingsSubtitle" xml:space="preserve">
+    <value>Configure mail server and background jobs</value>
+  </data>
+  <data name="AdminLlmSettingsTitle" xml:space="preserve">
+    <value>LLM Settings</value>
+  </data>
+  <data name="AdminLlmSettingsSubtitle" xml:space="preserve">
+    <value>Configure AI model and scheduling</value>
+  </data>
+  <data name="AdminOutgoingSmtpTitle" xml:space="preserve">
+    <value>Outgoing SMTP</value>
+  </data>
+  <data name="AdminOutgoingSmtpSubtitle" xml:space="preserve">
+    <value>Configure outgoing mail server settings</value>
+  </data>
+  <data name="AdminJobsTitle" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="AdminJobsSubtitle" xml:space="preserve">
+    <value>Manage background processing tasks</value>
+  </data>
+  <data name="AdminSystemPromptTitle" xml:space="preserve">
+    <value>System Prompt</value>
+  </data>
+  <data name="AdminSystemPromptSubtitle" xml:space="preserve">
+    <value>Configure the AI system prompt</value>
+  </data>
+  <data name="AdminSchedulingTitle" xml:space="preserve">
+    <value>Scheduling</value>
+  </data>
+  <data name="AdminSchedulingSubtitle" xml:space="preserve">
+    <value>Configure AI processing schedule</value>
+  </data>
+  <data name="StubComingSoon" xml:space="preserve">
+    <value>This page is under construction.</value>
+  </data>
 </root>

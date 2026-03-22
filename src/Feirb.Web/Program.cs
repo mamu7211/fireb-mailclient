@@ -17,6 +17,7 @@ builder.Services.AddAuthorizationCore(options =>
     options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
 });
 
+builder.Services.AddScoped<ToolbarStateService>();
 builder.Services.AddScoped<JwtAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
     sp.GetRequiredService<JwtAuthenticationStateProvider>());
