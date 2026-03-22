@@ -47,7 +47,7 @@ Pronounced like "fire-bee", the name is simply "Brief" (German for *letter*) spe
 
 ```bash
 git clone git@github.com:mamu7211/fireb-mailclient.git
-cd mailclient
+cd fireb-mailclient
 dotnet workload install aspire
 dotnet restore Feirb.sln
 dotnet run --project src/Feirb.AppHost
