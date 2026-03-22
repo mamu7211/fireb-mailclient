@@ -273,13 +273,31 @@
   <data name="SuccessSetupComplete" xml:space="preserve">
     <value>Setup completed successfully! Please log in.</value>
   </data>
-  <data name="NavAdmin" xml:space="preserve">
-    <value>Administration</value>
+  <data name="NavMain" xml:space="preserve">
+    <value>Main</value>
   </data>
-  <data name="NavAdminUsers" xml:space="preserve">
-    <value>Users</value>
+  <data name="NavInbox" xml:space="preserve">
+    <value>Inbox</value>
   </data>
-  <data name="NavAdminSettings" xml:space="preserve">
+  <data name="NavSent" xml:space="preserve">
+    <value>Sent</value>
+  </data>
+  <data name="NavDrafts" xml:space="preserve">
+    <value>Drafts</value>
+  </data>
+  <data name="NavTrash" xml:space="preserve">
+    <value>Trash</value>
+  </data>
+  <data name="NavArchive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="NavSettings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="NavAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="NavLogout" xml:space="preserve">
+    <value>Logout</value>
   </data>
 </root>

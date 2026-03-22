@@ -1,38 +1,113 @@
+@using Feirb.Web.Services
 @inject IStringLocalizer<SharedResources> L
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">@L["AppName"]</a>
-        <div class="ms-auto">
-            <Feirb.Web.Components.LanguageSwitcher />
-        </div>
-    </div>
-</div>
-
-<div class="nav-scrollable">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> @L["NavHome"]
-            </NavLink>
-        </div>
-
-        <AuthorizeView Policy="RequireAdmin">
-            <Authorized>
-                <div class="nav-item px-3 mt-3">
-                    <h6 class="text-muted small fw-bold text-uppercase px-3">@L["NavAdmin"]</h6>
+<aside class="feirb-sidebar">
+    <!-- User Profile -->
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar-profile">
+                <div class="profile-avatar">
+                    @(context.User.Identity?.Name?[..1].ToUpperInvariant() ?? "?")
                 </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="admin/users">
-                        <span class="bi bi-people-fill-nav-menu" aria-hidden="true"></span> @L["NavAdminUsers"]
+                <div class="profile-info">
+                    <span class="profile-name">@context.User.Identity?.Name</span>
+                    <span class="profile-email">@(context.User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "")</span>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+        <!-- Main Section -->
+        <div class="nav-section">
+            <p class="nav-section-label">@L["NavMain"]</p>
+            <ul class="nav-list">
+                <li>
+                    <NavLink class="nav-entry" href="" Match="NavLinkMatch.All">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <span>@L["NavInbox"]</span>
                     </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="admin/settings">
-                        <span class="bi bi-gear-fill-nav-menu" aria-hidden="true"></span> @L["NavAdminSettings"]
+                </li>
+                <li>
+                    <NavLink class="nav-entry" href="sent">
+                        <span class="material-symbols-outlined">send</span>
+                        <span>@L["NavSent"]</span>
                     </NavLink>
-                </div>
-            </Authorized>
-        </AuthorizeView>
+                </li>
+                <li>
+                    <NavLink class="nav-entry" href="drafts">
+                        <span class="material-symbols-outlined">draft</span>
+                        <span>@L["NavDrafts"]</span>
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Folders Section -->
+        <div class="nav-section">
+            <ul class="nav-list">
+                <li>
+                    <NavLink class="nav-entry" href="trash">
+                        <span class="material-symbols-outlined">delete</span>
+                        <span>@L["NavTrash"]</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="nav-entry" href="archive">
+                        <span class="material-symbols-outlined">archive</span>
+                        <span>@L["NavArchive"]</span>
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
     </nav>
-</div>
+
+    <!-- Bottom Section -->
+    <div class="sidebar-bottom">
+        <div class="sidebar-lang">
+            <span class="material-symbols-outlined">language</span>
+            <Feirb.Web.Components.LanguageSwitcher ButtonClass="btn-outline-secondary btn-sm" />
+        </div>
+
+        <ul class="nav-list">
+            <li>
+                <NavLink class="nav-entry" href="settings">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span>@L["NavSettings"]</span>
+                </NavLink>
+            </li>
+
+            <AuthorizeView Policy="RequireAdmin">
+                <Authorized>
+                    <li>
+                        <NavLink class="nav-entry" href="admin/users">
+                            <span class="material-symbols-outlined">admin_panel_settings</span>
+                            <span>@L["NavAdmin"]</span>
+                        </NavLink>
+                    </li>
+                </Authorized>
+            </AuthorizeView>
+
+            <li>
+                <button class="nav-entry nav-entry-button" @onclick="LogoutAsync">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>@L["NavLogout"]</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+@code {
+    private async Task LogoutAsync()
+    {
+        if (AuthStateProvider is JwtAuthenticationStateProvider jwtProvider)
+        {
+            await jwtProvider.LogoutAsync();
+            Navigation.NavigateTo("/login", forceLoad: true);
+        }
+    }
+}

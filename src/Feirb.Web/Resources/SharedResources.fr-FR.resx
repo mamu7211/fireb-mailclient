@@ -273,13 +273,31 @@
   <data name="SuccessSetupComplete" xml:space="preserve">
     <value>Configuration terminée avec succès ! Veuillez vous connecter.</value>
   </data>
-  <data name="NavAdmin" xml:space="preserve">
-    <value>Administration</value>
+  <data name="NavMain" xml:space="preserve">
+    <value>Principal</value>
   </data>
-  <data name="NavAdminUsers" xml:space="preserve">
-    <value>Utilisateurs</value>
+  <data name="NavInbox" xml:space="preserve">
+    <value>Boîte de réception</value>
   </data>
-  <data name="NavAdminSettings" xml:space="preserve">
+  <data name="NavSent" xml:space="preserve">
+    <value>Envoyés</value>
+  </data>
+  <data name="NavDrafts" xml:space="preserve">
+    <value>Brouillons</value>
+  </data>
+  <data name="NavTrash" xml:space="preserve">
+    <value>Corbeille</value>
+  </data>
+  <data name="NavArchive" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="NavSettings" xml:space="preserve">
     <value>Paramètres</value>
+  </data>
+  <data name="NavAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="NavLogout" xml:space="preserve">
+    <value>Déconnexion</value>
   </data>
 </root>
