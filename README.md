@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="feirb-logo.svg" alt="Feirb Logo" width="200">
-</p>
-
 # Feirb Mailclient
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
