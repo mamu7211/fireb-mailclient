@@ -21,7 +21,7 @@ public sealed class JwtAuthenticationStateProvider(IJSRuntime jsRuntime) : Authe
         if (claims is null)
             return _anonymousState;
 
-        var identity = new ClaimsIdentity(claims, "jwt");
+        var identity = new ClaimsIdentity(claims, "jwt", "name", "role");
         return new AuthenticationState(new ClaimsPrincipal(identity));
     }
 
@@ -30,7 +30,7 @@ public sealed class JwtAuthenticationStateProvider(IJSRuntime jsRuntime) : Authe
         ArgumentNullException.ThrowIfNull(tokens);
         await jsRuntime.InvokeVoidAsync("blazorAuth.setTokens", tokens.AccessToken, tokens.RefreshToken);
         var claims = ParseClaimsFromJwt(tokens.AccessToken);
-        var identity = new ClaimsIdentity(claims, "jwt");
+        var identity = new ClaimsIdentity(claims, "jwt", "name", "role");
         var user = new ClaimsPrincipal(identity);
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
     }

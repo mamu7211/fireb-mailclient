@@ -273,4 +273,13 @@
   <data name="SuccessSetupComplete" xml:space="preserve">
     <value>Configuration terminée avec succès ! Veuillez vous connecter.</value>
   </data>
+  <data name="NavAdmin" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="NavAdminUsers" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="NavAdminSettings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
 </root>

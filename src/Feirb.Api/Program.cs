@@ -36,7 +36,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero,
         };
     });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+});
 
 // Data Protection API for credential encryption
 builder.Services.AddDataProtection();
@@ -86,6 +89,10 @@ authGroup.MapAuthEndpoints();
 // Setup endpoints are anonymous (guarded by admin-exists check)
 var setupGroup = app.MapGroup(ApiRoutes.Setup).AllowAnonymous();
 setupGroup.MapSetupEndpoints();
+
+// Admin endpoints require admin role
+var adminGroup = apiGroup.MapGroup("/admin").RequireAuthorization("RequireAdmin");
+adminGroup.MapAdminEndpoints();
 
 app.MapFallbackToFile("index.html");
 
