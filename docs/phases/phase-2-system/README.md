@@ -12,6 +12,7 @@
 | 6 | [Breadcrumb & Navigation](06-breadcrumb-navigation.md) | #38 | Breadcrumb component, drill-down navigation, settings/admin page hierarchy |
 | 7 | [Profile Editing](07-profile-editing.md) | #39 | Personal Information & Security & Password pages with API |
 | 8 | [Dashboard Landing](08-dashboard-landing.md) | #40 | Dashboard stub at `/`, mail route stubs, sidebar updates |
+| 9 | [Mailbox Configuration](09-mailbox-configuration.md) | #42 | Per-user IMAP/SMTP mailbox setup with connection testing |
 
 ## Dependencies
 
@@ -24,3 +25,4 @@
 - Feature 6 depends on Feature 5 (main page layout exists)
 - Feature 7 depends on Feature 6 (breadcrumb and navigation components)
 - Feature 8 should be implemented before Feature 6 (Dashboard is the breadcrumb root)
+- Feature 9 depends on Feature 6 (drill-down navigation, toolbar) and #41 (Data Protection fix)

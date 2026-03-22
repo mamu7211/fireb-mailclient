@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create reusable navigation components for settings and admin pages: a global breadcrumb, a drill-down section list, and a content section component. Wire up the settings and admin page hierarchy.
+Create reusable navigation components for settings and admin pages: a global breadcrumb, a drill-down section list, a content section component, and a sticky toolbar. Wire up the settings and admin page hierarchy.
 
 ## Deliverables
 
@@ -58,6 +58,14 @@ Create reusable navigation components for settings and admin pages: a global bre
 /admin/llm-settings/scheduling             → Stub
 ```
 
+### Sticky Toolbar Component
+
+- Rendered next to the breadcrumb, sticky (stays visible on scroll)
+- `ToolbarStateService`: leaf pages register their actions (e.g., Save, Delete)
+- Toolbar component reads from the service and renders the action buttons
+- Actions are page-specific — navigating away clears the toolbar
+- Layout: `[[breadcrumb]....[toolbar actions]]`
+
 ### Stitch Reference
 
 - Project: "Login Page"
@@ -77,4 +85,6 @@ All new strings (section titles, subtitles, breadcrumb labels) localized in `en-
 - [ ] Existing user management table accessible via new route
 - [ ] Stub pages render with correct breadcrumb
 - [ ] All strings localized in 4 locales
+- [ ] Sticky toolbar renders page-specific actions next to breadcrumb
+- [ ] ToolbarStateService allows pages to register/clear actions
 - [ ] Components are reusable (shared between Settings and Admin)
