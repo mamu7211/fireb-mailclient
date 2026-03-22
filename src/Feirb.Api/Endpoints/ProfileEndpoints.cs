@@ -42,11 +42,14 @@ public static class ProfileEndpoints
         if (user is null)
             return Results.NotFound();
 
+        if (request.Username is null && request.Email is null)
+            return Results.Ok(new ProfileResponse(user.Username, user.Email));
+
         if (request.Username is not null)
         {
             var usernameTaken = await db.Users.AnyAsync(u => u.Username == request.Username && u.Id != userId);
             if (usernameTaken)
-                return Results.Conflict(new { message = localizer["UsernameAlreadyTaken"].Value });
+                return Results.Conflict(new MessageResponse(localizer["UsernameAlreadyTaken"].Value));
 
             user.Username = request.Username;
         }
@@ -55,7 +58,7 @@ public static class ProfileEndpoints
         {
             var emailTaken = await db.Users.AnyAsync(u => u.Email == request.Email && u.Id != userId);
             if (emailTaken)
-                return Results.Conflict(new { message = localizer["EmailAlreadyRegistered"].Value });
+                return Results.Conflict(new MessageResponse(localizer["EmailAlreadyRegistered"].Value));
 
             user.Email = request.Email;
         }
@@ -79,7 +82,7 @@ public static class ProfileEndpoints
             return Results.NotFound();
 
         if (!authService.VerifyPassword(request.CurrentPassword, user.PasswordHash))
-            return Results.BadRequest(new { message = localizer["InvalidCurrentPassword"].Value });
+            return Results.BadRequest(new MessageResponse(localizer["InvalidCurrentPassword"].Value));
 
         user.PasswordHash = authService.HashPassword(request.NewPassword);
         user.SecurityStamp = Guid.NewGuid().ToString();
@@ -88,7 +91,7 @@ public static class ProfileEndpoints
         user.UpdatedAt = DateTime.UtcNow;
         await db.SaveChangesAsync();
 
-        return Results.Ok(new { message = localizer["PasswordChanged"].Value });
+        return Results.Ok(new MessageResponse(localizer["PasswordChanged"].Value));
     }
 
     private static async Task<IResult> LogoutAllAsync(
@@ -107,7 +110,7 @@ public static class ProfileEndpoints
         user.UpdatedAt = DateTime.UtcNow;
         await db.SaveChangesAsync();
 
-        return Results.Ok(new { message = localizer["AllSessionsLoggedOut"].Value });
+        return Results.Ok(new MessageResponse(localizer["AllSessionsLoggedOut"].Value));
     }
 
     private static Guid GetCurrentUserId(HttpContext httpContext) =>

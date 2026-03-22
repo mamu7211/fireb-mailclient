@@ -1,5 +1,6 @@
 @page "/settings/security"
 @attribute [Authorize]
+@using Feirb.Shared.Auth
 @using Feirb.Shared.Settings
 @inject HttpClient Http
 @inject IStringLocalizer<SharedResources> L
@@ -101,12 +102,25 @@
 
             if (response.IsSuccessStatusCode)
             {
+                // Re-authenticate to get fresh tokens with the new security stamp
+                var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+                var username = authState.User.Identity?.Name;
+                var loginRequest = new LoginRequest(username!, _passwordModel.NewPassword!);
+                var loginResponse = await Http.PostAsJsonAsync("/api/auth/login", loginRequest);
+
+                if (loginResponse.IsSuccessStatusCode && AuthStateProvider is JwtAuthenticationStateProvider jwtProvider)
+                {
+                    var tokens = await loginResponse.Content.ReadFromJsonAsync<TokenResponse>();
+                    if (tokens is not null)
+                        await jwtProvider.LoginAsync(tokens);
+                }
+
                 _successMessage = L["SuccessPasswordChanged"];
                 _passwordModel = new PasswordFormModel();
             }
             else
             {
-                var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                var error = await response.Content.ReadFromJsonAsync<MessageResponse>();
                 _errorMessage = error?.Message ?? L["ErrorPasswordChangeFailed"];
             }
         }
@@ -168,5 +182,4 @@
         public string? ConfirmNewPassword { get; set; }
     }
 
-    private sealed record ErrorResponse(string Message);
 }
