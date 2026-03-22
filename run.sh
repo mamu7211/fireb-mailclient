@@ -7,6 +7,7 @@ SEED="true"
 for arg in "$@"; do
     case "$arg" in
         --no-seeding) SEED="" ;;
+        *) echo "Unknown argument: $arg"; exit 1 ;;
     esac
 done
 
