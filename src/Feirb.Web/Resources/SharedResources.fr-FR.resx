@@ -684,4 +684,28 @@
   <data name="ErrorLogoutAllFailed" xml:space="preserve">
     <value>Échec de la déconnexion de toutes les sessions. Veuillez réessayer.</value>
   </data>
+  <data name="SectionSender" xml:space="preserve">
+    <value>Expéditeur</value>
+  </data>
+  <data name="LabelFromAddress" xml:space="preserve">
+    <value>Adresse d'expédition</value>
+  </data>
+  <data name="LabelFromName" xml:space="preserve">
+    <value>Nom d'expédition</value>
+  </data>
+  <data name="PlaceholderFromAddress" xml:space="preserve">
+    <value>noreply@example.com</value>
+  </data>
+  <data name="PlaceholderFromName" xml:space="preserve">
+    <value>Système de messagerie Feirb</value>
+  </data>
+  <data name="SuccessSmtpSettingsUpdated" xml:space="preserve">
+    <value>Paramètres SMTP mis à jour avec succès.</value>
+  </data>
+  <data name="ErrorSmtpSettingsFailed" xml:space="preserve">
+    <value>Une erreur est survenue lors du traitement des paramètres SMTP.</value>
+  </data>
+  <data name="LoadingSmtpSettings" xml:space="preserve">
+    <value>Chargement des paramètres SMTP...</value>
+  </data>
 </root>

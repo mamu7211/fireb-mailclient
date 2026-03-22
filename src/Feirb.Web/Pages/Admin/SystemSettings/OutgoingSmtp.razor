@@ -1,8 +1,261 @@
 @page "/admin/system-settings/outgoing-smtp"
 @attribute [Authorize(Policy = "RequireAdmin")]
+@using System.ComponentModel.DataAnnotations
+@using Feirb.Shared.Admin
+@using Feirb.Shared.Settings
+@inject HttpClient Http
 @inject IStringLocalizer<SharedResources> L
+@inject ToolbarStateService ToolbarState
+@implements IDisposable
 
 <PageTitle>@L["AdminOutgoingSmtpTitle"] - Feirb</PageTitle>
 
-<h1 class="mb-4">@L["AdminOutgoingSmtpTitle"]</h1>
-<p class="text-muted">@L["StubComingSoon"]</p>
+@if (!string.IsNullOrEmpty(_successMessage))
+{
+    <div class="alert alert-success alert-dismissible py-2" role="alert">
+        @_successMessage
+        <button type="button" class="btn-close" @onclick="() => _successMessage = null"></button>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger alert-dismissible py-2" role="alert">
+        @_errorMessage
+        <button type="button" class="btn-close" @onclick="() => _errorMessage = null"></button>
+    </div>
+}
+
+@if (_isLoading)
+{
+    <div class="text-center py-5">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">@L["LoadingSmtpSettings"]</span>
+        </div>
+    </div>
+}
+else if (_model is not null)
+{
+    <EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
+        <DataAnnotationsValidator />
+
+        @* Server Section *@
+        <h5 class="text-muted mb-3">@L["MailboxSectionSmtp"]</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label for="smtpHost" class="form-label">@L["LabelSmtpHostMailbox"]</label>
+                        <InputText id="smtpHost" class="form-control" @bind-Value="_model.Host" placeholder="@L["PlaceholderSmtpHostMailbox"]" />
+                        <ValidationMessage For="() => _model.Host" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="smtpPort" class="form-label">@L["LabelSmtpPortMailbox"]</label>
+                        <InputNumber id="smtpPort" class="form-control" @bind-Value="_model.Port" />
+                        <ValidationMessage For="() => _model.Port" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="smtpUsername" class="form-label">@L["LabelSmtpUsernameMailbox"]</label>
+                        <InputText id="smtpUsername" class="form-control" @bind-Value="_model.Username" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="smtpPassword" class="form-label">@L["LabelSmtpPasswordMailbox"]</label>
+                        <InputText id="smtpPassword" class="form-control" type="password" @bind-Value="_model.Password"
+                            placeholder="@L["PasswordPlaceholderKeep"]" />
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="form-check">
+                            <InputCheckbox id="smtpUseTls" class="form-check-input" @bind-Value="_model.UseTls" />
+                            <label for="smtpUseTls" class="form-check-label">@L["LabelSmtpUseTlsMailbox"]</label>
+                        </div>
+                        <div class="form-check">
+                            <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_model.RequiresAuth" />
+                            <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuthMailbox"]</label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="TestSmtpAsync" disabled="@_isTestingSmtp">
+                        @if (_isTestingSmtp)
+                        {
+                            <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+                        }
+                        @L["ButtonTestConnection"]
+                    </button>
+                </div>
+                @if (_smtpTestResult is not null)
+                {
+                    <div class="alert @(_smtpTestResult.Success ? "alert-success" : "alert-danger") mt-3 mb-0 py-2">
+                        @GetTestResultMessage(_smtpTestResult)
+                    </div>
+                }
+            </div>
+        </div>
+
+        @* Sender Section *@
+        <h5 class="text-muted mb-3">@L["SectionSender"]</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fromAddress" class="form-label">@L["LabelFromAddress"]</label>
+                        <InputText id="fromAddress" class="form-control" @bind-Value="_model.FromAddress" placeholder="@L["PlaceholderFromAddress"]" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fromName" class="form-label">@L["LabelFromName"]</label>
+                        <InputText id="fromName" class="form-control" @bind-Value="_model.FromName" placeholder="@L["PlaceholderFromName"]" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    private SmtpFormModel? _model;
+    private bool _isLoading = true;
+    private bool _isSaving;
+    private string? _successMessage;
+    private string? _errorMessage;
+
+    private bool _isTestingSmtp;
+    private TestConnectionResponse? _smtpTestResult;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ToolbarState.SetActions(
+        [
+            new ToolbarAction(L["ButtonSave"], "btn-primary", HandleSaveAsync, "check")
+        ]);
+
+        try
+        {
+            var settings = await Http.GetFromJsonAsync<SystemSmtpSettingsResponse>("/api/admin/system-settings/smtp");
+            if (settings is not null)
+            {
+                _model = new SmtpFormModel
+                {
+                    Host = settings.Host,
+                    Port = settings.Port,
+                    UseTls = settings.UseTls,
+                    RequiresAuth = settings.RequiresAuth,
+                    Username = settings.Username,
+                    FromAddress = settings.FromAddress,
+                    FromName = settings.FromName,
+                };
+            }
+        }
+        catch
+        {
+            _errorMessage = L["ErrorSmtpSettingsFailed"];
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    public void Dispose() => ToolbarState.Clear();
+
+    private async Task HandleSaveAsync()
+    {
+        if (_isSaving || _model is null) return;
+        _isSaving = true;
+        _errorMessage = null;
+        _successMessage = null;
+
+        try
+        {
+            var request = new UpdateSystemSmtpSettingsRequest(
+                _model.Host!, _model.Port, _model.UseTls, _model.RequiresAuth,
+                _model.Username, _model.Password,
+                _model.FromAddress, _model.FromName);
+
+            var response = await Http.PutAsJsonAsync("/api/admin/system-settings/smtp", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                _model.Password = null;
+                _successMessage = L["SuccessSmtpSettingsUpdated"];
+            }
+            else
+            {
+                var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                _errorMessage = error?.Message ?? L["ErrorSmtpSettingsFailed"];
+            }
+        }
+        catch
+        {
+            _errorMessage = L["ErrorSmtpSettingsFailed"];
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private async Task TestSmtpAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_model?.Host)) return;
+        _isTestingSmtp = true;
+        _smtpTestResult = null;
+        try
+        {
+            var request = new TestSmtpMailboxRequest(
+                _model.Host, _model.Port, _model.Username, _model.Password,
+                _model.UseTls, _model.RequiresAuth);
+            var response = await Http.PostAsJsonAsync("/api/mail/test/smtp", request);
+            _smtpTestResult = await response.Content.ReadFromJsonAsync<TestConnectionResponse>();
+        }
+        catch
+        {
+            _smtpTestResult = new TestConnectionResponse(false, null, null);
+        }
+        finally
+        {
+            _isTestingSmtp = false;
+        }
+    }
+
+    private string GetTestResultMessage(TestConnectionResponse result)
+    {
+        if (result.Success)
+            return L["TestConnectionSuccess"];
+        return result.ErrorStep switch
+        {
+            "dns" => L["TestConnectionFailedDns"],
+            "tls" => L["TestConnectionFailedTls"],
+            "auth" => L["TestConnectionFailedAuth"],
+            _ => L["TestConnectionFailed"]
+        };
+    }
+
+    private sealed class SmtpFormModel
+    {
+        [Required]
+        [StringLength(256)]
+        public string? Host { get; set; }
+
+        [Range(1, 65535)]
+        public int Port { get; set; } = 587;
+
+        public string? Username { get; set; }
+
+        public string? Password { get; set; }
+
+        public bool UseTls { get; set; } = true;
+
+        public bool RequiresAuth { get; set; } = true;
+
+        [EmailAddress]
+        [StringLength(256)]
+        public string? FromAddress { get; set; }
+
+        [StringLength(256)]
+        public string? FromName { get; set; }
+    }
+
+    private sealed record ErrorResponse(string Message);
+}

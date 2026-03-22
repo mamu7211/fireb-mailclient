@@ -114,6 +114,8 @@ setupGroup.MapSetupEndpoints();
 // Admin endpoints require admin role
 var adminGroup = apiGroup.MapGroup("/admin").RequireAuthorization("RequireAdmin");
 adminGroup.MapAdminEndpoints();
+var systemSettingsGroup = adminGroup.MapGroup("/system-settings");
+systemSettingsGroup.MapSystemSettingsEndpoints();
 
 // Settings endpoints (per-user, JWT required)
 var settingsGroup = apiGroup.MapGroup("/settings");

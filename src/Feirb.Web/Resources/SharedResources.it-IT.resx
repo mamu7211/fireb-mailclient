@@ -684,4 +684,28 @@
   <data name="ErrorLogoutAllFailed" xml:space="preserve">
     <value>Disconnessione di tutte le sessioni fallita. Riprova.</value>
   </data>
+  <data name="SectionSender" xml:space="preserve">
+    <value>Mittente</value>
+  </data>
+  <data name="LabelFromAddress" xml:space="preserve">
+    <value>Indirizzo mittente</value>
+  </data>
+  <data name="LabelFromName" xml:space="preserve">
+    <value>Nome mittente</value>
+  </data>
+  <data name="PlaceholderFromAddress" xml:space="preserve">
+    <value>noreply@example.com</value>
+  </data>
+  <data name="PlaceholderFromName" xml:space="preserve">
+    <value>Sistema di posta Feirb</value>
+  </data>
+  <data name="SuccessSmtpSettingsUpdated" xml:space="preserve">
+    <value>Impostazioni SMTP aggiornate con successo.</value>
+  </data>
+  <data name="ErrorSmtpSettingsFailed" xml:space="preserve">
+    <value>Si è verificato un errore durante l'elaborazione delle impostazioni SMTP.</value>
+  </data>
+  <data name="LoadingSmtpSettings" xml:space="preserve">
+    <value>Caricamento impostazioni SMTP...</value>
+  </data>
 </root>

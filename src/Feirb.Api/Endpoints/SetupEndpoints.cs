@@ -12,7 +12,6 @@ namespace Feirb.Api.Endpoints;
 
 public static class SetupEndpoints
 {
-    private const string _smtpPasswordPurpose = "SmtpPassword";
 
     public static RouteGroupBuilder MapSetupEndpoints(this RouteGroupBuilder group)
     {
@@ -46,7 +45,7 @@ public static class SetupEndpoints
             UpdatedAt = DateTime.UtcNow,
         };
 
-        var protector = dataProtection.CreateProtector(_smtpPasswordPurpose);
+        var protector = dataProtection.CreateProtector(DataProtectionPurposes.SmtpPassword);
         var smtpSettings = new Data.Entities.SmtpSettings
         {
             Id = Guid.NewGuid(),
@@ -56,6 +55,8 @@ public static class SetupEndpoints
             EncryptedPassword = request.SmtpPassword is not null ? protector.Protect(request.SmtpPassword) : null,
             UseTls = request.SmtpUseTls,
             RequiresAuth = request.SmtpRequiresAuth,
+            FromAddress = request.Email,
+            FromName = request.Username,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
         };
