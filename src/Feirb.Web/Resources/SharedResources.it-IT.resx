@@ -711,6 +711,21 @@
   <data name="BreadcrumbMail" xml:space="preserve">
     <value>Posta</value>
   </data>
+  <data name="BreadcrumbInbox" xml:space="preserve">
+    <value>Posta in arrivo</value>
+  </data>
+  <data name="BreadcrumbSent" xml:space="preserve">
+    <value>Inviati</value>
+  </data>
+  <data name="BreadcrumbDrafts" xml:space="preserve">
+    <value>Bozze</value>
+  </data>
+  <data name="BreadcrumbTrash" xml:space="preserve">
+    <value>Cestino</value>
+  </data>
+  <data name="BreadcrumbArchive" xml:space="preserve">
+    <value>Archivio</value>
+  </data>
   <data name="NavDashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
