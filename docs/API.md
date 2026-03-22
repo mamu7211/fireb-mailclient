@@ -1,4 +1,4 @@
-# Feirb — API Documentation
+# Feirb — API Reference
 
 Base URL: `https://localhost:7200`
 
@@ -6,58 +6,93 @@ All endpoints return JSON. Error responses use [RFC 7807 Problem Details](https:
 
 ## Authentication
 
-Currently none — Feirb is designed for NAS-local access. Future versions may add authentication.
+JWT Bearer authentication. Obtain a token via `/api/auth/login`, include it as `Authorization: Bearer <token>` on subsequent requests.
 
-## Endpoints
+## Implemented Endpoints
+
+### Auth — `/api/auth`
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/auth/register` | Create a new user account |
+| POST | `/api/auth/login` | Authenticate, returns JWT + refresh token |
+| POST | `/api/auth/refresh` | Refresh an expired JWT |
+| POST | `/api/auth/request-reset` | Request a password reset email |
+| GET | `/api/auth/validate-reset-token/{token}` | Validate a password reset token |
+| POST | `/api/auth/reset-password` | Complete password reset with new password |
+
+### Setup — `/api/setup`
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/setup/status` | Check if initial setup is complete |
+| POST | `/api/setup/complete` | Complete initial setup (admin account + SMTP) |
+| POST | `/api/setup/test-smtp` | Test SMTP connection with provided settings |
+
+### Admin — `/api/admin` (requires admin role)
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/admin/users` | List all users |
+| POST | `/api/admin/users` | Create a new user |
+| PUT | `/api/admin/users/{id}` | Update user details |
+| DELETE | `/api/admin/users/{id}` | Delete a user |
+| POST | `/api/admin/users/{id}/reset-password` | Admin-initiated password reset |
+
+## Planned Endpoints
+
+> These endpoints are part of the project roadmap but **not yet implemented**.
 
 ### Mail — `/api/mail`
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/mail` | List messages (query: folder, page, size, search) |
-| GET | `/api/mail/{id}` | Get full message |
-| POST | `/api/mail` | Send a new message |
-| POST | `/api/mail/{id}/reply` | Reply to a message |
-| POST | `/api/mail/{id}/forward` | Forward a message |
-| DELETE | `/api/mail/{id}` | Delete message |
-| PATCH | `/api/mail/{id}/read` | Mark as read/unread |
-| PATCH | `/api/mail/{id}/move` | Move to folder |
+| Method | Path | Description | Phase |
+|--------|------|-------------|-------|
+| GET | `/api/mail` | List messages (query: folder, page, size, search) | 4 |
+| GET | `/api/mail/{id}` | Get full message | 4 |
+| POST | `/api/mail` | Send a new message | 5 |
+| POST | `/api/mail/{id}/reply` | Reply to a message | 5 |
+| POST | `/api/mail/{id}/forward` | Forward a message | 5 |
+| DELETE | `/api/mail/{id}` | Delete message | 4 |
+| PATCH | `/api/mail/{id}/read` | Mark as read/unread | 4 |
+| PATCH | `/api/mail/{id}/move` | Move to folder | 4 |
 
 ### Folders — `/api/folders`
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/folders` | List all folders with unread counts |
-| POST | `/api/folders` | Create folder |
-| DELETE | `/api/folders/{name}` | Delete folder |
+| Method | Path | Description | Phase |
+|--------|------|-------------|-------|
+| GET | `/api/folders` | List all folders with unread counts | 3 |
+| POST | `/api/folders` | Create folder | Future |
+| DELETE | `/api/folders/{name}` | Delete folder | Future |
 
 ### Settings — `/api/settings`
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/settings/accounts` | List configured mail accounts |
-| POST | `/api/settings/accounts` | Add mail account |
-| PUT | `/api/settings/accounts/{id}` | Update mail account |
-| DELETE | `/api/settings/accounts/{id}` | Remove mail account |
-| POST | `/api/settings/accounts/{id}/test` | Test account connection |
-| GET | `/api/settings/preferences` | Get user preferences |
-| PUT | `/api/settings/preferences` | Update user preferences |
+| Method | Path | Description | Phase |
+|--------|------|-------------|-------|
+| GET | `/api/settings/accounts` | List configured mail accounts | 2 |
+| POST | `/api/settings/accounts` | Add mail account | 2 |
+| PUT | `/api/settings/accounts/{id}` | Update mail account | 2 |
+| DELETE | `/api/settings/accounts/{id}` | Remove mail account | 2 |
+| POST | `/api/settings/accounts/{id}/test` | Test account connection | 2 |
+| GET | `/api/settings/preferences` | Get user preferences | Future |
+| PUT | `/api/settings/preferences` | Update user preferences | Future |
 
 ### AI — `/api/ai`
 
-| Method | Path | Description |
-|--------|------|-------------|
-| POST | `/api/ai/summarize` | Summarize a mail message |
-| POST | `/api/ai/draft-reply` | Generate a reply draft |
-| POST | `/api/ai/categorize` | Categorize messages |
+| Method | Path | Description | Phase |
+|--------|------|-------------|-------|
+| POST | `/api/ai/summarize` | Summarize a mail message | 6 |
+| POST | `/api/ai/draft-reply` | Generate a reply draft | 6 |
+| POST | `/api/ai/categorize` | Categorize messages | 6 |
 
 ## Error Codes
 
 | Status | Meaning |
 |--------|---------|
 | 400 | Bad Request — validation error |
+| 401 | Unauthorized — missing or invalid JWT |
+| 403 | Forbidden — insufficient permissions (e.g., non-admin) |
 | 404 | Not Found — resource doesn't exist |
-| 409 | Conflict — e.g., duplicate folder name |
-| 429 | Too Many Requests — AI endpoint rate limit |
-| 502 | Bad Gateway — mail server connection failed |
-| 503 | Service Unavailable — Ollama not ready |
+| 409 | Conflict — e.g., duplicate username or email |
+| 429 | Too Many Requests — AI endpoint rate limit (planned) |
+| 502 | Bad Gateway — mail server connection failed (planned) |
+| 503 | Service Unavailable — Ollama not ready (planned) |

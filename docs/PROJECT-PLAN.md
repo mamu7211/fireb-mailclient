@@ -12,7 +12,9 @@ Feirb is built in vertical feature slices. Each phase delivers a working increme
 - Minimal API + Blazor WASM + Shared projects
 - CI pipeline, documentation, Claude Code skills
 
-## Phase 1: Auth & User Management
+## Phase 1: Auth & User Management ✅
+
+*Completed — merged on `main`.*
 
 Multi-user authentication with JWT-based API security.
 
@@ -32,7 +34,9 @@ Multi-user authentication with JWT-based API security.
 | **Tests** | Auth endpoint tests, JWT validation tests |
 | **EF Core** | Initial migration with User table |
 
-## Phase 2: Mail Account Setup
+## Phase 2: Mail Account Setup ✅
+
+*Completed — merged on `main`. Implemented as system-level SMTP setup (setup wizard) and admin user management rather than per-user mail account CRUD.*
 
 Users configure their IMAP/SMTP mail accounts.
 
@@ -48,7 +52,9 @@ Users configure their IMAP/SMTP mail accounts.
 | **Tests** | Account CRUD tests, encryption round-trip tests |
 | **EF Core** | Migration adding MailAccount table |
 
-## Phase 3: Dashboard & Navigation Shell
+## Phase 3: Dashboard & Navigation Shell ✅
+
+*Completed — merged on `main`. Sidebar navigation, main layout, and placeholder pages for all mail folders are in place.*
 
 The application layout and navigation structure.
 

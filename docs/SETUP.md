@@ -20,6 +20,9 @@
 git clone git@github.com:mamu7211/fireb-mailclient.git
 cd mailclient
 
+# Install Aspire workload (first time only)
+dotnet workload install aspire
+
 # Restore dependencies
 dotnet restore Feirb.sln
 

@@ -61,32 +61,14 @@ This starts all services via Aspire:
 
 > **Note:** On first run, the Ollama qwen3:4b model (~2.6GB) will be downloaded automatically.
 
-## Project Structure
-
-```
-mailclient/
-├── src/
-│   ├── Feirb.AppHost/          # Aspire orchestration (start here)
-│   ├── Feirb.ServiceDefaults/  # Shared service configuration
-│   ├── Feirb.Api/              # Backend API
-│   ├── Feirb.Web/              # Blazor WASM frontend
-│   └── Feirb.Shared/           # Shared DTOs and interfaces
-├── tests/
-│   ├── Feirb.Api.Tests/
-│   └── Feirb.Web.Tests/
-├── docs/
-│   ├── ARCHITECTURE.md                    # Architecture & design decisions
-│   ├── SETUP.md                     # Developer setup guide
-│   └── API.md                       # API documentation
-├── CLAUDE.md                        # Claude Code project instructions
-└── Feirb.sln
-```
-
 ## Documentation
 
-- **[Design Document](docs/ARCHITECTURE.md)** — Architecture, data model, and technical decisions
-- **[Setup Guide](docs/SETUP.md)** — Developer onboarding and environment setup
-- **[API Documentation](docs/API.md)** — Endpoint reference and examples
+- **[Architecture](docs/ARCHITECTURE.md)** — System design, project structure, and technical decisions
+- **[Developer Setup](docs/SETUP.md)** — Environment setup and development workflow
+- **[API Reference](docs/API.md)** — Endpoint documentation (implemented and planned)
+- **[Deployment](docs/DEPLOYMENT.md)** — Current deployment options and roadmap
+- **[UI/UX Design](docs/DESIGN.md)** — Color tokens, typography, and component styles
+- **[Project Plan](docs/PROJECT-PLAN.md)** — Phase roadmap and progress
 
 ## Contributing
 
