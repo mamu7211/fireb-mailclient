@@ -66,4 +66,19 @@
   <data name="SmtpConnectionFailed" xml:space="preserve">
     <value>Échec de la connexion au serveur SMTP.</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Utilisateur introuvable.</value>
+  </data>
+  <data name="CannotDeleteSelf" xml:space="preserve">
+    <value>Vous ne pouvez pas supprimer votre propre compte.</value>
+  </data>
+  <data name="CannotDemoteSelf" xml:space="preserve">
+    <value>Vous ne pouvez pas retirer vos propres privilèges d'administrateur.</value>
+  </data>
+  <data name="LastAdminCannotBeDemoted" xml:space="preserve">
+    <value>Le dernier administrateur ne peut pas être rétrogradé. Au moins un administrateur doit exister.</value>
+  </data>
+  <data name="UserDeleted" xml:space="preserve">
+    <value>L'utilisateur a été supprimé.</value>
+  </data>
 </root>

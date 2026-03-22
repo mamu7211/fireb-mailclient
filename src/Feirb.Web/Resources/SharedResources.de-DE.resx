@@ -300,4 +300,100 @@
   <data name="NavLogout" xml:space="preserve">
     <value>Abmelden</value>
   </data>
+  <data name="PageTitleAdminUsers" xml:space="preserve">
+    <value>Admin - Benutzer - Feirb</value>
+  </data>
+  <data name="AdminUsersHeading" xml:space="preserve">
+    <value>Benutzerverwaltung</value>
+  </data>
+  <data name="ButtonCreateUser" xml:space="preserve">
+    <value>Benutzer erstellen</value>
+  </data>
+  <data name="ButtonEdit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="ButtonDelete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="ButtonConfirm" xml:space="preserve">
+    <value>Bestätigen</value>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="ButtonCopyLink" xml:space="preserve">
+    <value>In die Zwischenablage kopieren</value>
+  </data>
+  <data name="LabelIsAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="ColumnUsername" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="ColumnEmail" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="ColumnAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ColumnCreatedAt" xml:space="preserve">
+    <value>Erstellt</value>
+  </data>
+  <data name="ColumnActions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="CreateUserTitle" xml:space="preserve">
+    <value>Benutzer erstellen</value>
+  </data>
+  <data name="EditUserTitle" xml:space="preserve">
+    <value>Benutzer bearbeiten</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Benutzer löschen</value>
+  </data>
+  <data name="ConfirmDeleteMessage" xml:space="preserve">
+    <value>Möchten Sie den Benutzer „{0}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.</value>
+  </data>
+  <data name="ResetPasswordTitle" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="ResetPasswordConfirmMessage" xml:space="preserve">
+    <value>Möchten Sie das Passwort für „{0}" wirklich zurücksetzen?</value>
+  </data>
+  <data name="ResetLinkMessage" xml:space="preserve">
+    <value>Teilen Sie den folgenden Link zum Zurücksetzen mit „{0}":</value>
+  </data>
+  <data name="ResetLinkNote" xml:space="preserve">
+    <value>Dieser Link ist 24 Stunden gültig. Der Benutzer kann damit ein neues Passwort festlegen.</value>
+  </data>
+  <data name="SuccessUserCreated" xml:space="preserve">
+    <value>Benutzer erfolgreich erstellt.</value>
+  </data>
+  <data name="SuccessUserUpdated" xml:space="preserve">
+    <value>Benutzer erfolgreich aktualisiert.</value>
+  </data>
+  <data name="SuccessUserDeleted" xml:space="preserve">
+    <value>Benutzer erfolgreich gelöscht.</value>
+  </data>
+  <data name="ErrorUserManagementFailed" xml:space="preserve">
+    <value>Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.</value>
+  </data>
+  <data name="AdminBadgeYes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="AdminBadgeNo" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NoUsersFound" xml:space="preserve">
+    <value>Keine Benutzer gefunden.</value>
+  </data>
+  <data name="LoadingUsers" xml:space="preserve">
+    <value>Benutzer werden geladen...</value>
+  </data>
 </root>

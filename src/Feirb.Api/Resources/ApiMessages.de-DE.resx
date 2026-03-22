@@ -66,4 +66,19 @@
   <data name="SmtpConnectionFailed" xml:space="preserve">
     <value>Verbindung zum SMTP-Server fehlgeschlagen.</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Benutzer nicht gefunden.</value>
+  </data>
+  <data name="CannotDeleteSelf" xml:space="preserve">
+    <value>Sie können Ihr eigenes Konto nicht löschen.</value>
+  </data>
+  <data name="CannotDemoteSelf" xml:space="preserve">
+    <value>Sie können Ihre eigenen Administratorrechte nicht entfernen.</value>
+  </data>
+  <data name="LastAdminCannotBeDemoted" xml:space="preserve">
+    <value>Der letzte Administrator kann nicht herabgestuft werden. Mindestens ein Administrator muss vorhanden sein.</value>
+  </data>
+  <data name="UserDeleted" xml:space="preserve">
+    <value>Benutzer wurde gelöscht.</value>
+  </data>
 </root>

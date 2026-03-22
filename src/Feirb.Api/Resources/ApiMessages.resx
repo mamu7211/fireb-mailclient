@@ -66,4 +66,19 @@
   <data name="SmtpConnectionFailed" xml:space="preserve">
     <value>Failed to connect to SMTP server.</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+  <data name="CannotDeleteSelf" xml:space="preserve">
+    <value>You cannot delete your own account.</value>
+  </data>
+  <data name="CannotDemoteSelf" xml:space="preserve">
+    <value>You cannot remove your own admin privileges.</value>
+  </data>
+  <data name="LastAdminCannotBeDemoted" xml:space="preserve">
+    <value>The last admin cannot be demoted. At least one admin must exist.</value>
+  </data>
+  <data name="UserDeleted" xml:space="preserve">
+    <value>User has been deleted.</value>
+  </data>
 </root>

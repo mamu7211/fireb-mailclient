@@ -300,4 +300,100 @@
   <data name="NavLogout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="PageTitleAdminUsers" xml:space="preserve">
+    <value>Admin - Users - Feirb</value>
+  </data>
+  <data name="AdminUsersHeading" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="ButtonCreateUser" xml:space="preserve">
+    <value>Create User</value>
+  </data>
+  <data name="ButtonEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ButtonDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ButtonConfirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ButtonCopyLink" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="LabelIsAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="ColumnUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="ColumnEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ColumnAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ColumnCreatedAt" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="ColumnActions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="CreateUserTitle" xml:space="preserve">
+    <value>Create User</value>
+  </data>
+  <data name="EditUserTitle" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Delete User</value>
+  </data>
+  <data name="ConfirmDeleteMessage" xml:space="preserve">
+    <value>Are you sure you want to delete user "{0}"? This action cannot be undone.</value>
+  </data>
+  <data name="ResetPasswordTitle" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ResetPasswordConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to reset the password for "{0}"?</value>
+  </data>
+  <data name="ResetLinkMessage" xml:space="preserve">
+    <value>Share the following reset link with "{0}":</value>
+  </data>
+  <data name="ResetLinkNote" xml:space="preserve">
+    <value>This link expires in 24 hours. The user can use it to set a new password.</value>
+  </data>
+  <data name="SuccessUserCreated" xml:space="preserve">
+    <value>User created successfully.</value>
+  </data>
+  <data name="SuccessUserUpdated" xml:space="preserve">
+    <value>User updated successfully.</value>
+  </data>
+  <data name="SuccessUserDeleted" xml:space="preserve">
+    <value>User deleted successfully.</value>
+  </data>
+  <data name="ErrorUserManagementFailed" xml:space="preserve">
+    <value>An error occurred. Please try again.</value>
+  </data>
+  <data name="AdminBadgeYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AdminBadgeNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoUsersFound" xml:space="preserve">
+    <value>No users found.</value>
+  </data>
+  <data name="LoadingUsers" xml:space="preserve">
+    <value>Loading users...</value>
+  </data>
 </root>
