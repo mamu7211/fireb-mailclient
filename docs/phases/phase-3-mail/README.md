@@ -14,6 +14,7 @@ Background IMAP synchronization and a unified inbox view. All mailboxes merge in
 | 2 | [IMAP Sync Service](02-imap-sync-service.md) | #69 | Quartz.NET background sync embedded in Feirb.Api |
 | 3 | [Mail API](03-mail-api.md) | #70 | Paginated inbox list and message detail endpoints |
 | 4 | [Inbox UI](04-inbox-ui.md) | #71 | Unified inbox list page and message detail page |
+| 5 | [GreenMail Dev Server](05-greenmail-dev-server.md) | #58 | Replace Mailpit with GreenMail (IMAP + SMTP + API) |
 
 ## Dependencies
 
@@ -21,6 +22,7 @@ Background IMAP synchronization and a unified inbox view. All mailboxes merge in
 - Feature 2 depends on Feature 1 (entities to write into)
 - Feature 3 depends on Feature 1 (entities to query)
 - Feature 4 depends on Feature 3 (API to call)
+- Feature 5 is independent — can be implemented at any point during Phase 3
 
 ## Deferred Feature Requests
 
