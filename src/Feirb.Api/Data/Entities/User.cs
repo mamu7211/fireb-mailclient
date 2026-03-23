@@ -10,6 +10,7 @@ public class User
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiresAt { get; set; }
     public bool IsAdmin { get; set; }
+    public string? TimeZone { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

@@ -24,6 +24,13 @@ public class Mailbox
     public bool SmtpUseTls { get; set; } = true;
     public bool SmtpRequiresAuth { get; set; } = true;
 
+    // Sync settings
+    public string? BadgeColor { get; set; }
+    public int InitialSyncDays { get; set; }
+    public int PollIntervalMinutes { get; set; } = 60;
+
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
+    public ICollection<CachedMessage> CachedMessages { get; set; } = [];
 }
