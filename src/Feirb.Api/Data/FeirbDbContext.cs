@@ -65,6 +65,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.SmtpUsername).HasMaxLength(256);
             entity.Property(e => e.SmtpEncryptedPassword).HasMaxLength(1024);
             entity.Property(e => e.BadgeColor).HasMaxLength(9);
+            entity.Property(e => e.PollIntervalMinutes).HasDefaultValue(60);
             entity.HasOne(e => e.User)
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
@@ -74,8 +75,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
         modelBuilder.Entity<CachedMessage>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.HasIndex(e => e.MailboxId);
-            entity.HasIndex(e => e.MessageId).IsUnique();
+            entity.HasIndex(e => new { e.MailboxId, e.MessageId }).IsUnique();
             entity.HasIndex(e => e.Date);
             entity.Property(e => e.MessageId).HasMaxLength(512);
             entity.Property(e => e.Subject).HasMaxLength(1024);

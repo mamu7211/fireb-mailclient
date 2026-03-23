@@ -37,7 +37,7 @@ namespace Feirb.Api.Data.Migrations
                 table: "Mailboxes",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 60);
 
             migrationBuilder.CreateTable(
                 name: "CachedMessages",
@@ -100,14 +100,9 @@ namespace Feirb.Api.Data.Migrations
                 column: "Date");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CachedMessages_MailboxId",
+                name: "IX_CachedMessages_MailboxId_MessageId",
                 table: "CachedMessages",
-                column: "MailboxId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CachedMessages_MessageId",
-                table: "CachedMessages",
-                column: "MessageId",
+                columns: new[] { "MailboxId", "MessageId" },
                 unique: true);
         }
 

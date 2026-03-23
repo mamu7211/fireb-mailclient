@@ -107,9 +107,7 @@ namespace Feirb.Api.Data.Migrations
 
                     b.HasIndex("Date");
 
-                    b.HasIndex("MailboxId");
-
-                    b.HasIndex("MessageId")
+                    b.HasIndex("MailboxId", "MessageId")
                         .IsUnique();
 
                     b.ToTable("CachedMessages");
@@ -166,7 +164,9 @@ namespace Feirb.Api.Data.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<int>("PollIntervalMinutes")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(60);
 
                     b.Property<string>("SmtpEncryptedPassword")
                         .HasMaxLength(1024)
