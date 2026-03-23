@@ -10,6 +10,8 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
     public DbSet<SmtpSettings> SmtpSettings => Set<SmtpSettings>();
     public DbSet<Mailbox> Mailboxes => Set<Mailbox>();
+    public DbSet<CachedMessage> CachedMessages => Set<CachedMessage>();
+    public DbSet<CachedAttachment> CachedAttachments => Set<CachedAttachment>();
     public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +27,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.PasswordHash).HasMaxLength(256);
             entity.Property(e => e.SecurityStamp).HasMaxLength(64);
+            entity.Property(e => e.TimeZone).HasMaxLength(64);
         });
 
         modelBuilder.Entity<SmtpSettings>(entity =>
@@ -61,9 +64,39 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.SmtpHost).HasMaxLength(256);
             entity.Property(e => e.SmtpUsername).HasMaxLength(256);
             entity.Property(e => e.SmtpEncryptedPassword).HasMaxLength(1024);
+            entity.Property(e => e.BadgeColor).HasMaxLength(9);
+            entity.Property(e => e.PollIntervalMinutes).HasDefaultValue(60);
             entity.HasOne(e => e.User)
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<CachedMessage>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => new { e.MailboxId, e.MessageId }).IsUnique();
+            entity.HasIndex(e => e.Date);
+            entity.Property(e => e.MessageId).HasMaxLength(512);
+            entity.Property(e => e.Subject).HasMaxLength(1024);
+            entity.Property(e => e.From).HasMaxLength(512);
+            entity.Property(e => e.ReplyTo).HasMaxLength(512);
+            entity.Property(e => e.To).HasMaxLength(2048);
+            entity.Property(e => e.Cc).HasMaxLength(2048);
+            entity.HasOne(e => e.Mailbox)
+                .WithMany(m => m.CachedMessages)
+                .HasForeignKey(e => e.MailboxId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<CachedAttachment>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Filename).HasMaxLength(512);
+            entity.Property(e => e.MimeType).HasMaxLength(256);
+            entity.HasOne(e => e.CachedMessage)
+                .WithMany(m => m.Attachments)
+                .HasForeignKey(e => e.CachedMessageId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }
