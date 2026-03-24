@@ -98,7 +98,7 @@ public class ImapSyncService(
                 {
                     await db.SaveChangesAsync(cancellationToken);
                     pendingCount = 0;
-                    logger.LogDebug("Saved batch of {BatchSize} messages for mailbox {MailboxId}",
+                    logger.LogInformation("Saved batch of {BatchSize} messages for mailbox {MailboxId}",
                         _saveBatchSize, mailboxId);
                 }
             }
