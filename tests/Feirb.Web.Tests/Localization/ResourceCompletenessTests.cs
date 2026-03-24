@@ -98,6 +98,7 @@ public class ResourceCompletenessTests
         "PaginationPrevious",
         "PaginationNext",
         "PaginationPageOf",
+        "NoBodyContent",
     ];
 
     /// <summary>Keys that may be identical across languages (brand names, universal terms).</summary>

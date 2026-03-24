@@ -807,4 +807,7 @@
   <data name="PaginationPageOf" xml:space="preserve">
     <value>Page {0} of {1}</value>
   </data>
+  <data name="NoBodyContent" xml:space="preserve">
+    <value>This message has no content.</value>
+  </data>
 </root>

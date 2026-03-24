@@ -41,7 +41,10 @@ else
             <tbody>
                 @foreach (var msg in _messages.Items)
                 {
-                    <tr role="button" @onclick="() => NavigateToMessage(msg.Id)" style="cursor: pointer;">
+                    <tr role="button" tabindex="0"
+                        @onclick="() => NavigateToMessage(msg.Id)"
+                        @onkeydown="e => OnRowKeyDownAsync(e, msg.Id)"
+                        style="cursor: pointer;">
                         <td>
                             <span class="badge" style="background-color: @(msg.MailboxBadgeColor ?? "#6c757d");">
                                 @msg.MailboxName
@@ -55,7 +58,7 @@ else
                                 <span class="material-symbols-outlined ms-1" style="font-size: 1rem; vertical-align: middle;">attachment</span>
                             }
                         </td>
-                        <td class="text-nowrap">@msg.Date.LocalDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-nowrap">@msg.Date.LocalDateTime.ToString("g")</td>
                     </tr>
                 }
             </tbody>
@@ -129,6 +132,12 @@ else
             _currentPage++;
             await LoadMessagesAsync();
         }
+    }
+
+    private void OnRowKeyDownAsync(KeyboardEventArgs e, Guid id)
+    {
+        if (e.Key is "Enter" or " ")
+            NavigateToMessage(id);
     }
 
     private void NavigateToMessage(Guid id) =>

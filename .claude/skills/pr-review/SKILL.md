@@ -67,9 +67,11 @@ Perform a thorough code review on a given pull request, covering correctness, co
    - 🟡 **Suggestion** — should fix, improves quality (convention violations, missing tests, i18n gaps)
    - 🟢 **Nitpick** — optional, minor improvements (style, naming preferences)
 
-3. **Reference specific files and lines** when pointing out issues.
+3. **Prefix every finding** with its severity icon (🔴, 🟡, or 🟢) so findings are scannable at a glance.
 
-4. **On user request**, submit findings as a GitHub PR review:
+4. **Reference specific files and lines** when pointing out issues.
+
+5. **On user request**, submit findings as a GitHub PR review:
    ```bash
    gh pr review {pr_number} --comment --body "..."
    ```

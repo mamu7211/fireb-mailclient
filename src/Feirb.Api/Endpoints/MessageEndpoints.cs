@@ -43,7 +43,7 @@ public static class MessageEndpoints
                 m.From,
                 m.Subject,
                 m.Date,
-                m.Attachments.Count > 0))
+                m.Attachments.Any()))
             .ToListAsync();
 
         return Results.Ok(new PaginatedResponse<MessageListItemResponse>(items, page, pageSize, totalCount));
@@ -82,6 +82,10 @@ public static class MessageEndpoints
         return Results.Ok(response);
     }
 
-    private static Guid GetCurrentUserId(HttpContext httpContext) =>
-        Guid.Parse(httpContext.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    private static Guid GetCurrentUserId(HttpContext httpContext)
+    {
+        var claim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)
+            ?? throw new InvalidOperationException("Missing NameIdentifier claim. Ensure the endpoint requires authorization.");
+        return Guid.Parse(claim.Value);
+    }
 }
