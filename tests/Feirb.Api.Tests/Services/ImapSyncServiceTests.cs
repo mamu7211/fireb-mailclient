@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
 namespace Feirb.Api.Tests.Services;
@@ -130,7 +131,7 @@ public class ImapSyncServiceTests
         var logger = NullLogger<ImapSyncService>.Instance;
         var scopeFactory = services.GetRequiredService<IServiceScopeFactory>();
 
-        var service = new ImapSyncService(scopeFactory, logger);
+        var service = new ImapSyncService(scopeFactory, logger, Options.Create(new ImapSyncSettings()));
 
         // Should not throw — just logs warning
         await service.Invoking(s => s.SyncMailboxAsync(Guid.NewGuid()))
@@ -170,7 +171,7 @@ public class ImapSyncServiceTests
 
         var logger = NullLogger<ImapSyncService>.Instance;
         var scopeFactory = services.GetRequiredService<IServiceScopeFactory>();
-        var service = new ImapSyncService(scopeFactory, logger);
+        var service = new ImapSyncService(scopeFactory, logger, Options.Create(new ImapSyncSettings()));
 
         // Should not throw — just logs warning and skips
         await service.Invoking(s => s.SyncMailboxAsync(mailbox.Id))
@@ -335,8 +336,8 @@ public class ImapSyncServiceTests
     }
 
     [Fact]
-    public void SaveBatchSize_IsReasonableValue() =>
-        ImapSyncService.SaveBatchSize.Should().BeInRange(10, 200);
+    public void ImapSyncSettings_DefaultSaveBatchSize_Is50() =>
+        new ImapSyncSettings().SaveBatchSize.Should().Be(50);
 
     private static ServiceProvider CreateServiceProvider()
     {

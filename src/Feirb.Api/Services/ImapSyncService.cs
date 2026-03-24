@@ -5,16 +5,18 @@ using MailKit.Net.Imap;
 using MailKit.Search;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
 namespace Feirb.Api.Services;
 
 public class ImapSyncService(
     IServiceScopeFactory scopeFactory,
-    ILogger<ImapSyncService> logger) : IImapSyncService
+    ILogger<ImapSyncService> logger,
+    IOptions<ImapSyncSettings> syncSettings) : IImapSyncService
 {
     private const string _imapPasswordPurpose = "MailboxImapPassword";
-    internal const int SaveBatchSize = 50;
+    private readonly int _saveBatchSize = syncSettings.Value.SaveBatchSize;
 
     public async Task SyncMailboxAsync(Guid mailboxId, CancellationToken cancellationToken = default)
     {
@@ -92,12 +94,12 @@ public class ImapSyncService(
                 existingMessageIds.Add(cached.MessageId);
                 pendingCount++;
 
-                if (pendingCount >= SaveBatchSize)
+                if (pendingCount >= _saveBatchSize)
                 {
                     await db.SaveChangesAsync(cancellationToken);
                     pendingCount = 0;
                     logger.LogDebug("Saved batch of {BatchSize} messages for mailbox {MailboxId}",
-                        SaveBatchSize, mailboxId);
+                        _saveBatchSize, mailboxId);
                 }
             }
 
