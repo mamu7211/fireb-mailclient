@@ -334,6 +334,10 @@ public class ImapSyncServiceTests
         lastSeenUid.Should().Be(100u);
     }
 
+    [Fact]
+    public void SaveBatchSize_IsReasonableValue() =>
+        ImapSyncService.SaveBatchSize.Should().BeInRange(10, 200);
+
     private static ServiceProvider CreateServiceProvider()
     {
         var services = new ServiceCollection();

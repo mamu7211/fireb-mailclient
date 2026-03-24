@@ -14,6 +14,7 @@ public class ImapSyncService(
     ILogger<ImapSyncService> logger) : IImapSyncService
 {
     private const string _imapPasswordPurpose = "MailboxImapPassword";
+    internal const int SaveBatchSize = 50;
 
     public async Task SyncMailboxAsync(Guid mailboxId, CancellationToken cancellationToken = default)
     {
@@ -75,6 +76,7 @@ public class ImapSyncService(
                 .Select(cm => cm.MessageId)
                 .ToHashSetAsync(cancellationToken);
 
+            var pendingCount = 0;
             foreach (var uid in uids)
             {
                 var message = await inbox.GetMessageAsync(uid, cancellationToken);
@@ -87,9 +89,22 @@ public class ImapSyncService(
 
                 var cached = MapToCachedMessage(message, mailboxId, uid);
                 db.CachedMessages.Add(cached);
+                existingMessageIds.Add(cached.MessageId);
+                pendingCount++;
+
+                if (pendingCount >= SaveBatchSize)
+                {
+                    await db.SaveChangesAsync(cancellationToken);
+                    pendingCount = 0;
+                    logger.LogDebug("Saved batch of {BatchSize} messages for mailbox {MailboxId}",
+                        SaveBatchSize, mailboxId);
+                }
             }
 
-            await db.SaveChangesAsync(cancellationToken);
+            if (pendingCount > 0)
+            {
+                await db.SaveChangesAsync(cancellationToken);
+            }
             await client.DisconnectAsync(quit: true, cancellationToken);
 
             logger.LogInformation("Sync completed for mailbox {MailboxId}", mailboxId);
