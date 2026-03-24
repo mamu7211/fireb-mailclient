@@ -5,15 +5,18 @@ using MailKit.Net.Imap;
 using MailKit.Search;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
 namespace Feirb.Api.Services;
 
 public class ImapSyncService(
     IServiceScopeFactory scopeFactory,
-    ILogger<ImapSyncService> logger) : IImapSyncService
+    ILogger<ImapSyncService> logger,
+    IOptions<ImapSyncSettings> syncSettings) : IImapSyncService
 {
     private const string _imapPasswordPurpose = "MailboxImapPassword";
+    private readonly int _saveBatchSize = syncSettings.Value.SaveBatchSize;
 
     public async Task SyncMailboxAsync(Guid mailboxId, CancellationToken cancellationToken = default)
     {
@@ -75,6 +78,7 @@ public class ImapSyncService(
                 .Select(cm => cm.MessageId)
                 .ToHashSetAsync(cancellationToken);
 
+            var pendingCount = 0;
             foreach (var uid in uids)
             {
                 var message = await inbox.GetMessageAsync(uid, cancellationToken);
@@ -87,9 +91,22 @@ public class ImapSyncService(
 
                 var cached = MapToCachedMessage(message, mailboxId, uid);
                 db.CachedMessages.Add(cached);
+                existingMessageIds.Add(cached.MessageId);
+                pendingCount++;
+
+                if (pendingCount >= _saveBatchSize)
+                {
+                    await db.SaveChangesAsync(cancellationToken);
+                    pendingCount = 0;
+                    logger.LogInformation("Saved batch of {BatchSize} messages for mailbox {MailboxId}",
+                        _saveBatchSize, mailboxId);
+                }
             }
 
-            await db.SaveChangesAsync(cancellationToken);
+            if (pendingCount > 0)
+            {
+                await db.SaveChangesAsync(cancellationToken);
+            }
             await client.DisconnectAsync(quit: true, cancellationToken);
 
             logger.LogInformation("Sync completed for mailbox {MailboxId}", mailboxId);

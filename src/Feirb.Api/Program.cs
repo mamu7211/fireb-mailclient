@@ -71,6 +71,9 @@ builder.Services.AddDataProtection()
 // Localization
 builder.Services.AddLocalization();
 
+// IMAP sync configuration
+builder.Services.Configure<ImapSyncSettings>(builder.Configuration.GetSection(ImapSyncSettings.SectionName));
+
 // Quartz.NET scheduler
 builder.Services.AddQuartz();
 builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
