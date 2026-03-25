@@ -73,6 +73,7 @@ dotnet format
 - Record types for all DTOs in `Feirb.Shared`
 - All async methods suffixed with `Async`
 - Expression-bodied members for single-line implementations
+- **Icons:** Bootstrap Icons (`<i class="bi bi-icon-name"></i>`). Do NOT use Google Material Symbols
 - See `.editorconfig` for full formatting rules
 
 ### Testing
@@ -88,6 +89,12 @@ dotnet format
 - Scopes: `(api)`, `(web)`, `(apphost)`, `(shared)`, `(design)`
 - Branch naming: `feature/`, `fix/`, `docs/`, `chore/`
 - Target branch: `main`
+
+### Issues
+
+- See [`docs/ISSUES.md`](docs/ISSUES.md) for issue templates, labels, and guidelines
+- Always apply at least one type label (`bug`, `feature`, `enhancement`, etc.)
+- Feature specs live inline in the issue body — no separate spec docs
 
 ### API Design
 
