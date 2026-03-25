@@ -15,6 +15,7 @@ Background IMAP synchronization and a unified inbox view. All mailboxes merge in
 | 3 | [Mail API](03-mail-api.md) | #70 | Paginated inbox list and message detail endpoints |
 | 4 | [Inbox UI](04-inbox-ui.md) | #71 | Unified inbox list page and message detail page |
 | 5 | [GreenMail Dev Server](05-greenmail-dev-server.md) | #58 | Replace Mailpit with GreenMail (IMAP + SMTP + API) |
+| 6 | [Dashboard Widget System](06-dashboard-widget-system.md) | #89 | GridStack.js widget grid with layout persistence (spike) |
 
 ## Dependencies
 
