@@ -7,7 +7,7 @@ namespace Feirb.Api.Endpoints;
 
 public static class MailStatsEndpoints
 {
-    private static readonly int[] AllowedDays = [7, 14, 30, 90, 180, 365];
+    private static readonly int[] _allowedDays = [7, 14, 30, 90, 180, 365];
 
     public static RouteGroupBuilder MapMailStatsEndpoints(this RouteGroupBuilder group)
     {
@@ -22,7 +22,7 @@ public static class MailStatsEndpoints
     {
         var userId = GetCurrentUserId(httpContext);
 
-        if (!AllowedDays.Contains(days))
+        if (!_allowedDays.Contains(days))
             days = 7;
 
         var totalCount = await db.CachedMessages
