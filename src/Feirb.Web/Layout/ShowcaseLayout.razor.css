@@ -1,0 +1,4 @@
+.showcase-layout {
+    min-height: 100vh;
+    background-color: var(--bs-body-bg);
+}

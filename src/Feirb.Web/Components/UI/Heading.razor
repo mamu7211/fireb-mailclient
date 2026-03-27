@@ -1,0 +1,61 @@
+@namespace Feirb.Web.Components.UI
+
+@* Semantic heading with optional icon and subtitle. *@
+<div class="feirb-heading @Class">
+    @switch (Level)
+    {
+        case HeadingLevel.Large:
+            <h1 class="feirb-heading-title feirb-heading-lg">
+                @if (!string.IsNullOrEmpty(Icon))
+                {
+                    <Icon Name="@Icon" Size="IconSize.Large" Class="me-2" />
+                }
+                @ChildContent
+            </h1>
+            break;
+        case HeadingLevel.Small:
+            <h3 class="feirb-heading-title feirb-heading-sm">
+                @if (!string.IsNullOrEmpty(Icon))
+                {
+                    <Icon Name="@Icon" Size="IconSize.Small" Class="me-2" />
+                }
+                @ChildContent
+            </h3>
+            break;
+        default:
+            <h2 class="feirb-heading-title feirb-heading-md">
+                @if (!string.IsNullOrEmpty(Icon))
+                {
+                    <Icon Name="@Icon" Class="me-2" />
+                }
+                @ChildContent
+            </h2>
+            break;
+    }
+    @if (!string.IsNullOrEmpty(Subtitle))
+    {
+        <p class="feirb-heading-subtitle">@Subtitle</p>
+    }
+</div>
+
+@code {
+    /// <summary>Heading level determining the rendered HTML element and size.</summary>
+    [Parameter]
+    public HeadingLevel Level { get; set; } = HeadingLevel.Large;
+
+    /// <summary>Bootstrap Icon name (without "bi-" prefix).</summary>
+    [Parameter]
+    public string? Icon { get; set; }
+
+    /// <summary>Optional subtitle rendered below the heading.</summary>
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    /// <summary>Heading text/content.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    /// <summary>Additional CSS classes.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+}

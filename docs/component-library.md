@@ -19,6 +19,24 @@ Renders a Bootstrap Icon with consistent sizing.
 | `Size` | `IconSize` | `Default` | `Small` (0.875rem), `Default` (1.25rem), `Large` (2rem) |
 | `Class` | `string?` | `null` | Extra CSS classes |
 
+## Heading
+
+Semantic heading with optional icon and subtitle.
+
+```razor
+<Heading Level="HeadingLevel.Large" Icon="gear">Settings</Heading>
+<Heading Level="HeadingLevel.Medium" Subtitle="Configure your account">Profile</Heading>
+<Heading Level="HeadingLevel.Small">Section Title</Heading>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Level` | `HeadingLevel` | `Large` | `Large` (h1), `Medium` (h2), `Small` (h3) |
+| `Icon` | `string?` | `null` | Icon name (without `bi-` prefix) |
+| `Subtitle` | `string?` | `null` | Subtitle text below the heading |
+| `ChildContent` | `RenderFragment` (required) | — | Heading text/content |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
 ## Button
 
 Standard button with optional icon.
@@ -93,6 +111,7 @@ Defined in `UIEnums.cs`:
 - **`ButtonVariant`**: `Primary`, `Secondary`, `Danger`, `Warning`
 - **`ButtonSize`**: `Small`, `Medium`, `Large`
 - **`IconPosition`**: `Left`, `Right`
+- **`HeadingLevel`**: `Large`, `Medium`, `Small`
 
 ## Design Tokens
 

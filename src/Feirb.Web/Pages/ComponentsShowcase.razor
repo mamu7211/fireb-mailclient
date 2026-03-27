@@ -1,0 +1,511 @@
+@page "/components-showcase"
+@attribute [AllowAnonymous]
+@layout Feirb.Web.Layout.ShowcaseLayout
+@inject IJSRuntime JS
+
+<div class="showcase-container">
+    <!-- Mobile hamburger -->
+    <button class="showcase-hamburger d-md-none" @onclick="ToggleSidebar" aria-label="Toggle sidebar">
+        <Icon Name="list" Size="IconSize.Large" />
+    </button>
+
+    <!-- Sidebar backdrop (mobile) -->
+    @if (_sidebarOpen)
+    {
+        <div class="showcase-backdrop d-md-none" @onclick="ToggleSidebar"></div>
+    }
+
+    <!-- Sidebar -->
+    <aside class="showcase-sidebar @(_sidebarOpen ? "open" : "")" role="navigation" aria-label="Component navigation">
+        <div class="showcase-sidebar-header">
+            <Heading Level="HeadingLevel.Small" Icon="palette2">Feirb Components</Heading>
+        </div>
+
+        @foreach (var category in _categories)
+        {
+            <div class="showcase-nav-section">
+                <button class="showcase-nav-section-label"
+                        @onclick="() => ToggleCategory(category.Name)"
+                        aria-expanded="@category.IsExpanded">
+                    <Icon Name="@(category.IsExpanded ? "chevron-down" : "chevron-right")" Size="IconSize.Small" />
+                    <span>@category.Name</span>
+                </button>
+                @if (category.IsExpanded)
+                {
+                    <ul class="showcase-nav-list">
+                        @foreach (var component in category.Components)
+                        {
+                            <li>
+                                <button class="showcase-nav-entry @(_selectedComponent == component ? "active" : "")"
+                                        @onclick="() => SelectComponent(component)">
+                                    @component
+                                </button>
+                            </li>
+                        }
+                        @if (category.Components.Length == 0)
+                        {
+                            <li class="showcase-nav-empty">No components yet</li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
+    </aside>
+
+    <!-- Main content -->
+    <main class="showcase-main">
+        @switch (_selectedComponent)
+        {
+            case "Icon":
+                @RenderIconSection()
+                break;
+            case "Heading":
+                @RenderHeadingSection()
+                break;
+            case "Button":
+                @RenderButtonSection()
+                break;
+            case "CircularButton":
+                @RenderCircularButtonSection()
+                break;
+            case "Card":
+                @RenderCardSection()
+                break;
+            default:
+                <div class="text-center py-5">
+                    <Icon Name="palette2" Size="IconSize.Large" Class="mb-3 d-block mx-auto" />
+                    <p class="text-muted">Select a component from the sidebar.</p>
+                </div>
+                break;
+        }
+    </main>
+</div>
+
+@* ────────────── Icon Section ────────────── *@
+@{
+    RenderFragment RenderIconSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="image">Icon</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Renders a Bootstrap Icon with consistent sizing. Wraps <code>&lt;i class="bi bi-..."&gt;</code> with standardized size classes.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>Name</code></td><td><code>string</code></td><td>required</td><td>Icon name without <code>bi-</code> prefix</td></tr>
+                        <tr><td><code>Size</code></td><td><code>IconSize</code></td><td><code>Default</code></td><td>Small (0.875rem), Default (1.25rem), Large (2rem)</td></tr>
+                        <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Size:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_iconSize">
+                        <option value="@IconSize.Small">Small</option>
+                        <option value="@IconSize.Default">Default</option>
+                        <option value="@IconSize.Large">Large</option>
+                    </select>
+                    <label class="form-label mb-0">Name:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_iconName">
+                        <option value="gear">gear</option>
+                        <option value="envelope">envelope</option>
+                        <option value="pencil">pencil</option>
+                        <option value="trash">trash</option>
+                        <option value="star-fill">star-fill</option>
+                        <option value="heart-fill">heart-fill</option>
+                    </select>
+                </div>
+                <div class="showcase-preview-area">
+                    <Icon Name="@_iconName" Size="@_iconSize" />
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── Heading Section ────────────── *@
+@{
+    RenderFragment RenderHeadingSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="type-h1">Heading</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Semantic heading component with optional icon and subtitle. Renders <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, or <code>&lt;h3&gt;</code> based on the level.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>Level</code></td><td><code>HeadingLevel</code></td><td><code>Large</code></td><td>Large (h1), Medium (h2), Small (h3)</td></tr>
+                        <tr><td><code>Icon</code></td><td><code>string?</code></td><td><code>null</code></td><td>Icon name without <code>bi-</code> prefix</td></tr>
+                        <tr><td><code>Subtitle</code></td><td><code>string?</code></td><td><code>null</code></td><td>Subtitle text below the heading</td></tr>
+                        <tr><td><code>ChildContent</code></td><td><code>RenderFragment</code></td><td>required</td><td>Heading text/content</td></tr>
+                        <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Level:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_headingLevel">
+                        <option value="@HeadingLevel.Large">Large</option>
+                        <option value="@HeadingLevel.Medium">Medium</option>
+                        <option value="@HeadingLevel.Small">Small</option>
+                    </select>
+                    <label class="form-label mb-0">Icon:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_headingIcon">
+                        <option value="">(none)</option>
+                        <option value="gear">gear</option>
+                        <option value="envelope">envelope</option>
+                        <option value="star-fill">star-fill</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="headingSubtitle" @bind="_headingShowSubtitle" />
+                        <label class="form-check-label" for="headingSubtitle">Subtitle</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <Heading Level="@_headingLevel"
+                             Icon="@(string.IsNullOrEmpty(_headingIcon) ? null : _headingIcon)"
+                             Subtitle="@(_headingShowSubtitle ? "This is a subtitle" : null)">
+                        Example Heading
+                    </Heading>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── Button Section ────────────── *@
+@{
+    RenderFragment RenderButtonSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="hand-index-thumb">Button</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Standard button with optional icon. Maps to Bootstrap button classes with consistent styling.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>Variant</code></td><td><code>ButtonVariant</code></td><td><code>Primary</code></td><td>Primary, Secondary, Danger, Warning</td></tr>
+                        <tr><td><code>Size</code></td><td><code>ButtonSize</code></td><td><code>Medium</code></td><td>Small, Medium, Large</td></tr>
+                        <tr><td><code>Icon</code></td><td><code>string?</code></td><td><code>null</code></td><td>Icon name (without <code>bi-</code> prefix)</td></tr>
+                        <tr><td><code>IconPosition</code></td><td><code>IconPosition</code></td><td><code>Left</code></td><td>Left or Right</td></tr>
+                        <tr><td><code>Disabled</code></td><td><code>bool</code></td><td><code>false</code></td><td>Disabled state</td></tr>
+                        <tr><td><code>ChildContent</code></td><td><code>RenderFragment?</code></td><td>&#8212;</td><td>Button text/content</td></tr>
+                        <tr><td><code>OnClick</code></td><td><code>EventCallback</code></td><td>&#8212;</td><td>Click handler</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Variant:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_btnVariant">
+                        <option value="@ButtonVariant.Primary">Primary</option>
+                        <option value="@ButtonVariant.Secondary">Secondary</option>
+                        <option value="@ButtonVariant.Danger">Danger</option>
+                        <option value="@ButtonVariant.Warning">Warning</option>
+                    </select>
+                    <label class="form-label mb-0">Size:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_btnSize">
+                        <option value="@ButtonSize.Small">Small</option>
+                        <option value="@ButtonSize.Medium">Medium</option>
+                        <option value="@ButtonSize.Large">Large</option>
+                    </select>
+                    <label class="form-label mb-0">Icon:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_btnIcon">
+                        <option value="">(none)</option>
+                        <option value="pencil">pencil</option>
+                        <option value="trash">trash</option>
+                        <option value="download">download</option>
+                        <option value="plus-lg">plus-lg</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="btnDisabled" @bind="_btnDisabled" />
+                        <label class="form-check-label" for="btnDisabled">Disabled</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <Button Variant="@_btnVariant"
+                            Size="@_btnSize"
+                            Icon="@(string.IsNullOrEmpty(_btnIcon) ? null : _btnIcon)"
+                            Disabled="@_btnDisabled">
+                        Save
+                    </Button>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── CircularButton Section ────────────── *@
+@{
+    RenderFragment RenderCircularButtonSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="circle">CircularButton</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Icon-only circular button. Requires <code>AriaLabel</code> for WCAG AA accessibility compliance.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>AriaLabel</code></td><td><code>string</code></td><td>required</td><td>Accessible name (WCAG AA)</td></tr>
+                        <tr><td><code>Variant</code></td><td><code>ButtonVariant</code></td><td><code>Primary</code></td><td>Visual variant</td></tr>
+                        <tr><td><code>Size</code></td><td><code>ButtonSize</code></td><td><code>Medium</code></td><td>Small (2rem), Medium (2.5rem), Large (3rem)</td></tr>
+                        <tr><td><code>Disabled</code></td><td><code>bool</code></td><td><code>false</code></td><td>Disabled state</td></tr>
+                        <tr><td><code>ChildContent</code></td><td><code>RenderFragment?</code></td><td>&#8212;</td><td>Typically an <code>&lt;Icon&gt;</code></td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Variant:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_cbVariant">
+                        <option value="@ButtonVariant.Primary">Primary</option>
+                        <option value="@ButtonVariant.Secondary">Secondary</option>
+                        <option value="@ButtonVariant.Danger">Danger</option>
+                        <option value="@ButtonVariant.Warning">Warning</option>
+                    </select>
+                    <label class="form-label mb-0">Size:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_cbSize">
+                        <option value="@ButtonSize.Small">Small</option>
+                        <option value="@ButtonSize.Medium">Medium</option>
+                        <option value="@ButtonSize.Large">Large</option>
+                    </select>
+                    <label class="form-label mb-0">Icon:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_cbIcon">
+                        <option value="gear">gear</option>
+                        <option value="x">x</option>
+                        <option value="pencil">pencil</option>
+                        <option value="trash">trash</option>
+                        <option value="plus-lg">plus-lg</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cbDisabled" @bind="_cbDisabled" />
+                        <label class="form-check-label" for="cbDisabled">Disabled</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <CircularButton AriaLabel="Action"
+                                    Variant="@_cbVariant"
+                                    Size="@_cbSize"
+                                    Disabled="@_cbDisabled">
+                        <Icon Name="@_cbIcon" Size="@GetCircularIconSize(_cbSize)" />
+                    </CircularButton>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── Card Section ────────────── *@
+@{
+    RenderFragment RenderCardSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="card-text">Card</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Minimal card container with consistent shadow, border-radius, and padding. Use for grouping related content.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>ChildContent</code></td><td><code>RenderFragment</code></td><td>required</td><td>Card content</td></tr>
+                        <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cardExtraPadding" @bind="_cardExtraPadding" />
+                        <label class="form-check-label" for="cardExtraPadding">Extra padding (p-4)</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <Card Class="@(_cardExtraPadding ? "p-4" : "")">
+                        <h3>Example Card</h3>
+                        <p class="mb-0">This is some content inside a card component.</p>
+                    </Card>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@code {
+    // Sidebar state
+    private bool _sidebarOpen;
+    private string _selectedComponent = "Icon";
+
+    // Category model
+    private List<CategoryModel> _categories = new()
+    {
+        new("Primitives", true, "Icon", "Heading", "Button", "CircularButton", "Card"),
+        new("Composite", false),
+        new("Forms", false),
+        new("Feedback", false),
+        new("Navigation", false)
+    };
+
+    // Icon playground
+    private IconSize _iconSize = IconSize.Default;
+    private string _iconName = "gear";
+
+    // Heading playground
+    private HeadingLevel _headingLevel = HeadingLevel.Large;
+    private string _headingIcon = "";
+    private bool _headingShowSubtitle;
+
+    // Button playground
+    private ButtonVariant _btnVariant = ButtonVariant.Primary;
+    private ButtonSize _btnSize = ButtonSize.Medium;
+    private string _btnIcon = "";
+    private bool _btnDisabled;
+
+    // CircularButton playground
+    private ButtonVariant _cbVariant = ButtonVariant.Primary;
+    private ButtonSize _cbSize = ButtonSize.Medium;
+    private string _cbIcon = "gear";
+    private bool _cbDisabled;
+
+    // Card playground
+    private bool _cardExtraPadding;
+
+    // Code highlight ref
+    private ElementReference _codeElement;
+
+    private string CurrentCode => _selectedComponent switch
+    {
+        "Icon" => GetIconCode(),
+        "Heading" => GetHeadingCode(),
+        "Button" => GetButtonCode(),
+        "CircularButton" => GetCircularButtonCode(),
+        "Card" => GetCardCode(),
+        _ => ""
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("highlightCode", _codeElement, CurrentCode);
+        }
+        catch (JSException)
+        {
+            // highlight.js may not be loaded yet on first render
+        }
+    }
+
+    private void ToggleSidebar() => _sidebarOpen = !_sidebarOpen;
+
+    private void ToggleCategory(string name)
+    {
+        var category = _categories.Find(c => c.Name == name);
+        if (category is not null)
+            category.IsExpanded = !category.IsExpanded;
+    }
+
+    private void SelectComponent(string name)
+    {
+        _selectedComponent = name;
+        _sidebarOpen = false;
+    }
+
+    private static IconSize GetCircularIconSize(ButtonSize size) => size switch
+    {
+        ButtonSize.Small => IconSize.Small,
+        ButtonSize.Large => IconSize.Large,
+        _ => IconSize.Default
+    };
+
+    // ──── Code generation ────
+
+    private string GetIconCode() =>
+        $"""<Icon Name="{_iconName}"{(_iconSize != IconSize.Default ? $" Size=\"IconSize.{_iconSize}\"" : "")} />""";
+
+    private string GetHeadingCode()
+    {
+        var attrs = _headingLevel != HeadingLevel.Large ? $" Level=\"HeadingLevel.{_headingLevel}\"" : "";
+        if (!string.IsNullOrEmpty(_headingIcon))
+            attrs += $" Icon=\"{_headingIcon}\"";
+        if (_headingShowSubtitle)
+            attrs += " Subtitle=\"This is a subtitle\"";
+        return $"<Heading{attrs}>Example Heading</Heading>";
+    }
+
+    private string GetButtonCode()
+    {
+        var attrs = "";
+        if (_btnVariant != ButtonVariant.Primary) attrs += $" Variant=\"ButtonVariant.{_btnVariant}\"";
+        if (_btnSize != ButtonSize.Medium) attrs += $" Size=\"ButtonSize.{_btnSize}\"";
+        if (!string.IsNullOrEmpty(_btnIcon)) attrs += $" Icon=\"{_btnIcon}\"";
+        if (_btnDisabled) attrs += " Disabled=\"true\"";
+        return $"<Button{attrs}>Save</Button>";
+    }
+
+    private string GetCircularButtonCode()
+    {
+        var attrs = " AriaLabel=\"Action\"";
+        if (_cbVariant != ButtonVariant.Primary) attrs += $" Variant=\"ButtonVariant.{_cbVariant}\"";
+        if (_cbSize != ButtonSize.Medium) attrs += $" Size=\"ButtonSize.{_cbSize}\"";
+        if (_cbDisabled) attrs += " Disabled=\"true\"";
+        var iconSizeAttr = _cbSize != ButtonSize.Medium ? $" Size=\"IconSize.{GetCircularIconSize(_cbSize)}\"" : "";
+        return $"""
+            <CircularButton{attrs}>
+                <Icon Name="{_cbIcon}"{iconSizeAttr} />
+            </CircularButton>
+            """;
+    }
+
+    private string GetCardCode()
+    {
+        var cls = _cardExtraPadding ? " Class=\"p-4\"" : "";
+        return $"""
+            <Card{cls}>
+                <h3>Example Card</h3>
+                <p>This is some content inside a card component.</p>
+            </Card>
+            """;
+    }
+
+    private class CategoryModel(string name, bool isExpanded, params string[] components)
+    {
+        public string Name { get; } = name;
+        public bool IsExpanded { get; set; } = isExpanded;
+        public string[] Components { get; } = components;
+    }
+}

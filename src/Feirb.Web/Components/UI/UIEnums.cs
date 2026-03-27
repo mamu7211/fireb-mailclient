@@ -31,3 +31,11 @@ public enum IconPosition
     Left,
     Right
 }
+
+/// <summary>Semantic heading level.</summary>
+public enum HeadingLevel
+{
+    Large,
+    Medium,
+    Small
+}

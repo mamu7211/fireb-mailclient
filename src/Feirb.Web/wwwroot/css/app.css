@@ -315,6 +315,38 @@ code {
     color: var(--bs-primary);
 }
 
+/* Heading component */
+.feirb-heading {
+    margin-bottom: 1rem;
+}
+
+.feirb-heading-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    font-weight: 700;
+    color: var(--feirb-on-surface);
+}
+
+.feirb-heading-lg {
+    font-size: 1.75rem;
+}
+
+.feirb-heading-md {
+    font-size: 1.25rem;
+}
+
+.feirb-heading-sm {
+    font-size: 1rem;
+}
+
+.feirb-heading-subtitle {
+    color: var(--feirb-on-surface-variant);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
     color: var(--bs-secondary-color);
     text-align: end;
