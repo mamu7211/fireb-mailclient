@@ -60,6 +60,7 @@ Start working on a feature tracked by a GitHub issue.
    - Minimal APIs grouped by feature
    - xUnit + FluentAssertions for tests
    - Async methods suffixed with `Async`
+   - **For any UI work:** use `/implement-ui` to ensure consistent styling with the shared component library
 
 10. **Verify the implementation:**
    ```bash

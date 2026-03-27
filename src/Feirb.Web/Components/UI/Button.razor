@@ -1,0 +1,85 @@
+@namespace Feirb.Web.Components.UI
+
+@* Standard button with optional icon and consistent styling. *@
+<button type="@Type"
+        class="btn @VariantCss @SizeCss @Class"
+        disabled="@Disabled"
+        title="@Title"
+        @onclick="OnClick"
+        @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrEmpty(Icon) && IconPosition == IconPosition.Left)
+    {
+        <Icon Name="@Icon" Size="IconSize.Small" Class="@IconSpacingCss" />
+    }
+    @ChildContent
+    @if (!string.IsNullOrEmpty(Icon) && IconPosition == IconPosition.Right)
+    {
+        <Icon Name="@Icon" Size="IconSize.Small" Class="@IconSpacingCss" />
+    }
+</button>
+
+@code {
+    /// <summary>Button visual variant.</summary>
+    [Parameter]
+    public ButtonVariant Variant { get; set; } = ButtonVariant.Primary;
+
+    /// <summary>Button size.</summary>
+    [Parameter]
+    public ButtonSize Size { get; set; } = ButtonSize.Medium;
+
+    /// <summary>Bootstrap Icon name (without "bi-" prefix). Renders alongside ChildContent.</summary>
+    [Parameter]
+    public string? Icon { get; set; }
+
+    /// <summary>Position of the icon relative to the text.</summary>
+    [Parameter]
+    public IconPosition IconPosition { get; set; } = IconPosition.Left;
+
+    /// <summary>Button content (text, markup).</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Click event callback.</summary>
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    /// <summary>Whether the button is disabled.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>HTML button type attribute.</summary>
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    /// <summary>Tooltip text.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Additional CSS classes.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    /// <summary>Any extra HTML attributes.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string VariantCss => Variant switch
+    {
+        ButtonVariant.Primary => "btn-primary",
+        ButtonVariant.Secondary => "btn-secondary",
+        ButtonVariant.Danger => "btn-danger",
+        ButtonVariant.Warning => "btn-warning",
+        _ => "btn-primary"
+    };
+
+    private string SizeCss => Size switch
+    {
+        ButtonSize.Small => "btn-sm",
+        ButtonSize.Large => "btn-lg",
+        _ => ""
+    };
+
+    private string IconSpacingCss => ChildContent is not null
+        ? (IconPosition == IconPosition.Left ? "me-1" : "ms-1")
+        : "";
+}
