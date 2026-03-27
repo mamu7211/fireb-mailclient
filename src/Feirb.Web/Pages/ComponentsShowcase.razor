@@ -56,6 +56,9 @@
     <main class="showcase-main">
         @switch (_selectedComponent)
         {
+            case "Design Fundamentals":
+                @RenderDesignFundamentalsSection()
+                break;
             case "Icon":
                 @RenderIconSection()
                 break;
@@ -71,6 +74,15 @@
             case "Card":
                 @RenderCardSection()
                 break;
+            case "NavigationItem":
+                @RenderNavigationItemSection()
+                break;
+            case "ContentSection":
+                @RenderContentSectionSection()
+                break;
+            case "NavMenu":
+                @RenderNavMenuSection()
+                break;
             default:
                 <div class="text-center py-5">
                     <Icon Name="palette2" Size="IconSize.Large" Class="mb-3 d-block mx-auto" />
@@ -80,6 +92,147 @@
         }
     </main>
 </div>
+
+@* ────────────── Design Fundamentals ────────────── *@
+@{
+    RenderFragment RenderDesignFundamentalsSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="palette2">Design Fundamentals</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Theme</Heading>
+                <p>Feirb uses the <strong>Electric Iris</strong> theme — a modern, soft light UI with subtle color accents, rounded surfaces, and generous spacing. No neon or glow effects; colors are flat. Pure black is avoided in favor of a deep blue-gray neutral.</p>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Color Palette</Heading>
+                <div class="showcase-color-grid">
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #b6004f;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Primary</strong>
+                            <code>#b6004f</code>
+                            <span class="text-muted">CTAs, active states, links</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #ff7195;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Primary Container</strong>
+                            <code>#ff7195</code>
+                            <span class="text-muted">Selection highlights, hover tints</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #006852;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Secondary</strong>
+                            <code>#006852</code>
+                            <span class="text-muted">Secondary actions, success indicators</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #FFE04A;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Warning</strong>
+                            <code>#FFE04A</code>
+                            <span class="text-muted">Warnings, tags, highlights</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #b31b25;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Error</strong>
+                            <code>#b31b25</code>
+                            <span class="text-muted">Danger actions, validation errors</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #2d2d43;"></div>
+                        <div class="showcase-color-info">
+                            <strong>On Surface</strong>
+                            <code>#2d2d43</code>
+                            <span class="text-muted">Body text, headings</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #5a5972;"></div>
+                        <div class="showcase-color-info">
+                            <strong>On Surface Variant</strong>
+                            <code>#5a5972</code>
+                            <span class="text-muted">Subtitles, secondary text</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #f8f5ff; border: 1px solid rgba(0,0,0,0.1);"></div>
+                        <div class="showcase-color-info">
+                            <strong>Background</strong>
+                            <code>#f8f5ff</code>
+                            <span class="text-muted">Page background (light lavender)</span>
+                        </div>
+                    </div>
+                    <div class="showcase-color-item">
+                        <div class="showcase-color-swatch" style="background-color: #e8e5ff;"></div>
+                        <div class="showcase-color-info">
+                            <strong>Surface Container</strong>
+                            <code>#e8e5ff</code>
+                            <span class="text-muted">Hover backgrounds, input fills</span>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Typography</Heading>
+                <p>Primary font is <strong>Inter</strong> with fallbacks to Helvetica Neue, Helvetica, and Arial.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Element</th><th>Size</th><th>Weight</th></tr></thead>
+                    <tbody>
+                        <tr><td>Heading Large (h1)</td><td>1.75rem</td><td>700</td></tr>
+                        <tr><td>Heading Medium (h2)</td><td>1.25rem</td><td>700</td></tr>
+                        <tr><td>Heading Small (h3)</td><td>1rem</td><td>700</td></tr>
+                        <tr><td>Body text</td><td>1rem (browser default)</td><td>400</td></tr>
+                        <tr><td>Subtitle / secondary</td><td>0.875rem</td><td>400</td></tr>
+                        <tr><td>Nav section labels</td><td>0.625rem uppercase</td><td>600</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Surfaces and Elevation</Heading>
+                <table class="table table-sm">
+                    <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+                    <tbody>
+                        <tr><td>Border radius</td><td><code>1rem</code> (16px)</td><td>Cards, modals</td></tr>
+                        <tr><td>Border radius (lg)</td><td><code>1.5rem</code> (24px)</td><td>Large containers</td></tr>
+                        <tr><td>Input radius</td><td><code>0.75rem</code> (12px)</td><td>Form controls</td></tr>
+                        <tr><td>Button radius</td><td><code>9999px</code></td><td>Pill-shaped buttons</td></tr>
+                        <tr><td>Shadow</td><td><code>0 8px 24px rgba(0,0,0,0.06)</code></td><td>Cards, primary buttons</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-3 mb-0"><strong>Layering:</strong> Base background → Raised cards (white, shadow) → Interactive elements (accent colors)</p>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Icons</Heading>
+                <p class="mb-2">All icons use <strong>Bootstrap Icons</strong> (<code>bi-*</code>). Never use Google Material Symbols or other icon sets.</p>
+                <div class="d-flex align-items-center gap-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <Icon Name="gear" Size="IconSize.Small" />
+                        <span class="text-muted">Small (0.875rem)</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <Icon Name="gear" />
+                        <span class="text-muted">Default (1.25rem)</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <Icon Name="gear" Size="IconSize.Large" />
+                        <span class="text-muted">Large (2rem)</span>
+                    </div>
+                </div>
+            </Card>
+        </div>;
+}
 
 @* ────────────── Icon Section ────────────── *@
 @{
@@ -366,19 +519,209 @@
         </div>;
 }
 
+@* ────────────── NavigationItem Section ────────────── *@
+@{
+    RenderFragment RenderNavigationItemSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="box-arrow-right">NavigationItem</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Card-style navigation link with icon, title, optional subtitle, and chevron. Used in settings and admin index pages to navigate to sub-pages.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>Icon</code></td><td><code>string</code></td><td>required</td><td>Icon name without <code>bi-</code> prefix</td></tr>
+                        <tr><td><code>Title</code></td><td><code>string</code></td><td>required</td><td>Navigation item title</td></tr>
+                        <tr><td><code>Subtitle</code></td><td><code>string?</code></td><td><code>null</code></td><td>Description text below the title</td></tr>
+                        <tr><td><code>Href</code></td><td><code>string</code></td><td>required</td><td>Target URL</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Icon:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_navIcon">
+                        <option value="person">person</option>
+                        <option value="lock">lock</option>
+                        <option value="envelope">envelope</option>
+                        <option value="tag">tag</option>
+                        <option value="gear">gear</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="navSubtitle" @bind="_navShowSubtitle" />
+                        <label class="form-check-label" for="navSubtitle">Subtitle</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <NavigationItem
+                        Icon="@_navIcon"
+                        Title="Personal Information"
+                        Subtitle="@(_navShowSubtitle ? "Update your name and email address" : null)"
+                        Href="/components-showcase" />
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── ContentSection Section ────────────── *@
+@{
+    RenderFragment RenderContentSectionSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="layout-text-sidebar">ContentSection</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Card with a header (icon + heading with optional subtitle) and a body for child content. Used for inline settings sections that don't navigate away.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>Icon</code></td><td><code>string</code></td><td>required</td><td>Icon name without <code>bi-</code> prefix</td></tr>
+                        <tr><td><code>Title</code></td><td><code>string</code></td><td>required</td><td>Section title (rendered via Heading)</td></tr>
+                        <tr><td><code>Subtitle</code></td><td><code>string?</code></td><td><code>null</code></td><td>Subtitle (rendered via Heading)</td></tr>
+                        <tr><td><code>ChildContent</code></td><td><code>RenderFragment?</code></td><td>&#8212;</td><td>Section body content</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Preview</Heading>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <label class="form-label mb-0">Icon:</label>
+                    <select class="form-select form-select-sm w-auto" @bind="_csIcon">
+                        <option value="translate">translate</option>
+                        <option value="palette">palette</option>
+                        <option value="bell">bell</option>
+                        <option value="shield-lock">shield-lock</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="csSubtitle" @bind="_csShowSubtitle" />
+                        <label class="form-check-label" for="csSubtitle">Subtitle</label>
+                    </div>
+                </div>
+                <div class="showcase-preview-area">
+                    <ContentSection
+                        Icon="@_csIcon"
+                        Title="Language"
+                        Subtitle="@(_csShowSubtitle ? "Choose your preferred display language" : null)">
+                        <p class="mb-0">Section body content goes here.</p>
+                    </ContentSection>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">Code</Heading>
+                <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+            </Card>
+        </div>;
+}
+
+@* ────────────── NavMenu Section ────────────── *@
+@{
+    RenderFragment RenderNavMenuSection() =>
+        @<div>
+            <Heading Level="HeadingLevel.Large" Icon="layout-sidebar">NavMenu</Heading>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Info</Heading>
+                <p>Fixed sidebar navigation used in <code>MainLayout</code>. Contains user profile, compose button, mail folder links, and bottom actions (settings, admin, logout). This is a layout component, not a reusable primitive.</p>
+                <table class="table table-sm">
+                    <thead><tr><th>Aspect</th><th>Details</th></tr></thead>
+                    <tbody>
+                        <tr><td>Location</td><td><code>src/Feirb.Web/Layout/NavMenu.razor</code></td></tr>
+                        <tr><td>Width</td><td>16rem (fixed)</td></tr>
+                        <tr><td>Position</td><td>Fixed left, full viewport height</td></tr>
+                        <tr><td>Z-index</td><td>40</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+
+            <Card Class="mb-3 p-4">
+                <Heading Level="HeadingLevel.Small">Structure</Heading>
+                <p>The sidebar is divided into four sections:</p>
+                <div class="showcase-preview-area">
+                    <div class="showcase-navmenu-demo">
+                        <!-- Profile -->
+                        <div class="d-flex align-items-center gap-3 mb-3 pb-3" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle text-white fw-bold" style="width: 2.5rem; height: 2.5rem; background-color: var(--bs-primary);">A</div>
+                            <div class="d-flex flex-column">
+                                <span class="fw-semibold" style="font-size: 0.875rem;">Admin</span>
+                                <span class="text-muted" style="font-size: 0.75rem;">admin@@feirb.local</span>
+                            </div>
+                        </div>
+
+                        <!-- Compose -->
+                        <div class="mb-3">
+                            <Button Variant="ButtonVariant.Primary" Icon="pencil-fill" Class="w-100 justify-content-center">Compose</Button>
+                        </div>
+
+                        <!-- Nav entries -->
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center gap-3 px-3 py-2" style="color: var(--bs-primary); background: rgba(255,113,149,0.15); border-right: 3px solid var(--bs-primary); font-size: 0.875rem; font-weight: 500;">
+                                <Icon Name="speedometer2" /> <span>Dashboard</span>
+                            </div>
+                        </div>
+
+                        <p class="px-3 mb-2" style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--feirb-on-surface-variant); font-weight: 600;">Main</p>
+                        @foreach (var (icon, label) in new[] { ("inbox", "Inbox"), ("send", "Sent"), ("pencil-square", "Drafts"), ("trash", "Trash"), ("archive", "Archive") })
+                        {
+                            <div class="d-flex align-items-center gap-3 px-3 py-2" style="color: var(--feirb-on-surface-variant); font-size: 0.875rem; font-weight: 500;">
+                                <Icon Name="@icon" /> <span>@label</span>
+                            </div>
+                        }
+
+                        <!-- Bottom -->
+                        <div class="mt-3 pt-3" style="border-top: 1px solid rgba(0,0,0,0.08);">
+                            @foreach (var (icon, label) in new[] { ("gear", "Settings"), ("shield-lock", "Admin"), ("box-arrow-right", "Logout") })
+                            {
+                                <div class="d-flex align-items-center gap-3 px-3 py-2" style="color: var(--feirb-on-surface-variant); font-size: 0.875rem; font-weight: 500;">
+                                    <Icon Name="@icon" /> <span>@label</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <Card Class="p-4">
+                <Heading Level="HeadingLevel.Small">CSS Classes</Heading>
+                <table class="table table-sm mb-0">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>.feirb-sidebar</code></td><td>Main sidebar container (fixed, 16rem, white bg)</td></tr>
+                        <tr><td><code>.sidebar-profile</code></td><td>User avatar + name/email section</td></tr>
+                        <tr><td><code>.nav-section</code></td><td>Grouped navigation block</td></tr>
+                        <tr><td><code>.nav-section-label</code></td><td>Section header (uppercase, 0.625rem, letter-spacing)</td></tr>
+                        <tr><td><code>.nav-entry</code></td><td>Individual nav link (flex, icon + label)</td></tr>
+                        <tr><td><code>.nav-entry.active</code></td><td>Active state (primary color, pink bg, right border)</td></tr>
+                        <tr><td><code>.sidebar-bottom</code></td><td>Bottom-pinned section (settings, admin, logout)</td></tr>
+                    </tbody>
+                </table>
+            </Card>
+        </div>;
+}
+
 @code {
     // Sidebar state
     private bool _sidebarOpen;
-    private string _selectedComponent = "Icon";
+    private string _selectedComponent = "Design Fundamentals";
 
     // Category model
     private List<CategoryModel> _categories = new()
     {
+        new("Foundations", true, "Design Fundamentals"),
         new("Primitives", true, "Icon", "Heading", "Button", "CircularButton", "Card"),
         new("Composite", false),
         new("Forms", false),
         new("Feedback", false),
-        new("Navigation", false)
+        new("Navigation", true, "NavigationItem", "ContentSection", "NavMenu")
     };
 
     // Icon playground
@@ -405,6 +748,14 @@
     // Card playground
     private bool _cardExtraPadding;
 
+    // NavigationItem playground
+    private string _navIcon = "person";
+    private bool _navShowSubtitle = true;
+
+    // ContentSection playground
+    private string _csIcon = "translate";
+    private bool _csShowSubtitle = true;
+
     // Code highlight ref
     private ElementReference _codeElement;
 
@@ -415,6 +766,8 @@
         "Button" => GetButtonCode(),
         "CircularButton" => GetCircularButtonCode(),
         "Card" => GetCardCode(),
+        "NavigationItem" => GetNavigationItemCode(),
+        "ContentSection" => GetContentSectionCode(),
         _ => ""
     };
 
@@ -499,6 +852,29 @@
                 <h3>Example Card</h3>
                 <p>This is some content inside a card component.</p>
             </Card>
+            """;
+    }
+
+    private string GetNavigationItemCode()
+    {
+        var subtitle = _navShowSubtitle ? "\n    Subtitle=\"Update your name and email address\"" : "";
+        return $"""
+            <NavigationItem
+                Icon="{_navIcon}"
+                Title="Personal Information"{subtitle}
+                Href="/settings/personal-information" />
+            """;
+    }
+
+    private string GetContentSectionCode()
+    {
+        var subtitle = _csShowSubtitle ? "\n    Subtitle=\"Choose your preferred display language\"" : "";
+        return $"""
+            <ContentSection
+                Icon="{_csIcon}"
+                Title="Language"{subtitle}>
+                <p>Section body content goes here.</p>
+            </ContentSection>
             """;
     }
 

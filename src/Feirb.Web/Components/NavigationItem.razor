@@ -1,8 +1,9 @@
+@using Feirb.Web.Components.UI
 @inject NavigationManager Navigation
 
 <div class="nav-item-card" @onclick="Navigate" role="button" tabindex="0">
     <div class="nav-item-left">
-        <i class="bi bi-@Icon nav-item-icon"></i>
+        <Icon Name="@Icon" Size="IconSize.Large" Class="nav-item-icon" />
         <div class="nav-item-text">
             <span class="nav-item-title">@Title</span>
             @if (!string.IsNullOrEmpty(Subtitle))
@@ -11,7 +12,7 @@
             }
         </div>
     </div>
-    <i class="bi bi-chevron-right nav-item-chevron"></i>
+    <Icon Name="chevron-right" Class="nav-item-chevron" />
 </div>
 
 @code {

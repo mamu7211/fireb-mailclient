@@ -103,6 +103,45 @@ Minimal card container.
 | `ChildContent` | `RenderFragment` (required) | — | Card content |
 | `Class` | `string?` | `null` | Extra CSS classes |
 
+## NavigationItem
+
+Card-style navigation link with icon, title, optional subtitle, and chevron. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<NavigationItem Icon="person" Title="Personal Information"
+    Subtitle="Update your name and email address"
+    Href="/settings/personal-information" />
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Icon` | `string` (required) | — | Icon name without `bi-` prefix |
+| `Title` | `string` (required) | — | Navigation item title |
+| `Subtitle` | `string?` | `null` | Description text below the title |
+| `Href` | `string` (required) | — | Target URL |
+
+**Primitives used:** `Icon` (for icon and chevron)
+
+## ContentSection
+
+Card with header (icon + heading) and body for child content. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<ContentSection Icon="translate" Title="Language"
+    Subtitle="Choose your preferred display language">
+    <p>Content goes here.</p>
+</ContentSection>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Icon` | `string` (required) | — | Icon name without `bi-` prefix |
+| `Title` | `string` (required) | — | Section title |
+| `Subtitle` | `string?` | `null` | Subtitle text |
+| `ChildContent` | `RenderFragment?` | — | Section body content |
+
+**Primitives used:** `Icon` (for header icon), `Heading` (for title/subtitle)
+
 ## Enums
 
 Defined in `UIEnums.cs`:

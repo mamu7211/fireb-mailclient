@@ -1,13 +1,9 @@
+@using Feirb.Web.Components.UI
+
 <div class="content-section">
     <div class="content-section-header">
-        <i class="bi bi-@Icon content-section-icon"></i>
-        <div class="content-section-text">
-            <span class="content-section-title">@Title</span>
-            @if (!string.IsNullOrEmpty(Subtitle))
-            {
-                <span class="content-section-subtitle">@Subtitle</span>
-            }
-        </div>
+        <Icon Name="@Icon" Size="IconSize.Large" Class="content-section-icon" />
+        <Heading Level="HeadingLevel.Small" Subtitle="@Subtitle" Class="mb-0">@Title</Heading>
     </div>
     <div class="content-section-body">
         @ChildContent
