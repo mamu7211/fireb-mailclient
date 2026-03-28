@@ -47,3 +47,12 @@ public enum LabelPillSize
     Medium,
     Large
 }
+
+/// <summary>Display mode for mail card layout.</summary>
+public enum MailCardMode
+{
+    Large,
+    Medium,
+    Small,
+    Row
+}

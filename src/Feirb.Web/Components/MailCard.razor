@@ -1,0 +1,138 @@
+@using Feirb.Web.Components.UI
+
+@* Card component for displaying mail items across different layout contexts. *@
+<a href="@Href" class="mail-card mail-card-@ModeCss @(IsRead ? "" : "mail-card-unread") @Class"
+   title="@Subject">
+    @if (Mode == MailCardMode.Row)
+    {
+        <div class="mail-card-read-indicator">
+            <Icon Name="@(IsRead ? "envelope-open" : "envelope-fill")" Size="IconSize.Small" Class="mail-card-read-icon" />
+        </div>
+    }
+
+    <div class="mail-card-avatar @(Mode == MailCardMode.Row ? "mail-card-avatar-mini" : "")">
+        <Icon Name="person" Class="mail-card-avatar-icon" />
+    </div>
+
+    <div class="mail-card-body">
+        <div class="mail-card-header">
+            <div class="mail-card-sender">
+                <span class="mail-card-name">@SenderName</span>
+                <span class="mail-card-email">@SenderEmail</span>
+            </div>
+            <div class="mail-card-date">
+                @if (Mode is MailCardMode.Small)
+                {
+                    <span>@ReceivedAt.ToString("MMM d")</span>
+                }
+                else if (Mode is MailCardMode.Row)
+                {
+                    <span>@ReceivedAt.ToString("MMM d, HH:mm")</span>
+                }
+                else
+                {
+                    <span>@ReceivedAt.ToString("MMM d")</span>
+                    <span class="mail-card-time">@ReceivedAt.ToString("HH:mm")</span>
+                }
+            </div>
+        </div>
+
+        <span class="mail-card-subject">@Subject</span>
+
+        @if (Mode is MailCardMode.Large or MailCardMode.Medium && !string.IsNullOrWhiteSpace(Summary))
+        {
+            <p class="mail-card-summary @(Mode == MailCardMode.Large ? "mail-card-summary-3" : "mail-card-summary-2")">
+                @Summary
+            </p>
+        }
+
+        <div class="mail-card-footer">
+            <div class="mail-card-labels">
+                @{ var maxLabels = MaxLabelsForMode; }
+                @foreach (var label in VisibleLabels)
+                {
+                    <LabelPill Name="@label.Name" Color="@label.Color" Size="@LabelPillSizeForMode" />
+                }
+                @if (Labels.Count > maxLabels)
+                {
+                    <span class="mail-card-label-overflow">+@(Labels.Count - maxLabels)</span>
+                }
+            </div>
+
+            @if (Mode != MailCardMode.Row)
+            {
+                <Icon Name="@(IsRead ? "envelope-open" : "envelope-fill")" Size="IconSize.Small" Class="mail-card-read-icon" />
+            }
+        </div>
+    </div>
+</a>
+
+@code {
+    /// <summary>Display mode controlling layout density.</summary>
+    [Parameter, EditorRequired]
+    public MailCardMode Mode { get; set; }
+
+    /// <summary>Sender display name.</summary>
+    [Parameter, EditorRequired]
+    public string SenderName { get; set; } = default!;
+
+    /// <summary>Sender email address.</summary>
+    [Parameter, EditorRequired]
+    public string SenderEmail { get; set; } = default!;
+
+    /// <summary>Mail subject line (truncated with ellipsis).</summary>
+    [Parameter, EditorRequired]
+    public string Subject { get; set; } = default!;
+
+    /// <summary>Mail summary text (shown in Large and Medium modes).</summary>
+    [Parameter]
+    public string? Summary { get; set; }
+
+    /// <summary>Mail labels to display.</summary>
+    [Parameter]
+    public IReadOnlyList<MailCardLabel> Labels { get; set; } = [];
+
+    /// <summary>When the mail was received.</summary>
+    [Parameter, EditorRequired]
+    public DateTime ReceivedAt { get; set; }
+
+    /// <summary>Whether the mail has been read.</summary>
+    [Parameter]
+    public bool IsRead { get; set; }
+
+    /// <summary>Navigation target URL.</summary>
+    [Parameter, EditorRequired]
+    public string Href { get; set; } = default!;
+
+    /// <summary>Additional CSS classes.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    private string ModeCss => Mode switch
+    {
+        MailCardMode.Large => "large",
+        MailCardMode.Medium => "medium",
+        MailCardMode.Small => "small",
+        MailCardMode.Row => "row",
+        _ => "large"
+    };
+
+    private int MaxLabelsForMode => Mode switch
+    {
+        MailCardMode.Large => 4,
+        MailCardMode.Medium => 3,
+        MailCardMode.Small => 1,
+        MailCardMode.Row => 4,
+        _ => 4
+    };
+
+    private LabelPillSize LabelPillSizeForMode => Mode switch
+    {
+        MailCardMode.Large => LabelPillSize.Large,
+        MailCardMode.Small => LabelPillSize.Small,
+        _ => LabelPillSize.Medium
+    };
+
+    private IEnumerable<MailCardLabel> VisibleLabels =>
+        Labels.Take(MaxLabelsForMode);
+}
