@@ -222,6 +222,42 @@ Data-driven sidebar navigation with optional section headers and a bottom-pinned
 
 **Primitives used:** `Icon` (for item icons)
 
+## ToggleButtonGroup
+
+Mutually exclusive toggle buttons with radio group semantics. Exactly one item is selected at a time.
+
+```razor
+<ToggleButtonGroup Items="_themes" @bind-SelectedId="_selectedTheme" />
+
+@code {
+    private string _selectedTheme = "emerald";
+
+    private static readonly IReadOnlyList<ToggleButtonItem> _themes =
+    [
+        new("emerald", "Emerald Grove"),
+        new("ocean", "Ocean Breeze"),
+        new("sunset", "Sunset Glow")
+    ];
+}
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Items` | `IReadOnlyList<ToggleButtonItem>` (required) | — | Available options |
+| `SelectedId` | `string` (required) | — | Currently selected item ID |
+| `SelectedIdChanged` | `EventCallback<string>` | — | Fires when selection changes |
+| `MaxPerRow` | `int` | `8` | Maximum items per row before wrapping |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
+### ToggleButtonItem Record
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Id` | `string` | Unique identifier |
+| `Label` | `string` | Display text |
+
+**Accessibility:** `role="radiogroup"` on container, `role="radio"` + `aria-checked` on each button. Arrow keys move selection, Home/End jump to first/last.
+
 ## Enums
 
 Defined in `UIEnums.cs`:

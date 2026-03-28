@@ -1,0 +1,80 @@
+@namespace Feirb.Web.Components.UI
+
+@* Mutually exclusive toggle button group with radio semantics. *@
+    <div class="feirb-toggle-group @Class"
+         role="radiogroup"
+         style="grid-template-columns: repeat(@ColumnCount, 1fr)"
+         @onkeydown="HandleKeyDownAsync">
+        @for (var i = 0; i < Items.Count; i++)
+        {
+            var item = Items[i];
+            var isSelected = item.Id == SelectedId;
+            <button type="button"
+                    class="feirb-toggle-group-item @(isSelected ? "active" : "")"
+                    role="radio"
+                    aria-checked="@(isSelected ? "true" : "false")"
+                    tabindex="@(isSelected ? 0 : -1)"
+                    @onclick="() => SelectAsync(item.Id)">
+                @item.Label
+            </button>
+        }
+    </div>
+
+@code {
+    /// <summary>Available toggle options.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<ToggleButtonItem> Items { get; set; } = [];
+
+    /// <summary>ID of the currently selected item.</summary>
+    [Parameter, EditorRequired]
+    public string SelectedId { get; set; } = "";
+
+    /// <summary>Fires when the selected item changes.</summary>
+    [Parameter]
+    public EventCallback<string> SelectedIdChanged { get; set; }
+
+    /// <summary>Maximum number of items per row before wrapping.</summary>
+    [Parameter]
+    public int MaxPerRow { get; set; } = 8;
+
+    /// <summary>Additional CSS classes.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    private int ColumnCount
+    {
+        get
+        {
+            if (Items.Count <= MaxPerRow) return Items.Count;
+            var rows = (int)Math.Ceiling((double)Items.Count / MaxPerRow);
+            return (int)Math.Ceiling((double)Items.Count / rows);
+        }
+    }
+
+    private async Task SelectAsync(string id)
+    {
+        if (id == SelectedId) return;
+        SelectedId = id;
+        await SelectedIdChanged.InvokeAsync(id);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs e)
+    {
+        var currentIndex = Items.ToList().FindIndex(i => i.Id == SelectedId);
+        if (currentIndex < 0) return;
+
+        var newIndex = e.Key switch
+        {
+            "ArrowRight" or "ArrowDown" => (currentIndex + 1) % Items.Count,
+            "ArrowLeft" or "ArrowUp" => (currentIndex - 1 + Items.Count) % Items.Count,
+            "Home" => 0,
+            "End" => Items.Count - 1,
+            _ => -1
+        };
+
+        if (newIndex >= 0 && newIndex != currentIndex)
+        {
+            await SelectAsync(Items[newIndex].Id);
+        }
+    }
+}

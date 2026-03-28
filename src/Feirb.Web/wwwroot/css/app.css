@@ -239,6 +239,42 @@ a:hover, .btn-link:hover {
     padding: 1rem;
 }
 
+/* Toggle Button Group */
+.feirb-toggle-group {
+    display: inline-grid;
+    gap: 1px;
+    border-radius: var(--bs-border-radius);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--feirb-surface-container);
+    overflow: hidden;
+}
+
+.feirb-toggle-group-item {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: var(--feirb-surface);
+    color: var(--feirb-on-surface);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.feirb-toggle-group-item:hover:not(.active) {
+    background-color: var(--feirb-surface-container);
+}
+
+.feirb-toggle-group-item.active {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.feirb-toggle-group-item:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: -2px;
+    z-index: 1;
+}
+
 /* Inputs */
 .form-control {
     border-radius: var(--feirb-radius-input);
