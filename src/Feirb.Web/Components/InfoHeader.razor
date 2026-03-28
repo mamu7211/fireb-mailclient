@@ -1,0 +1,38 @@
+@using Feirb.Web.Components.UI
+
+<div class="info-header @Class">
+    <div class="info-header-top">
+        <Heading Level="@Level" Icon="@Icon" Subtitle="@Subtitle" Class="mb-0">@Title</Heading>
+        @if (HelpContent is not null)
+        {
+            <CircularButton AriaLabel="@(_helpExpanded ? "Hide help" : "Show help")"
+                            Variant="ButtonVariant.Secondary"
+                            Size="ButtonSize.Small"
+                            OnClick="ToggleHelp">
+                <Icon Name="@(_helpExpanded ? "x" : "question-circle")" Size="IconSize.Small" />
+            </CircularButton>
+        }
+    </div>
+    @if (HelpContent is not null && _helpExpanded)
+    {
+        <div class="info-header-help">
+            <Icon Name="info-circle" Size="IconSize.Default" Class="info-header-help-icon" />
+            <div class="info-header-help-text">
+                @HelpContent
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = default!;
+    [Parameter] public HeadingLevel Level { get; set; } = HeadingLevel.Large;
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter] public RenderFragment? HelpContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+
+    private bool _helpExpanded;
+
+    private void ToggleHelp() => _helpExpanded = !_helpExpanded;
+}
