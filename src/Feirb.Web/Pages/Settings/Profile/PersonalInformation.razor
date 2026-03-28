@@ -68,17 +68,18 @@ else if (_model is not null)
     private ProfileFormModel? _model;
     private bool _isLoading = true;
     private bool _isSaving;
-    private int _toolbarVersion;
+    private ToolbarAction[] _toolbarActions = [];
     private string? _successMessage;
     private string? _errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
-        _toolbarVersion = ToolbarState.SetActions(
+        _toolbarActions =
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings"); return Task.CompletedTask; }, "x-lg"),
             new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await HandleSaveAsync(); }, "check-lg")
-        ]);
+        ];
+        ToolbarState.AddActions(_toolbarActions);
 
         try
         {
@@ -102,7 +103,7 @@ else if (_model is not null)
         }
     }
 
-    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
+    public void Dispose() => ToolbarState.RemoveActions(_toolbarActions);
 
     private async Task<bool> HandleSaveAsync()
     {

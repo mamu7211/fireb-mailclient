@@ -204,16 +204,17 @@ else if (_model is not null)
     private TestConnectionResponse? _imapTestResult;
     private TestConnectionResponse? _smtpTestResult;
 
-    private int _toolbarVersion;
+    private ToolbarAction[] _toolbarActions = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _toolbarVersion = ToolbarState.SetActions(
+        _toolbarActions =
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings/mailboxes"); return Task.CompletedTask; }, "x-lg"),
             new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await HandleSaveAsync(); }, "check-lg"),
             new ToolbarAction(L["ButtonDelete"], ButtonVariant.Danger, () => { _showDeleteModal = true; StateHasChanged(); return Task.CompletedTask; }, "trash")
-        ]);
+        ];
+        ToolbarState.AddActions(_toolbarActions);
 
         try
         {
@@ -247,7 +248,7 @@ else if (_model is not null)
         }
     }
 
-    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
+    public void Dispose() => ToolbarState.RemoveActions(_toolbarActions);
 
     private async Task<bool> HandleSaveAsync()
     {

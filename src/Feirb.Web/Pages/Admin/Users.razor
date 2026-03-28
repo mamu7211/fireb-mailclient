@@ -282,14 +282,15 @@ else
     private CreateFormModel _createModel = new();
     private EditFormModel _editModel = new();
 
-    private int _toolbarVersion;
+    private ToolbarAction[] _toolbarActions = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _toolbarVersion = ToolbarState.SetActions(
+        _toolbarActions =
         [
             new ToolbarAction(L["ButtonCreateUser"], ButtonVariant.Primary, () => { ShowCreateModal(); return Task.CompletedTask; }, "plus-lg")
-        ]);
+        ];
+        ToolbarState.AddActions(_toolbarActions);
 
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         var userIdClaim = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -299,7 +300,7 @@ else
         await LoadUsersAsync();
     }
 
-    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
+    public void Dispose() => ToolbarState.RemoveActions(_toolbarActions);
 
     private async Task LoadUsersAsync()
     {

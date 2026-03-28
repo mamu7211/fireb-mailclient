@@ -13,34 +13,38 @@ public sealed class ToolbarAction(string label, ButtonVariant variant, Func<Task
 public sealed class ToolbarStateService
 {
     private readonly List<ToolbarAction> _actions = [];
-    private int _version;
 
     public IReadOnlyList<ToolbarAction> Actions => _actions;
 
     public event Action? OnChange;
 
-    public int SetActions(IEnumerable<ToolbarAction> actions)
+    public void AddActions(IEnumerable<ToolbarAction> actions)
     {
-        _actions.Clear();
         _actions.AddRange(actions);
-        _version++;
         OnChange?.Invoke();
-        return _version;
     }
 
-    public void ClearIfCurrent(int version)
+    public void RemoveActions(IEnumerable<ToolbarAction> actions)
     {
-        if (_version == version)
+        ArgumentNullException.ThrowIfNull(actions);
+        var changed = false;
+        foreach (var action in actions)
         {
-            _actions.Clear();
+            changed |= _actions.Remove(action);
+        }
+
+        if (changed)
+        {
             OnChange?.Invoke();
         }
     }
 
     public void Clear()
     {
+        if (_actions.Count == 0)
+            return;
+
         _actions.Clear();
-        _version++;
         OnChange?.Invoke();
     }
 }
