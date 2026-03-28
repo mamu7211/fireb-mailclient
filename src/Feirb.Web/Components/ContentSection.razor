@@ -1,6 +1,6 @@
 @using Feirb.Web.Components.UI
 
-<div class="content-section">
+<div class="content-section @Class">
     <div class="content-section-header">
         <Icon Name="@Icon" Size="IconSize.Large" Class="content-section-icon" />
         <Heading Level="HeadingLevel.Small" Subtitle="@Subtitle" Class="mb-0">@Title</Heading>
@@ -15,4 +15,5 @@
     [Parameter, EditorRequired] public string Title { get; set; } = default!;
     [Parameter] public string? Subtitle { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
 }

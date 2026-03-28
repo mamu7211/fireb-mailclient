@@ -26,54 +26,46 @@
     </div>
 }
 
-@* Change Password Section *@
-<h5 class="text-muted mb-3">@L["SecurityChangePasswordTitle"]</h5>
-<div class="card mb-4">
-    <div class="card-body">
-        <EditForm Model="_passwordModel" OnValidSubmit="HandleChangePasswordAsync">
-            <DataAnnotationsValidator />
+<ContentSection Icon="key" Title="@L["SecurityChangePasswordTitle"]" Subtitle="@L["SectionChangePasswordSubtitle"]" Class="mb-4">
+    <EditForm Model="_passwordModel" OnValidSubmit="HandleChangePasswordAsync">
+        <DataAnnotationsValidator />
 
-            <div class="mb-3">
-                <label for="currentPassword" class="form-label">@L["LabelCurrentPassword"]</label>
-                <InputText id="currentPassword" class="form-control" type="password" @bind-Value="_passwordModel.CurrentPassword" />
-                <ValidationMessage For="() => _passwordModel.CurrentPassword" />
-            </div>
-            <div class="mb-3">
-                <label for="newPassword" class="form-label">@L["LabelNewPassword"]</label>
-                <InputText id="newPassword" class="form-control" type="password" @bind-Value="_passwordModel.NewPassword"
-                    placeholder="@L["PlaceholderNewPassword"]" />
-                <ValidationMessage For="() => _passwordModel.NewPassword" />
-            </div>
-            <div class="mb-3">
-                <label for="confirmNewPassword" class="form-label">@L["LabelConfirmNewPassword"]</label>
-                <InputText id="confirmNewPassword" class="form-control" type="password" @bind-Value="_passwordModel.ConfirmNewPassword" />
-                <ValidationMessage For="() => _passwordModel.ConfirmNewPassword" />
-            </div>
-            <Button Variant="ButtonVariant.Primary" Type="submit" Disabled="_isChangingPassword">
-                @if (_isChangingPassword)
-                {
-                    <span class="spinner-border spinner-border-sm me-1" role="status"></span>
-                }
-                @L["ButtonChangePassword"]
-            </Button>
-        </EditForm>
-    </div>
-</div>
-
-@* Sessions Section *@
-<h5 class="text-muted mb-3">@L["SecuritySessionsTitle"]</h5>
-<div class="card">
-    <div class="card-body">
-        <p class="mb-3">@L["SecuritySessionsDescription"]</p>
-        <Button Variant="ButtonVariant.Danger" OnClick="HandleLogoutAllAsync" Disabled="_isLoggingOutAll">
-            @if (_isLoggingOutAll)
+        <div class="mb-3">
+            <label for="currentPassword" class="form-label">@L["LabelCurrentPassword"]</label>
+            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="_passwordModel.CurrentPassword" />
+            <ValidationMessage For="() => _passwordModel.CurrentPassword" />
+        </div>
+        <div class="mb-3">
+            <label for="newPassword" class="form-label">@L["LabelNewPassword"]</label>
+            <InputText id="newPassword" class="form-control" type="password" @bind-Value="_passwordModel.NewPassword"
+                placeholder="@L["PlaceholderNewPassword"]" />
+            <ValidationMessage For="() => _passwordModel.NewPassword" />
+        </div>
+        <div class="mb-3">
+            <label for="confirmNewPassword" class="form-label">@L["LabelConfirmNewPassword"]</label>
+            <InputText id="confirmNewPassword" class="form-control" type="password" @bind-Value="_passwordModel.ConfirmNewPassword" />
+            <ValidationMessage For="() => _passwordModel.ConfirmNewPassword" />
+        </div>
+        <Button Variant="ButtonVariant.Primary" Type="submit" Disabled="_isChangingPassword">
+            @if (_isChangingPassword)
             {
                 <span class="spinner-border spinner-border-sm me-1" role="status"></span>
             }
-            @L["ButtonLogoutAllSessions"]
+            @L["ButtonChangePassword"]
         </Button>
-    </div>
-</div>
+    </EditForm>
+</ContentSection>
+
+<ContentSection Icon="shield-lock" Title="@L["SecuritySessionsTitle"]" Subtitle="@L["SectionSessionsSubtitle"]">
+    <p class="mb-3">@L["SecuritySessionsDescription"]</p>
+    <Button Variant="ButtonVariant.Danger" OnClick="HandleLogoutAllAsync" Disabled="_isLoggingOutAll">
+        @if (_isLoggingOutAll)
+        {
+            <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+        }
+        @L["ButtonLogoutAllSessions"]
+    </Button>
+</ContentSection>
 
 @code {
     private PasswordFormModel _passwordModel = new();

@@ -957,4 +957,31 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Beim Verarbeiten des Labels ist ein Fehler aufgetreten.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den SMTP-Server, der zum Versenden ausgehender E-Mails vom System verwendet wird.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Legen Sie die Standard-Absenderidentität fest, die bei ausgehenden Nachrichten angezeigt wird.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Wählen Sie ein starkes Passwort, das Sie nicht auf anderen Websites verwenden.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Überprüfen und verwalten Sie Ihre aktiven Anmeldesitzungen auf allen Geräten.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Grundlegende Postfachinformationen wie Name und E-Mail-Adresse.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den IMAP-Server, der zum Empfangen eingehender E-Mails für dieses Postfach verwendet wird.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den SMTP-Server, der zum Versenden ausgehender E-Mails aus diesem Postfach verwendet wird.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Aktualisieren Sie Ihren Benutzernamen und Ihre E-Mail-Adresse.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Persönliche Informationen</value>
+  </data>
 </root>

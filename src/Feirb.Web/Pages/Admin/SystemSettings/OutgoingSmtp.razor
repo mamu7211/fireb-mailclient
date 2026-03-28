@@ -40,10 +40,7 @@ else if (_model is not null)
     <EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
         <DataAnnotationsValidator />
 
-        @* Server Section *@
-        <h5 class="text-muted mb-3">@L["MailboxSectionSmtp"]</h5>
-        <div class="card mb-4">
-            <div class="card-body">
+        <ContentSection Icon="send" Title="@L["MailboxSectionSmtp"]" Subtitle="@L["SectionSmtpSubtitle"]" Class="mb-4">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="smtpHost" class="form-label">@L["LabelSmtpHostMailbox"]</label>
@@ -92,13 +89,9 @@ else if (_model is not null)
                         @GetTestResultMessage(_smtpTestResult)
                     </div>
                 }
-            </div>
-        </div>
+        </ContentSection>
 
-        @* Sender Section *@
-        <h5 class="text-muted mb-3">@L["SectionSender"]</h5>
-        <div class="card mb-4">
-            <div class="card-body">
+        <ContentSection Icon="person" Title="@L["SectionSender"]" Subtitle="@L["SectionSenderSubtitle"]" Class="mb-4">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="fromAddress" class="form-label">@L["LabelFromAddress"]</label>
@@ -109,8 +102,7 @@ else if (_model is not null)
                         <InputText id="fromName" class="form-control" @bind-Value="_model.FromName" placeholder="@L["PlaceholderFromName"]" />
                     </div>
                 </div>
-            </div>
-        </div>
+        </ContentSection>
     </EditForm>
 }
 

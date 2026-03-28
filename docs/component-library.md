@@ -139,6 +139,7 @@ Card with header (icon + heading) and body for child content. Located in `src/Fe
 | `Title` | `string` (required) | — | Section title |
 | `Subtitle` | `string?` | `null` | Subtitle text |
 | `ChildContent` | `RenderFragment?` | — | Section body content |
+| `Class` | `string?` | `null` | Extra CSS classes |
 
 **Primitives used:** `Icon` (for header icon), `Heading` (for title/subtitle)
 

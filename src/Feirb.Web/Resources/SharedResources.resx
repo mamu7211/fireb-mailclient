@@ -957,4 +957,31 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>An error occurred while processing the label.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configure the SMTP server used to send outgoing mail from the system.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Set the default sender identity that appears on outgoing messages.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Choose a strong password that you don't use on other sites.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Review and manage your active login sessions across devices.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Basic mailbox information such as name and email address.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configure the IMAP server used to receive incoming mail for this mailbox.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configure the SMTP server used to send outgoing mail from this mailbox.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Update your username and email address.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
 </root>

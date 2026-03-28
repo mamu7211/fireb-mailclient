@@ -957,4 +957,31 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Une erreur est survenue lors du traitement du label.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configurez le serveur SMTP utilisé pour envoyer les e-mails sortants depuis le système.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Définissez l'identité d'expéditeur par défaut qui apparaît sur les messages sortants.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Choisissez un mot de passe fort que vous n'utilisez pas sur d'autres sites.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Consultez et gérez vos sessions de connexion actives sur tous vos appareils.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Informations de base de la boîte mail telles que le nom et l'adresse e-mail.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configurez le serveur IMAP utilisé pour recevoir les e-mails entrants de cette boîte mail.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configurez le serveur SMTP utilisé pour envoyer les e-mails sortants depuis cette boîte mail.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Mettez à jour votre nom d'utilisateur et votre adresse e-mail.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Informations personnelles</value>
+  </data>
 </root>

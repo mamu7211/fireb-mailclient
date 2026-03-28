@@ -957,4 +957,31 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Si è verificato un errore durante l'elaborazione dell'etichetta.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configura il server SMTP utilizzato per inviare le e-mail in uscita dal sistema.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Imposta l'identità del mittente predefinita che appare nei messaggi in uscita.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Scegli una password sicura che non utilizzi su altri siti.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Controlla e gestisci le sessioni di accesso attive su tutti i tuoi dispositivi.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Informazioni di base della casella di posta come nome e indirizzo e-mail.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configura il server IMAP utilizzato per ricevere le e-mail in arrivo per questa casella di posta.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configura il server SMTP utilizzato per inviare le e-mail in uscita da questa casella di posta.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Aggiorna il tuo nome utente e il tuo indirizzo e-mail.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Informazioni personali</value>
+  </data>
 </root>
