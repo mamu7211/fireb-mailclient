@@ -1,16 +1,24 @@
 @namespace Feirb.Web.Components.UI
+@implements IAsyncDisposable
+@inject IJSRuntime Js
 
 @* Data-driven sidebar menu with optional section headers and a bottom-pinned slot. *@
-<nav class="feirb-sidebar-menu @Class" aria-label="@AriaLabel">
+<nav class="feirb-sidebar-menu @Class" aria-label="@AriaLabel" @ref="_navRef">
     <div class="sidebar-menu-main">
+        @{ var sectionIndex = 0; }
         @foreach (var menuSection in Sections)
         {
+            var sectionId = !string.IsNullOrEmpty(menuSection.Label)
+                ? $"sidebar-section-{sectionIndex}"
+                : (string?)null;
+
             <div class="sidebar-menu-section">
-                @if (!string.IsNullOrEmpty(menuSection.Label))
+                @if (sectionId is not null)
                 {
-                    <p class="sidebar-menu-section-label">@menuSection.Label</p>
+                    <p id="@sectionId" class="sidebar-menu-section-label">@menuSection.Label</p>
                 }
-                <ul class="sidebar-menu-list">
+                <ul class="sidebar-menu-list" role="menu"
+                    aria-labelledby="@sectionId" aria-label="@(sectionId is null ? AriaLabel : null)">
                     @foreach (var item in menuSection.Items)
                     {
                         if (item.Visible is not null && !item.Visible())
@@ -18,10 +26,11 @@
                             continue;
                         }
 
-                        <li>
+                        <li role="none">
                             @if (item.OnClick is not null)
                             {
-                                <button class="sidebar-menu-entry" @onclick="item.OnClick">
+                                <button class="sidebar-menu-entry" role="menuitem" tabindex="-1"
+                                        @onclick="item.OnClick">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </button>
@@ -33,7 +42,8 @@
                                         ? NavLinkMatch.All
                                         : NavLinkMatch.Prefix);
 
-                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
+                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match"
+                                         role="menuitem" tabindex="-1">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </NavLink>
@@ -42,13 +52,15 @@
                     }
                 </ul>
             </div>
+
+            sectionIndex++;
         }
     </div>
 
     @if (BottomItems is { Count: > 0 })
     {
         <div class="sidebar-menu-bottom">
-            <ul class="sidebar-menu-list">
+            <ul class="sidebar-menu-list" role="menu" aria-label="@AriaLabel actions">
                 @foreach (var item in BottomItems)
                 {
                     if (item.Visible is not null && !item.Visible())
@@ -56,10 +68,11 @@
                         continue;
                     }
 
-                    <li>
+                    <li role="none">
                         @if (item.OnClick is not null)
                         {
-                            <button class="sidebar-menu-entry" @onclick="item.OnClick">
+                            <button class="sidebar-menu-entry" role="menuitem" tabindex="-1"
+                                    @onclick="item.OnClick">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </button>
@@ -70,7 +83,8 @@
                                 ? NavLinkMatch.All
                                 : NavLinkMatch.Prefix;
 
-                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
+                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match"
+                                     role="menuitem" tabindex="-1">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </NavLink>
@@ -98,4 +112,25 @@
     /// <summary>Additional CSS classes.</summary>
     [Parameter]
     public string? Class { get; set; }
+
+    private ElementReference _navRef;
+    private IJSObjectReference? _jsModule;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _jsModule = await Js.InvokeAsync<IJSObjectReference>(
+                "import", "./_content/Feirb.Web/Components/UI/SidebarMenu.razor.js");
+            await _jsModule.InvokeVoidAsync("initKeyboardNav", _navRef);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_jsModule is not null)
+        {
+            await _jsModule.DisposeAsync();
+        }
+    }
 }
