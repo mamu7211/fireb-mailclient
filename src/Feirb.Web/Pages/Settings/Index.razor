@@ -141,7 +141,7 @@
             if (response.IsSuccessStatusCode)
             {
                 var themeName = GetThemeDisplayName(themeId);
-                Notifications.Add(string.Format(L["SuccessThemeChanged"], themeName), NotificationSeverity.Info);
+                Notifications.Add(string.Format(L["SuccessThemeChanged"], themeName), NotificationSeverity.Success);
             }
         }
         catch
