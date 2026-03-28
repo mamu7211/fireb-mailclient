@@ -17,8 +17,7 @@
                 {
                     <p id="@sectionId" class="sidebar-menu-section-label">@menuSection.Label</p>
                 }
-                <ul class="sidebar-menu-list" role="menu"
-                    aria-labelledby="@sectionId" aria-label="@(sectionId is null ? AriaLabel : null)">
+                <ul class="sidebar-menu-list" aria-labelledby="@sectionId">
                     @foreach (var item in menuSection.Items)
                     {
                         if (item.Visible is not null && !item.Visible())
@@ -26,11 +25,10 @@
                             continue;
                         }
 
-                        <li role="none">
+                        <li>
                             @if (item.OnClick is not null)
                             {
-                                <button class="sidebar-menu-entry" role="menuitem" tabindex="-1"
-                                        @onclick="item.OnClick">
+                                <button class="sidebar-menu-entry" @onclick="item.OnClick">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </button>
@@ -42,8 +40,7 @@
                                         ? NavLinkMatch.All
                                         : NavLinkMatch.Prefix);
 
-                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match"
-                                         role="menuitem" tabindex="-1">
+                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </NavLink>
@@ -60,7 +57,7 @@
     @if (BottomItems is { Count: > 0 })
     {
         <div class="sidebar-menu-bottom">
-            <ul class="sidebar-menu-list" role="menu" aria-label="@AriaLabel actions">
+            <ul class="sidebar-menu-list">
                 @foreach (var item in BottomItems)
                 {
                     if (item.Visible is not null && !item.Visible())
@@ -68,11 +65,10 @@
                         continue;
                     }
 
-                    <li role="none">
+                    <li>
                         @if (item.OnClick is not null)
                         {
-                            <button class="sidebar-menu-entry" role="menuitem" tabindex="-1"
-                                    @onclick="item.OnClick">
+                            <button class="sidebar-menu-entry" @onclick="item.OnClick">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </button>
@@ -83,8 +79,7 @@
                                 ? NavLinkMatch.All
                                 : NavLinkMatch.Prefix;
 
-                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match"
-                                     role="menuitem" tabindex="-1">
+                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </NavLink>
@@ -122,7 +117,7 @@
         {
             _jsModule = await Js.InvokeAsync<IJSObjectReference>(
                 "import", "./_content/Feirb.Web/Components/UI/SidebarMenu.razor.js");
-            await _jsModule.InvokeVoidAsync("initKeyboardNav", _navRef);
+            await _jsModule.InvokeVoidAsync("syncAriaCurrent", _navRef);
         }
     }
 
