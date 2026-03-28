@@ -143,6 +143,31 @@ Card with header (icon + heading) and body for child content. Located in `src/Fe
 
 **Primitives used:** `Icon` (for header icon), `Heading` (for title/subtitle)
 
+## InfoHeader
+
+Page header with optional icon, subtitle, and toggleable help section. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<InfoHeader Title="Settings" Icon="gear" Subtitle="Manage your account and preferences" />
+
+<InfoHeader Title="Mailboxes" Icon="envelope" Subtitle="Connect your email accounts">
+    <HelpContent>
+        Here you can add IMAP/SMTP mailboxes and test connectivity.
+    </HelpContent>
+</InfoHeader>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Title` | `string` (required) | — | Header title text |
+| `Level` | `HeadingLevel` | `Large` | `Large` (h1), `Medium` (h2), `Small` (h3) |
+| `Icon` | `string?` | `null` | Icon name without `bi-` prefix |
+| `Subtitle` | `string?` | `null` | Subtitle text below the title |
+| `HelpContent` | `RenderFragment?` | `null` | Collapsible help content (shows toggle button when set) |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
+**Primitives used:** `Heading` (for title/subtitle), `Icon` (for help icon), `CircularButton` (for toggle)
+
 ## SidebarMenu
 
 Data-driven sidebar navigation with optional section headers and a bottom-pinned slot. Uses `NavLink` internally for active state tracking.

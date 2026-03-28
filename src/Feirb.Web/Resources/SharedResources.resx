@@ -984,4 +984,34 @@
   <data name="SectionPersonalInfoTitle" xml:space="preserve">
     <value>Personal Information</value>
   </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Manage your account, mailboxes, and preferences</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>System administration and configuration</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configure system-wide mail and infrastructure settings</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Monitor and manage background tasks and scheduled jobs</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configure AI features for mail categorization, summarization, and smart replies</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Customize the system prompt used by the AI model for processing emails</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Set when and how often the AI processes incoming mail</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Create, edit, and manage user accounts and permissions</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>View and manage your incoming emails</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connect and manage your email accounts</value>
+  </data>
 </root>

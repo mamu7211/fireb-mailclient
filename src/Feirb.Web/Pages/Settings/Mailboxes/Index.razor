@@ -3,15 +3,13 @@
 @using Feirb.Shared.Settings
 @inject HttpClient Http
 @inject IStringLocalizer<SharedResources> L
+@inject NavigationManager Navigation
+@inject ToolbarStateService ToolbarState
+@implements IDisposable
 
 <PageTitle>@L["PageTitleMailboxes"]</PageTitle>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">@L["MailboxesHeading"]</h1>
-    <a class="btn btn-primary" href="/settings/mailboxes/new">
-        <i class="bi bi-plus-lg me-1" style="font-size: 1.2rem; vertical-align: middle;"></i>@L["ButtonAddMailbox"]
-    </a>
-</div>
+<InfoHeader Title="@L["MailboxesHeading"]" Icon="envelope" Subtitle="@L["PageSubtitleMailboxes"]" />
 
 @if (_isLoading)
 {
@@ -46,6 +44,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        ToolbarState.SetActions(
+        [
+            new ToolbarAction(L["ButtonAddMailbox"], ButtonVariant.Primary, () => { Navigation.NavigateTo("/settings/mailboxes/new"); return Task.CompletedTask; }, "plus-lg")
+        ]);
+
         try
         {
             _mailboxes = await Http.GetFromJsonAsync<List<MailboxListResponse>>("/api/settings/mailboxes");
@@ -59,4 +62,6 @@ else
             _isLoading = false;
         }
     }
+
+    public void Dispose() => ToolbarState.Clear();
 }

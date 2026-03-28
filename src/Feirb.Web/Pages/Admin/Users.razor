@@ -7,15 +7,12 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IJSRuntime Js
 @inject NotificationService Notifications
+@inject ToolbarStateService ToolbarState
+@implements IDisposable
 
 <PageTitle>@L["PageTitleAdminUsers"]</PageTitle>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">@L["AdminUsersHeading"]</h1>
-    <Button Variant="ButtonVariant.Primary" Icon="plus-lg" OnClick="ShowCreateModal">
-        @L["ButtonCreateUser"]
-    </Button>
-</div>
+<InfoHeader Title="@L["AdminUsersHeading"]" Icon="people" Subtitle="@L["PageSubtitleUsers"]" />
 
 @if (!string.IsNullOrEmpty(_successMessage))
 {
@@ -285,6 +282,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        ToolbarState.SetActions(
+        [
+            new ToolbarAction(L["ButtonCreateUser"], ButtonVariant.Primary, () => { ShowCreateModal(); return Task.CompletedTask; }, "plus-lg")
+        ]);
+
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         var userIdClaim = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userIdClaim is not null)
@@ -292,6 +294,8 @@ else
 
         await LoadUsersAsync();
     }
+
+    public void Dispose() => ToolbarState.Clear();
 
     private async Task LoadUsersAsync()
     {

@@ -984,4 +984,34 @@
   <data name="SectionPersonalInfoTitle" xml:space="preserve">
     <value>Informazioni personali</value>
   </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Gestisci account, caselle di posta e preferenze</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Amministrazione e configurazione del sistema</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configura le impostazioni di posta e infrastruttura a livello di sistema</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Monitora e gestisci le attività in background e i job pianificati</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configura le funzionalità IA per categorizzazione, riassunto e risposte intelligenti</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Personalizza il prompt di sistema utilizzato dal modello IA per elaborare le e-mail</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Imposta quando e con quale frequenza l'IA elabora le e-mail in arrivo</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Crea, modifica e gestisci account utente e permessi</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Visualizza e gestisci le e-mail in arrivo</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connetti e gestisci i tuoi account e-mail</value>
+  </data>
 </root>

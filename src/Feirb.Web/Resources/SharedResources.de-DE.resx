@@ -984,4 +984,34 @@
   <data name="SectionPersonalInfoTitle" xml:space="preserve">
     <value>Persönliche Informationen</value>
   </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Konto, Postfächer und Einstellungen verwalten</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Systemadministration und Konfiguration</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Systemweite Mail- und Infrastruktur-Einstellungen konfigurieren</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Hintergrundaufgaben und geplante Jobs überwachen und verwalten</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>KI-Funktionen für E-Mail-Kategorisierung, Zusammenfassung und intelligente Antworten konfigurieren</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>System-Prompt anpassen, der vom KI-Modell zur E-Mail-Verarbeitung verwendet wird</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Festlegen, wann und wie oft die KI eingehende E-Mails verarbeitet</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Benutzerkonten und Berechtigungen erstellen, bearbeiten und verwalten</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Eingehende E-Mails anzeigen und verwalten</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>E-Mail-Konten verbinden und verwalten</value>
+  </data>
 </root>

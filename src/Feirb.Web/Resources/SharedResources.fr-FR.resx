@@ -984,4 +984,34 @@
   <data name="SectionPersonalInfoTitle" xml:space="preserve">
     <value>Informations personnelles</value>
   </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Gérer votre compte, vos boîtes mail et vos préférences</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Administration et configuration du système</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configurer les paramètres de messagerie et d'infrastructure à l'échelle du système</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Surveiller et gérer les tâches en arrière-plan et les jobs planifiés</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configurer les fonctionnalités IA pour la catégorisation, le résumé et les réponses intelligentes</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Personnaliser le prompt système utilisé par le modèle IA pour traiter les e-mails</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Définir quand et à quelle fréquence l'IA traite les e-mails entrants</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Créer, modifier et gérer les comptes utilisateurs et les permissions</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Consulter et gérer vos e-mails entrants</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connecter et gérer vos comptes de messagerie</value>
+  </data>
 </root>
