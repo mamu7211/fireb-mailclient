@@ -1086,4 +1086,37 @@
   <data name="UnsavedChangesMessage" xml:space="preserve">
     <value>Vous avez des modifications non enregistrées. Que souhaitez-vous faire ?</value>
   </data>
+  <data name="SettingsThemeTitle" xml:space="preserve">
+    <value>Thème</value>
+  </data>
+  <data name="SettingsThemeSubtitle" xml:space="preserve">
+    <value>Choisissez votre thème visuel</value>
+  </data>
+  <data name="ThemeLightLabel" xml:space="preserve">
+    <value>Clair</value>
+  </data>
+  <data name="ThemeDarkLabel" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+  <data name="ThemeGreenLight" xml:space="preserve">
+    <value>Vert</value>
+  </data>
+  <data name="ThemeGreenDark" xml:space="preserve">
+    <value>Vert</value>
+  </data>
+  <data name="ThemePinkLight" xml:space="preserve">
+    <value>Rose</value>
+  </data>
+  <data name="ThemePinkDark" xml:space="preserve">
+    <value>Rose</value>
+  </data>
+  <data name="ThemeBlueLight" xml:space="preserve">
+    <value>Bleu</value>
+  </data>
+  <data name="ThemeBlueDark" xml:space="preserve">
+    <value>Bleu</value>
+  </data>
+  <data name="SuccessThemeChanged" xml:space="preserve">
+    <value>Thème changé pour {0}.</value>
+  </data>
 </root>

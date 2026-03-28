@@ -1,8 +1,14 @@
 @page "/settings"
 @attribute [Authorize]
+@using Feirb.Shared.Settings
+@using Feirb.Web.Components.UI
 @inject IStringLocalizer<SharedResources> L
 @inject IJSRuntime Js
+@inject HttpClient Http
 @inject NavigationManager Navigation
+@inject NotificationService Notifications
+@inject UnsavedChangesService UnsavedChanges
+@implements IDisposable
 
 <PageTitle>@L["PageTitleSettings"]</PageTitle>
 
@@ -55,10 +61,52 @@
             }
         </div>
     </ContentSection>
+
+    <ContentSection Icon="palette" Title="@L["SettingsThemeTitle"]" Subtitle="@L["SettingsThemeSubtitle"]">
+        <div class="d-flex flex-column gap-3">
+            <div>
+                <label class="form-label fw-semibold mb-2">@L["ThemeLightLabel"]</label>
+                <ToggleButtonGroup Items="_lightThemes" SelectedId="@_selectedTheme"
+                                   SelectedIdChanged="OnThemeSelectedAsync" />
+            </div>
+            <div>
+                <label class="form-label fw-semibold mb-2">@L["ThemeDarkLabel"]</label>
+                <ToggleButtonGroup Items="_darkThemes" SelectedId="@_selectedTheme"
+                                   SelectedIdChanged="OnThemeSelectedAsync" />
+            </div>
+            @if (_selectedTheme != _savedTheme)
+            {
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary btn-sm" @onclick="SaveThemeAsync">
+                        <i class="bi bi-check-lg me-1"></i>@L["ButtonSave"]
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="RevertThemeAsync">
+                        <i class="bi bi-x-lg me-1"></i>@L["ButtonCancel"]
+                    </button>
+                </div>
+            }
+        </div>
+    </ContentSection>
 </div>
 
 @code {
     private string _currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
+    private string _savedTheme = "green-light";
+    private string _selectedTheme = "green-light";
+
+    private readonly IReadOnlyList<ToggleButtonItem> _lightThemes =
+    [
+        new("green-light", "Green"),
+        new("pink-light", "Pink"),
+        new("blue-light", "Blue"),
+    ];
+
+    private readonly IReadOnlyList<ToggleButtonItem> _darkThemes =
+    [
+        new("green-dark", "Green"),
+        new("pink-dark", "Pink"),
+        new("blue-dark", "Blue"),
+    ];
 
     private static readonly (string Code, string Label)[] Languages =
     [
@@ -68,6 +116,87 @@
         ("it-IT", "Italiano"),
     ];
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var prefs = await Http.GetFromJsonAsync<PreferencesResponse>("/api/settings/preferences");
+            if (prefs is not null)
+            {
+                _savedTheme = prefs.Theme;
+                _selectedTheme = prefs.Theme;
+            }
+        }
+        catch
+        {
+            // Fall back to localStorage theme
+            var localTheme = await Js.InvokeAsync<string>("blazorTheme.get");
+            if (!string.IsNullOrEmpty(localTheme))
+            {
+                _savedTheme = localTheme;
+                _selectedTheme = localTheme;
+            }
+        }
+    }
+
+    private async Task OnThemeSelectedAsync(string themeId)
+    {
+        _selectedTheme = themeId;
+        await Js.InvokeVoidAsync("blazorTheme.set", themeId);
+
+        if (_selectedTheme != _savedTheme)
+        {
+            UnsavedChanges.SetUnsavedChanges(true, SaveThemeAsync, RevertThemeAsync);
+        }
+        else
+        {
+            UnsavedChanges.Clear();
+        }
+    }
+
+    private async Task<bool> SaveThemeAsync()
+    {
+        try
+        {
+            var request = new UpdatePreferencesRequest(_selectedTheme);
+            var response = await Http.PutAsJsonAsync("/api/settings/preferences", request);
+            if (response.IsSuccessStatusCode)
+            {
+                _savedTheme = _selectedTheme;
+                UnsavedChanges.Clear();
+                var themeName = GetThemeDisplayName(_selectedTheme);
+                Notifications.Add(string.Format(L["SuccessThemeChanged"], themeName), NotificationSeverity.Info);
+                StateHasChanged();
+                return true;
+            }
+        }
+        catch
+        {
+            // Silently fail — user can retry
+        }
+
+        return false;
+    }
+
+    private async Task RevertThemeAsync()
+    {
+        _selectedTheme = _savedTheme;
+        await Js.InvokeVoidAsync("blazorTheme.set", _savedTheme);
+        UnsavedChanges.Clear();
+        StateHasChanged();
+    }
+
+    private string GetThemeDisplayName(string themeId) => themeId switch
+    {
+        "green-light" => L["ThemeGreenLight"],
+        "green-dark" => L["ThemeGreenDark"],
+        "pink-light" => L["ThemePinkLight"],
+        "pink-dark" => L["ThemePinkDark"],
+        "blue-light" => L["ThemeBlueLight"],
+        "blue-dark" => L["ThemeBlueDark"],
+        _ => themeId
+    };
+
     private async Task SetCultureAsync(string cultureName)
     {
         if (cultureName == _currentCulture)
@@ -75,5 +204,15 @@
 
         await Js.InvokeVoidAsync("blazorCulture.set", cultureName);
         Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
+
+    public void Dispose()
+    {
+        if (_selectedTheme != _savedTheme)
+        {
+            // Revert theme if navigating away without saving
+            _ = Js.InvokeVoidAsync("blazorTheme.set", _savedTheme);
+            UnsavedChanges.Clear();
+        }
     }
 }
