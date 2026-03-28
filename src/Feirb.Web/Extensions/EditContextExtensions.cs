@@ -8,7 +8,7 @@ public static class EditContextExtensions
     public static IDisposable EnableUnsavedChangesTracking(
         this EditContext editContext,
         UnsavedChangesService service,
-        Func<Task>? saveAsync = null,
+        Func<Task<bool>>? saveAsync = null,
         Func<Task>? discardAsync = null)
     {
         return new UnsavedChangesTracker(editContext, service, saveAsync, discardAsync);
@@ -18,13 +18,13 @@ public static class EditContextExtensions
     {
         private readonly EditContext _editContext;
         private readonly UnsavedChangesService _service;
-        private readonly Func<Task>? _saveAsync;
+        private readonly Func<Task<bool>>? _saveAsync;
         private readonly Func<Task>? _discardAsync;
 
         public UnsavedChangesTracker(
             EditContext editContext,
             UnsavedChangesService service,
-            Func<Task>? saveAsync,
+            Func<Task<bool>>? saveAsync,
             Func<Task>? discardAsync)
         {
             _editContext = editContext;

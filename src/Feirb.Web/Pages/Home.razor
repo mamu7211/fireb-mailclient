@@ -35,6 +35,7 @@
     private bool _editMode;
     private bool _gridInitialized;
     private bool _needsGridInit;
+    private int _toolbarVersion;
     private DotNetObjectReference<Home>? _dotNetRef;
     private readonly List<ActiveWidget> _activeWidgets = [];
 
@@ -86,13 +87,13 @@
     {
         if (_editMode)
         {
-            ToolbarState.SetActions([
+            _toolbarVersion = ToolbarState.SetActions([
                 new ToolbarAction(L["DashboardEditDone"], ButtonVariant.Primary, ExitEditModeAsync, "check-lg"),
             ]);
         }
         else
         {
-            ToolbarState.SetActions([
+            _toolbarVersion = ToolbarState.SetActions([
                 new ToolbarAction(L["DashboardEditButton"], ButtonVariant.Secondary, EnterEditModeAsync, "pencil"),
             ]);
         }
@@ -235,7 +236,7 @@
 
     public async ValueTask DisposeAsync()
     {
-        ToolbarState.Clear();
+        ToolbarState.ClearIfCurrent(_toolbarVersion);
         try
         {
             if (_gridInitialized)

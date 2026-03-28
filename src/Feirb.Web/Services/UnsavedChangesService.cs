@@ -4,13 +4,13 @@ public sealed class UnsavedChangesService
 {
     public bool HasUnsavedChanges { get; private set; }
 
-    public Func<Task>? SaveAsync { get; private set; }
+    public Func<Task<bool>>? SaveAsync { get; private set; }
 
     public Func<Task>? DiscardAsync { get; private set; }
 
     public event Action? OnChange;
 
-    public void SetUnsavedChanges(bool hasChanges, Func<Task>? saveAsync = null, Func<Task>? discardAsync = null)
+    public void SetUnsavedChanges(bool hasChanges, Func<Task<bool>>? saveAsync = null, Func<Task>? discardAsync = null)
     {
         HasUnsavedChanges = hasChanges;
         SaveAsync = saveAsync;

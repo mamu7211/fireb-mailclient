@@ -43,10 +43,11 @@ else
 @code {
     private List<MailboxListResponse>? _mailboxes;
     private bool _isLoading = true;
+    private int _toolbarVersion;
 
     protected override async Task OnInitializedAsync()
     {
-        ToolbarState.SetActions(
+        _toolbarVersion = ToolbarState.SetActions(
         [
             new ToolbarAction(L["ButtonAddMailbox"], ButtonVariant.Primary, () => { Navigation.NavigateTo("/settings/mailboxes/new"); return Task.CompletedTask; }, "plus-lg")
         ]);
@@ -65,5 +66,5 @@ else
         }
     }
 
-    public void Dispose() => ToolbarState.Clear();
+    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
 }

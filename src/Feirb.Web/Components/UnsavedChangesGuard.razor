@@ -5,7 +5,7 @@
 @implements IDisposable
 
 <NavigationLock ConfirmExternalNavigation="UnsavedChanges.HasUnsavedChanges"
-               OnBeforeInternalNavigation="OnBeforeInternalNavigationAsync" />
+               OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
 
 @if (_showModal)
 {
@@ -48,7 +48,7 @@
         UnsavedChanges.OnChange += StateHasChanged;
     }
 
-    private void OnBeforeInternalNavigationAsync(LocationChangingContext context)
+    private void OnBeforeInternalNavigation(LocationChangingContext context)
     {
         if (!UnsavedChanges.HasUnsavedChanges)
             return;
@@ -63,7 +63,14 @@
     {
         if (UnsavedChanges.SaveAsync is not null)
         {
-            await UnsavedChanges.SaveAsync();
+            var success = await UnsavedChanges.SaveAsync();
+            if (!success)
+            {
+                _showModal = false;
+                _pendingUri = null;
+                StateHasChanged();
+                return;
+            }
         }
 
         NavigateToPending();

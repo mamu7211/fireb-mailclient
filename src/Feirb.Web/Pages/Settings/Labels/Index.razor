@@ -155,9 +155,11 @@ else
     private LabelResponse? _deletingLabel;
     private LabelFormModel _formModel = new();
 
+    private int _toolbarVersion;
+
     protected override void OnInitialized()
     {
-        ToolbarState.SetActions(
+        _toolbarVersion = ToolbarState.SetActions(
         [
             new ToolbarAction(L["ButtonCreateLabel"], ButtonVariant.Primary, () => { OpenCreateModal(); return Task.CompletedTask; }, "plus-lg")
         ]);
@@ -168,7 +170,7 @@ else
         await LoadLabelsAsync();
     }
 
-    public void Dispose() => ToolbarState.Clear();
+    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
 
     private async Task LoadLabelsAsync()
     {

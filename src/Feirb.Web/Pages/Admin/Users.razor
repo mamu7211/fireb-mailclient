@@ -282,9 +282,11 @@ else
     private CreateFormModel _createModel = new();
     private EditFormModel _editModel = new();
 
+    private int _toolbarVersion;
+
     protected override async Task OnInitializedAsync()
     {
-        ToolbarState.SetActions(
+        _toolbarVersion = ToolbarState.SetActions(
         [
             new ToolbarAction(L["ButtonCreateUser"], ButtonVariant.Primary, () => { ShowCreateModal(); return Task.CompletedTask; }, "plus-lg")
         ]);
@@ -297,7 +299,7 @@ else
         await LoadUsersAsync();
     }
 
-    public void Dispose() => ToolbarState.Clear();
+    public void Dispose() => ToolbarState.ClearIfCurrent(_toolbarVersion);
 
     private async Task LoadUsersAsync()
     {
