@@ -1014,4 +1014,67 @@
   <data name="PageSubtitleMailboxes" xml:space="preserve">
     <value>Connecter et gérer vos comptes de messagerie</value>
   </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Mettre à jour vos informations de profil</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Gérer votre mot de passe et vos sessions actives</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Connecter un nouveau compte e-mail en fournissant les détails des serveurs IMAP et SMTP</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Mettre à jour les paramètres de connexion de cette boîte mail</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Configurer le serveur SMTP système et l'identité d'expéditeur par défaut</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Configurez votre profil personnel, connectez des boîtes mail via IMAP et SMTP, gérez les labels pour organiser vos e-mails et définissez votre langue préférée.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Gérez les comptes utilisateurs, configurez les paramètres de messagerie système et mettez en place des fonctionnalités IA comme la catégorisation automatique et les réponses intelligentes.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>Les paramètres système s'appliquent globalement et affectent tous les utilisateurs. Configurez le serveur de messagerie sortant et gérez les tâches en arrière-plan.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>Les tâches en arrière-plan gèrent la synchronisation des e-mails et le traitement IA. Surveillez leur statut et gérez la planification ici.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb utilise un modèle IA local (Ollama/Qwen3) pour catégoriser, résumer et rédiger des réponses à vos e-mails. Configurez le comportement du modèle et le calendrier de traitement ici.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>Le prompt système indique au modèle IA comment traiter vos e-mails. Personnalisez-le selon vos préférences de catégorisation, de ton et de style de résumé.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Contrôlez la fréquence de traitement des nouveaux e-mails entrants par l'IA. Un traitement plus fréquent signifie une catégorisation plus rapide mais une utilisation plus élevée des ressources de votre NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Créez et gérez les comptes utilisateurs de votre instance Feirb. Chaque utilisateur dispose de ses propres boîtes mail, labels et préférences. Les administrateurs peuvent réinitialiser les mots de passe et gérer les rôles.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>Votre boîte de réception affiche tous les messages entrants de vos boîtes mail connectées. Utilisez les labels et la catégorisation IA pour rester organisé.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Chaque boîte mail se connecte à un compte e-mail via IMAP (entrant) et SMTP (sortant). Vous pouvez ajouter plusieurs boîtes mail et tester la connectivité avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Les labels vous aident à organiser vos e-mails en catégories. Vous pouvez créer des labels personnalisés avec des couleurs, et l'IA peut automatiquement attribuer des labels aux e-mails entrants selon vos règles de classification.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Votre nom d'utilisateur est affiché dans l'interface et votre adresse e-mail est utilisée pour la récupération de compte.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Changez régulièrement votre mot de passe et vérifiez les sessions actives pour assurer la sécurité de votre compte. La déconnexion de toutes les sessions nécessitera une reconnexion sur chaque appareil.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Ajoutez un nouveau compte e-mail en entrant les détails du serveur IMAP pour la réception et SMTP pour l'envoi. Utilisez le bouton de test pour vérifier la connectivité avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Mettez à jour les paramètres de connexion de cette boîte mail. Laissez les champs de mot de passe vides pour conserver les mots de passe existants. Utilisez les boutons de test pour vérifier les modifications avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>Le serveur SMTP système est utilisé pour envoyer les notifications système et les e-mails non liés à une boîte mail utilisateur spécifique. Configurez la connexion au serveur et l'identité d'expéditeur par défaut.</value>
+  </data>
 </root>

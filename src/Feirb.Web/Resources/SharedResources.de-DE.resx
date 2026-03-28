@@ -1014,4 +1014,67 @@
   <data name="PageSubtitleMailboxes" xml:space="preserve">
     <value>E-Mail-Konten verbinden und verwalten</value>
   </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Profildaten aktualisieren</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Passwort und aktive Sitzungen verwalten</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Neues E-Mail-Konto durch Angabe der IMAP- und SMTP-Serverdetails verbinden</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Verbindungseinstellungen für dieses Postfach aktualisieren</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Systemweiten SMTP-Server und Standard-Absenderidentität konfigurieren</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Konfigurieren Sie Ihr persönliches Profil, verbinden Sie Postfächer über IMAP und SMTP, verwalten Sie Labels zur Organisation Ihrer E-Mails und legen Sie Ihre bevorzugte Sprache fest.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Verwalten Sie Benutzerkonten, konfigurieren Sie systemweite Mail-Einstellungen und richten Sie KI-gestützte Funktionen wie automatische Kategorisierung und intelligente Antworten ein.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>Systemeinstellungen gelten global und betreffen alle Benutzer. Konfigurieren Sie den ausgehenden Mailserver und verwalten Sie Hintergrundverarbeitungs-Jobs.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>Hintergrund-Jobs erledigen Aufgaben wie E-Mail-Synchronisierung und KI-Verarbeitung. Überwachen Sie deren Status und verwalten Sie die Planung hier.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb verwendet ein lokales KI-Modell (Ollama/Qwen3) zum Kategorisieren, Zusammenfassen und Erstellen von Antwortentwürfen für Ihre E-Mails. Konfigurieren Sie hier das Modellverhalten und den Verarbeitungszeitplan.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>Der System-Prompt weist das KI-Modell an, wie Ihre E-Mails verarbeitet werden sollen. Passen Sie ihn an Ihre Präferenzen für Kategorisierung, Tonalität und Zusammenfassungsstil an.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Steuern Sie, wie häufig die KI neue eingehende E-Mails verarbeitet. Häufigere Verarbeitung bedeutet schnellere Kategorisierung, aber höhere Ressourcennutzung auf Ihrem NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Erstellen und verwalten Sie Benutzerkonten für Ihre Feirb-Instanz. Jeder Benutzer hat eigene Postfächer, Labels und Einstellungen. Administratoren können Passwörter zurücksetzen und Rollen verwalten.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>Ihr Posteingang zeigt alle eingehenden Nachrichten Ihrer verbundenen Postfächer. Verwenden Sie Labels und KI-Kategorisierung, um alles übersichtlich zu halten.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Jedes Postfach verbindet sich über IMAP (eingehend) und SMTP (ausgehend) mit einem E-Mail-Konto. Sie können mehrere Postfächer hinzufügen und die Konnektivität vor dem Speichern testen.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Labels helfen Ihnen, E-Mails in Kategorien zu organisieren. Sie können benutzerdefinierte Labels mit Farben erstellen, und die KI kann eingehenden E-Mails automatisch Labels basierend auf Ihren Klassifizierungsregeln zuweisen.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Ihr Benutzername wird in der Oberfläche angezeigt und Ihre E-Mail-Adresse wird für die Kontowiederherstellung verwendet.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Ändern Sie Ihr Passwort regelmäßig und überprüfen Sie aktive Sitzungen, um die Sicherheit Ihres Kontos zu gewährleisten. Das Abmelden aller Sitzungen erfordert eine erneute Anmeldung auf jedem Gerät.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Fügen Sie ein neues E-Mail-Konto hinzu, indem Sie die IMAP-Serverdetails für den Empfang und SMTP-Details für den Versand eingeben. Verwenden Sie die Test-Schaltfläche, um die Konnektivität vor dem Speichern zu überprüfen.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Aktualisieren Sie die Verbindungseinstellungen für dieses Postfach. Lassen Sie die Passwortfelder leer, um die bestehenden Passwörter beizubehalten. Verwenden Sie die Test-Schaltflächen, um Änderungen vor dem Speichern zu überprüfen.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>Der System-SMTP-Server wird für den Versand von Systembenachrichtigungen und E-Mails verwendet, die nicht an ein bestimmtes Benutzerpostfach gebunden sind. Konfigurieren Sie die Serververbindung und die Standard-Absenderidentität.</value>
+  </data>
 </root>
