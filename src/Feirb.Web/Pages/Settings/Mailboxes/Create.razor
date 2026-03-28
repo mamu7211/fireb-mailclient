@@ -1,10 +1,12 @@
 @page "/settings/mailboxes/new"
 @attribute [Authorize]
 @using Feirb.Shared.Settings
+@using Feirb.Web.Extensions
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
+@inject UnsavedChangesService UnsavedChanges
 @implements IDisposable
 
 <PageTitle>@L["PageTitleNewMailbox"]</PageTitle>
@@ -21,7 +23,7 @@
     </div>
 }
 
-<EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
+<EditForm EditContext="_editContext" OnValidSubmit="HandleSaveAsync">
     <DataAnnotationsValidator />
 
     <ContentSection Icon="info-circle" Title="@L["MailboxSectionGeneral"]" Subtitle="@L["SectionMailboxGeneralSubtitle"]" Class="mb-4">
@@ -140,6 +142,8 @@
 
 @code {
     private MailboxFormModel _model = new();
+    private EditContext _editContext = null!;
+    private IDisposable? _unsavedChangesTracker;
     private bool _isSaving;
     private string? _errorMessage;
 
@@ -150,13 +154,21 @@
 
     protected override void OnInitialized()
     {
+        _editContext = new EditContext(_model);
+        _unsavedChangesTracker = _editContext.EnableUnsavedChangesTracking(
+            UnsavedChanges, HandleSaveAsync);
+
         ToolbarState.SetActions(
         [
             new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, HandleSaveAsync, "check-lg")
         ]);
     }
 
-    public void Dispose() => ToolbarState.Clear();
+    public void Dispose()
+    {
+        _unsavedChangesTracker?.Dispose();
+        ToolbarState.Clear();
+    }
 
     private async Task HandleSaveAsync()
     {
@@ -177,6 +189,7 @@
 
             if (response.IsSuccessStatusCode)
             {
+                UnsavedChanges.Clear();
                 var created = await response.Content.ReadFromJsonAsync<MailboxDetailResponse>();
                 Navigation.NavigateTo($"/settings/mailboxes/{created!.Id}");
             }

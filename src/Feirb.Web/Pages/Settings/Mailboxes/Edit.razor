@@ -1,11 +1,13 @@
 @page "/settings/mailboxes/{Id:guid}"
 @attribute [Authorize]
 @using Feirb.Shared.Settings
+@using Feirb.Web.Extensions
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
 @inject NotificationService Notifications
+@inject UnsavedChangesService UnsavedChanges
 @implements IDisposable
 
 <PageTitle>@L["PageTitleEditMailbox"]</PageTitle>
@@ -40,7 +42,7 @@
 }
 else if (_model is not null)
 {
-    <EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
+    <EditForm EditContext="_editContext" OnValidSubmit="HandleSaveAsync">
         <DataAnnotationsValidator />
 
         <ContentSection Icon="info-circle" Title="@L["MailboxSectionGeneral"]" Subtitle="@L["SectionMailboxGeneralSubtitle"]" Class="mb-4">
@@ -192,6 +194,8 @@ else if (_model is not null)
     [Parameter] public Guid Id { get; set; }
 
     private MailboxFormModel? _model;
+    private EditContext? _editContext;
+    private IDisposable? _unsavedChangesTracker;
     private bool _isLoading = true;
     private bool _isSaving;
     private bool _isDeleting;
@@ -232,6 +236,9 @@ else if (_model is not null)
                     SmtpUseTls = mailbox.SmtpUseTls,
                     SmtpRequiresAuth = mailbox.SmtpRequiresAuth,
                 };
+                _editContext = new EditContext(_model);
+                _unsavedChangesTracker = _editContext.EnableUnsavedChangesTracking(
+                    UnsavedChanges, HandleSaveAsync);
             }
         }
         catch
@@ -244,7 +251,11 @@ else if (_model is not null)
         }
     }
 
-    public void Dispose() => ToolbarState.Clear();
+    public void Dispose()
+    {
+        _unsavedChangesTracker?.Dispose();
+        ToolbarState.Clear();
+    }
 
     private async Task HandleSaveAsync()
     {
@@ -266,6 +277,7 @@ else if (_model is not null)
 
             if (response.IsSuccessStatusCode)
             {
+                UnsavedChanges.Clear();
                 _model.ImapPassword = null;
                 _model.SmtpPassword = null;
                 _successMessage = L["SuccessMailboxUpdated"];
