@@ -13,8 +13,8 @@ done
 
 if [ -n "$SEED" ]; then
     echo "Starting Feirb with database seeding enabled ..."
-    FEIRB_SEED_DATA=true dotnet run --project src/Feirb.AppHost
+    FEIRB_SEED_DATA=true dotnet watch --project src/Feirb.AppHost
 else
     echo "Starting Feirb without database seeding ..."
-    dotnet run --project src/Feirb.AppHost
+    dotnet watch --project src/Feirb.AppHost
 fi

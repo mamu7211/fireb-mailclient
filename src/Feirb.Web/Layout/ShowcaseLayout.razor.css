@@ -36,3 +36,59 @@
     padding: 2rem;
     max-width: 56rem;
 }
+
+/* Shared showcase styles (cascade into child components) */
+::deep .showcase-preview-area {
+    padding: 1.5rem;
+    background-color: var(--feirb-surface);
+    border-radius: var(--feirb-radius-input);
+    border: 1px dashed var(--feirb-outline-variant);
+}
+
+::deep pre {
+    margin: 0;
+    border-radius: var(--feirb-radius-input);
+    overflow-x: auto;
+}
+
+::deep pre code {
+    font-size: 0.8125rem;
+}
+
+::deep .showcase-color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 0.75rem;
+}
+
+::deep .showcase-color-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+::deep .showcase-color-swatch {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+::deep .showcase-color-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.0625rem;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+}
+
+::deep .showcase-color-name {
+}
+
+::deep .showcase-color-token {
+    font-size: 0.75rem;
+}
+
+::deep .showcase-color-usage {
+    line-height: 0.6;
+}

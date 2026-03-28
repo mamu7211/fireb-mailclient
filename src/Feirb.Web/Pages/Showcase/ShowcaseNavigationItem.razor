@@ -1,0 +1,74 @@
+@using Feirb.Web.Components.UI
+@inject IJSRuntime JS
+
+<Heading Level="HeadingLevel.Large" Icon="box-arrow-right">NavigationItem</Heading>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Info</Heading>
+    <p>Card-style navigation link with icon, title, optional subtitle, and chevron. Used in settings and admin index pages to navigate to sub-pages.</p>
+    <table class="table table-sm">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>Icon</code></td><td><code>string</code></td><td>required</td><td>Icon name without <code>bi-</code> prefix</td></tr>
+            <tr><td><code>Title</code></td><td><code>string</code></td><td>required</td><td>Navigation item title</td></tr>
+            <tr><td><code>Subtitle</code></td><td><code>string?</code></td><td><code>null</code></td><td>Description text below the title</td></tr>
+            <tr><td><code>Href</code></td><td><code>string</code></td><td>required</td><td>Target URL</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Preview</Heading>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <label class="form-label mb-0">Icon:</label>
+        <select class="form-select form-select-sm w-auto" @bind="_navIcon">
+            <option value="person">person</option>
+            <option value="lock">lock</option>
+            <option value="envelope">envelope</option>
+            <option value="tag">tag</option>
+            <option value="gear">gear</option>
+        </select>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="navSubtitle" @bind="_navShowSubtitle" />
+            <label class="form-check-label" for="navSubtitle">Subtitle</label>
+        </div>
+    </div>
+    <div class="showcase-preview-area">
+        <NavigationItem
+            Icon="@_navIcon"
+            Title="Personal Information"
+            Subtitle="@(_navShowSubtitle ? "Update your name and email address" : null)"
+            Href="/components-showcase" />
+    </div>
+</Card>
+
+<Card Class="p-4">
+    <Heading Level="HeadingLevel.Small">Code</Heading>
+    <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+</Card>
+
+@code {
+    private string _navIcon = "person";
+    private bool _navShowSubtitle = true;
+    private ElementReference _codeElement;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try { await JS.InvokeVoidAsync("highlightCode", _codeElement, CurrentCode); }
+        catch (JSException) { }
+    }
+
+    private string CurrentCode
+    {
+        get
+        {
+            var subtitle = _navShowSubtitle ? "\n    Subtitle=\"Update your name and email address\"" : "";
+            return $"""
+                <NavigationItem
+                    Icon="{_navIcon}"
+                    Title="Personal Information"{subtitle}
+                    Href="/settings/personal-information" />
+                """;
+        }
+    }
+}

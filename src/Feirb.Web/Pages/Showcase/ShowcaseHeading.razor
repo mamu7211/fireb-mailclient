@@ -1,0 +1,80 @@
+@using Feirb.Web.Components.UI
+@inject IJSRuntime JS
+
+<Heading Level="HeadingLevel.Large" Icon="type-h1">Heading</Heading>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Info</Heading>
+    <p>Semantic heading component with optional icon and subtitle. Renders <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, or <code>&lt;h3&gt;</code> based on the level.</p>
+    <table class="table table-sm">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>Level</code></td><td><code>HeadingLevel</code></td><td><code>Large</code></td><td>Large (h1), Medium (h2), Small (h3)</td></tr>
+            <tr><td><code>Icon</code></td><td><code>string?</code></td><td><code>null</code></td><td>Icon name without <code>bi-</code> prefix</td></tr>
+            <tr><td><code>Subtitle</code></td><td><code>string?</code></td><td><code>null</code></td><td>Subtitle text below the heading</td></tr>
+            <tr><td><code>ChildContent</code></td><td><code>RenderFragment</code></td><td>required</td><td>Heading text/content</td></tr>
+            <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Preview</Heading>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <label class="form-label mb-0">Level:</label>
+        <select class="form-select form-select-sm w-auto" @bind="_headingLevel">
+            <option value="@HeadingLevel.Large">Large</option>
+            <option value="@HeadingLevel.Medium">Medium</option>
+            <option value="@HeadingLevel.Small">Small</option>
+        </select>
+        <label class="form-label mb-0">Icon:</label>
+        <select class="form-select form-select-sm w-auto" @bind="_headingIcon">
+            <option value="">(none)</option>
+            <option value="gear">gear</option>
+            <option value="envelope">envelope</option>
+            <option value="star-fill">star-fill</option>
+        </select>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="headingSubtitle" @bind="_headingShowSubtitle" />
+            <label class="form-check-label" for="headingSubtitle">Subtitle</label>
+        </div>
+    </div>
+    <div class="showcase-preview-area">
+        <Heading Level="@_headingLevel"
+                 Icon="@(string.IsNullOrEmpty(_headingIcon) ? null : _headingIcon)"
+                 Subtitle="@(_headingShowSubtitle ? "This is a subtitle" : null)">
+            Example Heading
+        </Heading>
+    </div>
+</Card>
+
+<Card Class="p-4">
+    <Heading Level="HeadingLevel.Small">Code</Heading>
+    <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+</Card>
+
+@code {
+    private HeadingLevel _headingLevel = HeadingLevel.Large;
+    private string _headingIcon = "";
+    private bool _headingShowSubtitle;
+    private ElementReference _codeElement;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try { await JS.InvokeVoidAsync("highlightCode", _codeElement, CurrentCode); }
+        catch (JSException) { }
+    }
+
+    private string CurrentCode
+    {
+        get
+        {
+            var attrs = _headingLevel != HeadingLevel.Large ? $" Level=\"HeadingLevel.{_headingLevel}\"" : "";
+            if (!string.IsNullOrEmpty(_headingIcon))
+                attrs += $" Icon=\"{_headingIcon}\"";
+            if (_headingShowSubtitle)
+                attrs += " Subtitle=\"This is a subtitle\"";
+            return $"<Heading{attrs}>Example Heading</Heading>";
+        }
+    }
+}
