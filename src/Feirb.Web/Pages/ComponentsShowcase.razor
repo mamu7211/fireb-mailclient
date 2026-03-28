@@ -1,0 +1,52 @@
+@page "/components-showcase"
+@page "/components-showcase/{Section}"
+@attribute [AllowAnonymous]
+@layout Feirb.Web.Layout.ShowcaseLayout
+
+@using Feirb.Web.Pages.Showcase
+
+@switch (Section)
+{
+    case null:
+    case "":
+        <ShowcaseDesignFundamentals />
+        break;
+    case "icon":
+        <ShowcaseIcon />
+        break;
+    case "heading":
+        <ShowcaseHeading />
+        break;
+    case "button":
+        <ShowcaseButton />
+        break;
+    case "circular-button":
+        <ShowcaseCircularButton />
+        break;
+    case "card":
+        <ShowcaseCard />
+        break;
+    case "navigation-item":
+        <ShowcaseNavigationItem />
+        break;
+    case "content-section":
+        <ShowcaseContentSection />
+        break;
+    case "info-header":
+        <ShowcaseInfoHeader />
+        break;
+    case "sidebar-menu":
+        <ShowcaseSidebarMenu />
+        break;
+    default:
+        <div class="text-center py-5">
+            <Feirb.Web.Components.UI.Icon Name="palette2" Size="Feirb.Web.Components.UI.IconSize.Large" Class="mb-3 d-block mx-auto" />
+            <p class="text-muted">Component not found.</p>
+        </div>
+        break;
+}
+
+@code {
+    [Parameter]
+    public string? Section { get; set; }
+}

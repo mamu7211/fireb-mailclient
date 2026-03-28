@@ -957,4 +957,124 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>An error occurred while processing the label.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configure the SMTP server used to send outgoing mail from the system.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Set the default sender identity that appears on outgoing messages.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Choose a strong password that you don't use on other sites.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Review and manage your active login sessions across devices.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Basic mailbox information such as name and email address.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configure the IMAP server used to receive incoming mail for this mailbox.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configure the SMTP server used to send outgoing mail from this mailbox.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Update your username and email address.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Manage your account, mailboxes, and preferences</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>System administration and configuration</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configure system-wide mail and infrastructure settings</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Monitor and manage background tasks and scheduled jobs</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configure AI features for mail categorization, summarization, and smart replies</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Customize the system prompt used by the AI model for processing emails</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Set when and how often the AI processes incoming mail</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Create, edit, and manage user accounts and permissions</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>View and manage your incoming emails</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connect and manage your email accounts</value>
+  </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Update your profile details</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Manage your password and active sessions</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Connect a new email account by providing IMAP and SMTP server details</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Update connection settings for this mailbox</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Configure the system-wide SMTP server and default sender identity</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Configure your personal profile, connect mailboxes via IMAP and SMTP, manage labels for organizing your mail, and set your preferred language.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Manage user accounts, configure system-wide mail settings, and set up AI-powered features like automatic categorization and smart replies.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>System settings apply globally and affect all users. Configure the outgoing mail server and manage background processing jobs.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>Background jobs handle tasks like mail synchronization and AI processing. Monitor their status and manage scheduling here.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb uses a local AI model (Ollama/Qwen3) to categorize, summarize, and draft replies for your emails. Configure the model behavior and processing schedule here.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>The system prompt instructs the AI model how to process your emails. Customize it to match your preferences for categorization, tone, and summarization style.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Control how frequently the AI processes new incoming mail. More frequent processing means faster categorization but higher resource usage on your NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Create and manage user accounts for your Feirb instance. Each user has their own mailboxes, labels, and preferences. Admins can reset passwords and manage roles.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>Your inbox shows all incoming messages across your connected mailboxes. Use labels and AI categorization to keep things organized.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Each mailbox connects to an email account via IMAP (incoming) and SMTP (outgoing). You can add multiple mailboxes and test connectivity before saving.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Labels help you organize emails into categories. You can create custom labels with colors, and the AI can automatically assign labels to incoming mail based on your classification rules.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Your username is displayed in the interface and your email address is used for account recovery.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Change your password regularly and review active sessions to ensure your account is secure. Logging out all sessions will require you to sign in again on every device.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Add a new email account by entering the IMAP server details for receiving mail and SMTP details for sending. Use the test button to verify connectivity before saving.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Update the connection settings for this mailbox. Leave the password fields empty to keep the existing passwords. Use the test buttons to verify changes before saving.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>The system SMTP server is used for sending system notifications and emails that are not tied to a specific user mailbox. Configure the server connection and the default sender identity.</value>
+  </data>
 </root>

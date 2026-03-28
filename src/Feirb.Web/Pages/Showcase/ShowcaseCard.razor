@@ -1,0 +1,62 @@
+@using Feirb.Web.Components.UI
+@inject IJSRuntime JS
+
+<InfoHeader Title="Card" Icon="card-text" Subtitle="Minimal card container with soft shadow and rounded corners" />
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Info</Heading>
+    <p>Minimal card container with consistent shadow, border-radius, and padding. Use for grouping related content.</p>
+    <table class="table table-sm">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>ChildContent</code></td><td><code>RenderFragment</code></td><td>required</td><td>Card content</td></tr>
+            <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Preview</Heading>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cardExtraPadding" @bind="_cardExtraPadding" />
+            <label class="form-check-label" for="cardExtraPadding">Extra padding (p-4)</label>
+        </div>
+    </div>
+    <div class="showcase-preview-area">
+        <Card Class="@(_cardExtraPadding ? "p-4" : "")">
+            <h3>Example Card</h3>
+            <p class="mb-0">This is some content inside a card component.</p>
+        </Card>
+    </div>
+</Card>
+
+<Card Class="p-4">
+    <Heading Level="HeadingLevel.Small">Code</Heading>
+    <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+</Card>
+
+@code {
+    private bool _cardExtraPadding;
+    private ElementReference _codeElement;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try { await JS.InvokeVoidAsync("highlightCode", _codeElement, CurrentCode); }
+        catch (JSException) { }
+    }
+
+    private string CurrentCode
+    {
+        get
+        {
+            var cls = _cardExtraPadding ? " Class=\"p-4\"" : "";
+            return $"""
+                <Card{cls}>
+                    <h3>Example Card</h3>
+                    <p>This is some content inside a card component.</p>
+                </Card>
+                """;
+        }
+    }
+}

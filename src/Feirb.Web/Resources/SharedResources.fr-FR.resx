@@ -957,4 +957,124 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Une erreur est survenue lors du traitement du label.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configurez le serveur SMTP utilisé pour envoyer les e-mails sortants depuis le système.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Définissez l'identité d'expéditeur par défaut qui apparaît sur les messages sortants.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Choisissez un mot de passe fort que vous n'utilisez pas sur d'autres sites.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Consultez et gérez vos sessions de connexion actives sur tous vos appareils.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Informations de base de la boîte mail telles que le nom et l'adresse e-mail.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configurez le serveur IMAP utilisé pour recevoir les e-mails entrants de cette boîte mail.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configurez le serveur SMTP utilisé pour envoyer les e-mails sortants depuis cette boîte mail.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Mettez à jour votre nom d'utilisateur et votre adresse e-mail.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Informations personnelles</value>
+  </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Gérer votre compte, vos boîtes mail et vos préférences</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Administration et configuration du système</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configurer les paramètres de messagerie et d'infrastructure à l'échelle du système</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Surveiller et gérer les tâches en arrière-plan et les jobs planifiés</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configurer les fonctionnalités IA pour la catégorisation, le résumé et les réponses intelligentes</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Personnaliser le prompt système utilisé par le modèle IA pour traiter les e-mails</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Définir quand et à quelle fréquence l'IA traite les e-mails entrants</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Créer, modifier et gérer les comptes utilisateurs et les permissions</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Consulter et gérer vos e-mails entrants</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connecter et gérer vos comptes de messagerie</value>
+  </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Mettre à jour vos informations de profil</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Gérer votre mot de passe et vos sessions actives</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Connecter un nouveau compte e-mail en fournissant les détails des serveurs IMAP et SMTP</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Mettre à jour les paramètres de connexion de cette boîte mail</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Configurer le serveur SMTP système et l'identité d'expéditeur par défaut</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Configurez votre profil personnel, connectez des boîtes mail via IMAP et SMTP, gérez les labels pour organiser vos e-mails et définissez votre langue préférée.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Gérez les comptes utilisateurs, configurez les paramètres de messagerie système et mettez en place des fonctionnalités IA comme la catégorisation automatique et les réponses intelligentes.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>Les paramètres système s'appliquent globalement et affectent tous les utilisateurs. Configurez le serveur de messagerie sortant et gérez les tâches en arrière-plan.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>Les tâches en arrière-plan gèrent la synchronisation des e-mails et le traitement IA. Surveillez leur statut et gérez la planification ici.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb utilise un modèle IA local (Ollama/Qwen3) pour catégoriser, résumer et rédiger des réponses à vos e-mails. Configurez le comportement du modèle et le calendrier de traitement ici.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>Le prompt système indique au modèle IA comment traiter vos e-mails. Personnalisez-le selon vos préférences de catégorisation, de ton et de style de résumé.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Contrôlez la fréquence de traitement des nouveaux e-mails entrants par l'IA. Un traitement plus fréquent signifie une catégorisation plus rapide mais une utilisation plus élevée des ressources de votre NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Créez et gérez les comptes utilisateurs de votre instance Feirb. Chaque utilisateur dispose de ses propres boîtes mail, labels et préférences. Les administrateurs peuvent réinitialiser les mots de passe et gérer les rôles.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>Votre boîte de réception affiche tous les messages entrants de vos boîtes mail connectées. Utilisez les labels et la catégorisation IA pour rester organisé.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Chaque boîte mail se connecte à un compte e-mail via IMAP (entrant) et SMTP (sortant). Vous pouvez ajouter plusieurs boîtes mail et tester la connectivité avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Les labels vous aident à organiser vos e-mails en catégories. Vous pouvez créer des labels personnalisés avec des couleurs, et l'IA peut automatiquement attribuer des labels aux e-mails entrants selon vos règles de classification.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Votre nom d'utilisateur est affiché dans l'interface et votre adresse e-mail est utilisée pour la récupération de compte.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Changez régulièrement votre mot de passe et vérifiez les sessions actives pour assurer la sécurité de votre compte. La déconnexion de toutes les sessions nécessitera une reconnexion sur chaque appareil.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Ajoutez un nouveau compte e-mail en entrant les détails du serveur IMAP pour la réception et SMTP pour l'envoi. Utilisez le bouton de test pour vérifier la connectivité avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Mettez à jour les paramètres de connexion de cette boîte mail. Laissez les champs de mot de passe vides pour conserver les mots de passe existants. Utilisez les boutons de test pour vérifier les modifications avant d'enregistrer.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>Le serveur SMTP système est utilisé pour envoyer les notifications système et les e-mails non liés à une boîte mail utilisateur spécifique. Configurez la connexion au serveur et l'identité d'expéditeur par défaut.</value>
+  </data>
 </root>

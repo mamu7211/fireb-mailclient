@@ -13,24 +13,8 @@
     border-bottom: 1px solid var(--bs-border-color);
 }
 
-.content-section-icon {
-    font-size: 1.5rem;
+::deep .content-section-icon {
     color: var(--bs-primary);
-}
-
-.content-section-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.content-section-title {
-    font-weight: 600;
-    color: var(--bs-body-color);
-}
-
-.content-section-subtitle {
-    font-size: 0.875rem;
-    color: var(--bs-secondary-color);
 }
 
 .content-section-body {

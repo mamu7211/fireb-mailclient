@@ -11,6 +11,10 @@
 
 <PageTitle>@L["AdminOutgoingSmtpTitle"] - Feirb</PageTitle>
 
+<InfoHeader Title="@L["AdminOutgoingSmtpTitle"]" Icon="send" Subtitle="@L["PageSubtitleOutgoingSmtp"]">
+    <HelpContent>@L["PageHelpOutgoingSmtp"]</HelpContent>
+</InfoHeader>
+
 @if (!string.IsNullOrEmpty(_successMessage))
 {
     <div class="alert alert-success alert-dismissible py-2" role="alert">
@@ -40,10 +44,7 @@ else if (_model is not null)
     <EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
         <DataAnnotationsValidator />
 
-        @* Server Section *@
-        <h5 class="text-muted mb-3">@L["MailboxSectionSmtp"]</h5>
-        <div class="card mb-4">
-            <div class="card-body">
+        <ContentSection Icon="send" Title="@L["MailboxSectionSmtp"]" Subtitle="@L["SectionSmtpSubtitle"]" Class="mb-4">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="smtpHost" class="form-label">@L["LabelSmtpHostMailbox"]</label>
@@ -78,13 +79,13 @@ else if (_model is not null)
                             <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuthMailbox"]</label>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="TestSmtpAsync" disabled="@_isTestingSmtp">
+                    <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="TestSmtpAsync" Disabled="_isTestingSmtp">
                         @if (_isTestingSmtp)
                         {
                             <span class="spinner-border spinner-border-sm me-1" role="status"></span>
                         }
                         @L["ButtonTestConnection"]
-                    </button>
+                    </Button>
                 </div>
                 @if (_smtpTestResult is not null)
                 {
@@ -92,13 +93,9 @@ else if (_model is not null)
                         @GetTestResultMessage(_smtpTestResult)
                     </div>
                 }
-            </div>
-        </div>
+        </ContentSection>
 
-        @* Sender Section *@
-        <h5 class="text-muted mb-3">@L["SectionSender"]</h5>
-        <div class="card mb-4">
-            <div class="card-body">
+        <ContentSection Icon="person" Title="@L["SectionSender"]" Subtitle="@L["SectionSenderSubtitle"]" Class="mb-4">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="fromAddress" class="form-label">@L["LabelFromAddress"]</label>
@@ -109,8 +106,7 @@ else if (_model is not null)
                         <InputText id="fromName" class="form-control" @bind-Value="_model.FromName" placeholder="@L["PlaceholderFromName"]" />
                     </div>
                 </div>
-            </div>
-        </div>
+        </ContentSection>
     </EditForm>
 }
 
@@ -128,7 +124,7 @@ else if (_model is not null)
     {
         ToolbarState.SetActions(
         [
-            new ToolbarAction(L["ButtonSave"], "btn-primary", HandleSaveAsync, "check-lg")
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, HandleSaveAsync, "check-lg")
         ]);
 
         try

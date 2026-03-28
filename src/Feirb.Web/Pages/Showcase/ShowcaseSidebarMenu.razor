@@ -1,0 +1,102 @@
+@using Feirb.Web.Components.UI
+@inject IJSRuntime JS
+
+<InfoHeader Title="SidebarMenu" Icon="layout-sidebar" Subtitle="Data-driven sidebar navigation with sections and active state tracking" />
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Info</Heading>
+    <p>Data-driven sidebar navigation with optional section headers and a bottom-pinned slot. Uses <code>NavLink</code> internally for link items with automatic active state tracking. Items can alternatively render as buttons via an <code>OnClick</code> callback.</p>
+    <table class="table table-sm">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>Sections</code></td><td><code>IReadOnlyList&lt;SidebarMenuSection&gt;</code></td><td>required</td><td>Menu sections for the main scrollable area</td></tr>
+            <tr><td><code>BottomItems</code></td><td><code>IReadOnlyList&lt;SidebarMenuItem&gt;?</code></td><td><code>null</code></td><td>Items pinned to the bottom of the sidebar</td></tr>
+            <tr><td><code>AriaLabel</code></td><td><code>string</code></td><td><code>"Sidebar navigation"</code></td><td>Accessible label for the nav element</td></tr>
+            <tr><td><code>Class</code></td><td><code>string?</code></td><td><code>null</code></td><td>Extra CSS classes</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">SidebarMenuItem</Heading>
+    <table class="table table-sm">
+        <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>Icon</code></td><td><code>string</code></td><td>Bootstrap Icon name (required)</td></tr>
+            <tr><td><code>Label</code></td><td><code>string</code></td><td>Display text (required)</td></tr>
+            <tr><td><code>Href</code></td><td><code>string?</code></td><td>Navigation target; rendered via NavLink</td></tr>
+            <tr><td><code>OnClick</code></td><td><code>Func&lt;Task&gt;?</code></td><td>Action callback; renders as button when set</td></tr>
+            <tr><td><code>Visible</code></td><td><code>Func&lt;bool&gt;?</code></td><td>Controls visibility; defaults to always visible</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">SidebarMenuSection</Heading>
+    <table class="table table-sm">
+        <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>Items</code></td><td><code>IReadOnlyList&lt;SidebarMenuItem&gt;</code></td><td>Menu items in this section (required)</td></tr>
+            <tr><td><code>Label</code></td><td><code>string?</code></td><td>Optional section header text</td></tr>
+        </tbody>
+    </table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Preview</Heading>
+    <p class="text-muted mb-3">The sidebar on this page is a live example of SidebarMenu. The main app NavMenu also uses it.</p>
+    <div class="showcase-preview-area">
+        <div class="showcase-navmenu-demo">
+            <p class="px-3 mb-2" style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--feirb-on-surface-variant); font-weight: 600;">Main</p>
+            @foreach (var (icon, label) in new[] { ("inbox", "Inbox"), ("send", "Sent"), ("pencil-square", "Drafts") })
+            {
+                <div class="d-flex align-items-center gap-3 px-3 py-2" style="color: var(--feirb-on-surface-variant); font-size: 0.875rem; font-weight: 500;">
+                    <Icon Name="@icon" /> <span>@label</span>
+                </div>
+            }
+            <div class="mt-3 pt-3" style="border-top: 1px solid rgba(0,0,0,0.08);">
+                <div class="d-flex align-items-center gap-3 px-3 py-2" style="color: var(--feirb-on-surface-variant); font-size: 0.875rem; font-weight: 500;">
+                    <Icon Name="gear" /> <span>Settings</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Card>
+
+<Card Class="p-4">
+    <Heading Level="HeadingLevel.Small">Code</Heading>
+    <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+</Card>
+
+@code {
+    private ElementReference _codeElement;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try { await JS.InvokeVoidAsync("highlightCode", _codeElement, CurrentCode); }
+        catch (JSException) { }
+    }
+
+    private static string CurrentCode =>
+        """
+        <SidebarMenu Sections="_sections" BottomItems="_bottomItems" />
+
+        @code {
+            private IReadOnlyList<SidebarMenuSection> _sections =
+            [
+                new([new("speedometer2", "Dashboard", Href: "")]),
+                new(
+                [
+                    new("inbox", "Inbox", Href: "mail/inbox"),
+                    new("send", "Sent", Href: "mail/sent")
+                ], Label: "Main")
+            ];
+
+            private IReadOnlyList<SidebarMenuItem> _bottomItems =
+            [
+                new("gear", "Settings", Href: "settings"),
+                new("box-arrow-right", "Logout", OnClick: LogoutAsync)
+            ];
+        }
+        """;
+}

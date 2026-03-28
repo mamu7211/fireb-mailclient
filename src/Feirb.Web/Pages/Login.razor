@@ -1,16 +1,25 @@
 @page "/login"
 @layout AuthLayout
 @attribute [AllowAnonymous]
+@using System.Text.Json
 @using Feirb.Shared.Auth
 @using Feirb.Web.Services
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject JwtAuthenticationStateProvider AuthStateProvider
 @inject IStringLocalizer<SharedResources> L
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IWebAssemblyHostEnvironment HostEnvironment
 
 <PageTitle>@L["PageTitleLogin"]</PageTitle>
 
 <div class="position-relative w-100">
+    @if (HostEnvironment.IsDevelopment())
+    {
+        <a href="components-showcase" class="position-absolute top-0 start-0 p-3 text-muted" title="Component Showcase">
+            <Feirb.Web.Components.UI.Icon Name="palette2" Size="Feirb.Web.Components.UI.IconSize.Large" />
+        </a>
+    }
     <div class="position-absolute top-0 end-0 p-3">
         <Feirb.Web.Components.LanguageSwitcher ButtonClass="btn-outline-secondary" />
     </div>
@@ -52,13 +61,13 @@
                     <ValidationMessage For="() => _model.Password" />
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg w-100" disabled="@_isSubmitting">
+                <Button Variant="ButtonVariant.Primary" Size="ButtonSize.Large" Type="submit" Disabled="_isSubmitting" Class="w-100">
                     @if (_isSubmitting)
                     {
                         <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                     }
                     @L["ButtonLogIn"]
-                </button>
+                </Button>
             </EditForm>
 
             <div class="mt-3 text-center">
@@ -79,11 +88,18 @@
     private bool _showRegisteredMessage;
     private bool _showResetMessage;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         var uri = new Uri(Navigation.Uri);
         _showRegisteredMessage = uri.Query.Contains("registered=true");
         _showResetMessage = uri.Query.Contains("reset=true");
+
+        if (HostEnvironment.IsDevelopment() && await IsAutoLoginEnabledAsync())
+        {
+            _model.Username = "admin";
+            _model.Password = "admin@feirb.local";
+            await HandleLoginAsync();
+        }
     }
 
     private async Task HandleLoginAsync()
@@ -112,6 +128,19 @@
             : L["ErrorLoginFailed"];
 
         _isSubmitting = false;
+    }
+
+    private async Task<bool> IsAutoLoginEnabledAsync()
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<JsonElement>("/api/dev/config");
+            return response.TryGetProperty("autoLogin", out var val) && val.GetBoolean();
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private sealed class LoginFormModel

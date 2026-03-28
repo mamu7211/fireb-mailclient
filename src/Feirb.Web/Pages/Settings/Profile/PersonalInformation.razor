@@ -9,6 +9,10 @@
 
 <PageTitle>@L["PageTitlePersonalInformation"]</PageTitle>
 
+<InfoHeader Title="@L["PageTitlePersonalInformation"]" Icon="person" Subtitle="@L["PageSubtitlePersonalInfo"]">
+    <HelpContent>@L["PageHelpPersonalInfo"]</HelpContent>
+</InfoHeader>
+
 @if (!string.IsNullOrEmpty(_successMessage))
 {
     <div class="alert alert-success alert-dismissible py-2" role="alert">
@@ -44,20 +48,18 @@ else if (_model is not null)
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="username" class="form-label">@L["LabelUsername"]</label>
-                    <InputText id="username" class="form-control" @bind-Value="_model.Username" />
-                    <ValidationMessage For="() => _model.Username" />
-                </div>
-                <div class="mb-0">
-                    <label for="email" class="form-label">@L["LabelEmail"]</label>
-                    <InputText id="email" class="form-control" type="email" @bind-Value="_model.Email" />
-                    <ValidationMessage For="() => _model.Email" />
-                </div>
+        <ContentSection Icon="person" Title="@L["SectionPersonalInfoTitle"]" Subtitle="@L["SectionPersonalInfoSubtitle"]">
+            <div class="mb-3">
+                <label for="username" class="form-label">@L["LabelUsername"]</label>
+                <InputText id="username" class="form-control" @bind-Value="_model.Username" />
+                <ValidationMessage For="() => _model.Username" />
             </div>
-        </div>
+            <div class="mb-0">
+                <label for="email" class="form-label">@L["LabelEmail"]</label>
+                <InputText id="email" class="form-control" type="email" @bind-Value="_model.Email" />
+                <ValidationMessage For="() => _model.Email" />
+            </div>
+        </ContentSection>
     </EditForm>
 }
 
@@ -73,7 +75,7 @@ else if (_model is not null)
     {
         ToolbarState.SetActions(
         [
-            new ToolbarAction(L["ButtonSave"], "btn-primary", HandleSaveAsync, "check-lg")
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, HandleSaveAsync, "check-lg")
         ]);
 
         try

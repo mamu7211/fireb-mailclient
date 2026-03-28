@@ -1,0 +1,32 @@
+.info-header {
+    margin-bottom: 1.5rem;
+}
+
+.info-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.info-header-help {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--bs-light, #f8f9fa);
+    border-radius: var(--bs-border-radius);
+    border: 1px solid var(--bs-border-color);
+}
+
+::deep .info-header-help-icon {
+    color: var(--bs-primary);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.info-header-help-text {
+    color: var(--feirb-on-surface-variant);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}

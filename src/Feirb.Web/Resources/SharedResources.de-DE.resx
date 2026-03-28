@@ -957,4 +957,124 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Beim Verarbeiten des Labels ist ein Fehler aufgetreten.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den SMTP-Server, der zum Versenden ausgehender E-Mails vom System verwendet wird.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Legen Sie die Standard-Absenderidentität fest, die bei ausgehenden Nachrichten angezeigt wird.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Wählen Sie ein starkes Passwort, das Sie nicht auf anderen Websites verwenden.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Überprüfen und verwalten Sie Ihre aktiven Anmeldesitzungen auf allen Geräten.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Grundlegende Postfachinformationen wie Name und E-Mail-Adresse.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den IMAP-Server, der zum Empfangen eingehender E-Mails für dieses Postfach verwendet wird.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Konfigurieren Sie den SMTP-Server, der zum Versenden ausgehender E-Mails aus diesem Postfach verwendet wird.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Aktualisieren Sie Ihren Benutzernamen und Ihre E-Mail-Adresse.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Persönliche Informationen</value>
+  </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Konto, Postfächer und Einstellungen verwalten</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Systemadministration und Konfiguration</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Systemweite Mail- und Infrastruktur-Einstellungen konfigurieren</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Hintergrundaufgaben und geplante Jobs überwachen und verwalten</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>KI-Funktionen für E-Mail-Kategorisierung, Zusammenfassung und intelligente Antworten konfigurieren</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>System-Prompt anpassen, der vom KI-Modell zur E-Mail-Verarbeitung verwendet wird</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Festlegen, wann und wie oft die KI eingehende E-Mails verarbeitet</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Benutzerkonten und Berechtigungen erstellen, bearbeiten und verwalten</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Eingehende E-Mails anzeigen und verwalten</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>E-Mail-Konten verbinden und verwalten</value>
+  </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Profildaten aktualisieren</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Passwort und aktive Sitzungen verwalten</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Neues E-Mail-Konto durch Angabe der IMAP- und SMTP-Serverdetails verbinden</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Verbindungseinstellungen für dieses Postfach aktualisieren</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Systemweiten SMTP-Server und Standard-Absenderidentität konfigurieren</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Konfigurieren Sie Ihr persönliches Profil, verbinden Sie Postfächer über IMAP und SMTP, verwalten Sie Labels zur Organisation Ihrer E-Mails und legen Sie Ihre bevorzugte Sprache fest.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Verwalten Sie Benutzerkonten, konfigurieren Sie systemweite Mail-Einstellungen und richten Sie KI-gestützte Funktionen wie automatische Kategorisierung und intelligente Antworten ein.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>Systemeinstellungen gelten global und betreffen alle Benutzer. Konfigurieren Sie den ausgehenden Mailserver und verwalten Sie Hintergrundverarbeitungs-Jobs.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>Hintergrund-Jobs erledigen Aufgaben wie E-Mail-Synchronisierung und KI-Verarbeitung. Überwachen Sie deren Status und verwalten Sie die Planung hier.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb verwendet ein lokales KI-Modell (Ollama/Qwen3) zum Kategorisieren, Zusammenfassen und Erstellen von Antwortentwürfen für Ihre E-Mails. Konfigurieren Sie hier das Modellverhalten und den Verarbeitungszeitplan.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>Der System-Prompt weist das KI-Modell an, wie Ihre E-Mails verarbeitet werden sollen. Passen Sie ihn an Ihre Präferenzen für Kategorisierung, Tonalität und Zusammenfassungsstil an.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Steuern Sie, wie häufig die KI neue eingehende E-Mails verarbeitet. Häufigere Verarbeitung bedeutet schnellere Kategorisierung, aber höhere Ressourcennutzung auf Ihrem NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Erstellen und verwalten Sie Benutzerkonten für Ihre Feirb-Instanz. Jeder Benutzer hat eigene Postfächer, Labels und Einstellungen. Administratoren können Passwörter zurücksetzen und Rollen verwalten.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>Ihr Posteingang zeigt alle eingehenden Nachrichten Ihrer verbundenen Postfächer. Verwenden Sie Labels und KI-Kategorisierung, um alles übersichtlich zu halten.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Jedes Postfach verbindet sich über IMAP (eingehend) und SMTP (ausgehend) mit einem E-Mail-Konto. Sie können mehrere Postfächer hinzufügen und die Konnektivität vor dem Speichern testen.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Labels helfen Ihnen, E-Mails in Kategorien zu organisieren. Sie können benutzerdefinierte Labels mit Farben erstellen, und die KI kann eingehenden E-Mails automatisch Labels basierend auf Ihren Klassifizierungsregeln zuweisen.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Ihr Benutzername wird in der Oberfläche angezeigt und Ihre E-Mail-Adresse wird für die Kontowiederherstellung verwendet.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Ändern Sie Ihr Passwort regelmäßig und überprüfen Sie aktive Sitzungen, um die Sicherheit Ihres Kontos zu gewährleisten. Das Abmelden aller Sitzungen erfordert eine erneute Anmeldung auf jedem Gerät.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Fügen Sie ein neues E-Mail-Konto hinzu, indem Sie die IMAP-Serverdetails für den Empfang und SMTP-Details für den Versand eingeben. Verwenden Sie die Test-Schaltfläche, um die Konnektivität vor dem Speichern zu überprüfen.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Aktualisieren Sie die Verbindungseinstellungen für dieses Postfach. Lassen Sie die Passwortfelder leer, um die bestehenden Passwörter beizubehalten. Verwenden Sie die Test-Schaltflächen, um Änderungen vor dem Speichern zu überprüfen.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>Der System-SMTP-Server wird für den Versand von Systembenachrichtigungen und E-Mails verwendet, die nicht an ein bestimmtes Benutzerpostfach gebunden sind. Konfigurieren Sie die Serververbindung und die Standard-Absenderidentität.</value>
+  </data>
 </root>

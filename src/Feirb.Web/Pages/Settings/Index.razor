@@ -6,10 +6,12 @@
 
 <PageTitle>@L["PageTitleSettings"]</PageTitle>
 
-<h1 class="mb-4">@L["NavSettings"]</h1>
+<InfoHeader Title="@L["NavSettings"]" Icon="gear" Subtitle="@L["PageSubtitleSettings"]">
+    <HelpContent>@L["PageHelpSettings"]</HelpContent>
+</InfoHeader>
 
 <div class="d-flex flex-column gap-3">
-    <h5 class="text-muted mb-0">@L["SettingsAccountTitle"]</h5>
+    <Heading Level="HeadingLevel.Medium">@L["SettingsAccountTitle"]</Heading>
 
     <NavigationItem
         Icon="person"
@@ -23,7 +25,7 @@
         Subtitle="@L["SettingsSecuritySubtitle"]"
         Href="/settings/security" />
 
-    <h5 class="text-muted mb-0 mt-3">@L["SettingsMailTitle"]</h5>
+    <Heading Level="HeadingLevel.Medium" Class="mt-3">@L["SettingsMailTitle"]</Heading>
 
     <NavigationItem
         Icon="envelope"
@@ -37,7 +39,7 @@
         Subtitle="@L["SettingsLabelsSubtitle"]"
         Href="/settings/labels" />
 
-    <h5 class="text-muted mb-0 mt-3">@L["SettingsPreferencesTitle"]</h5>
+    <Heading Level="HeadingLevel.Medium" Class="mt-3">@L["SettingsPreferencesTitle"]</Heading>
 
     <ContentSection Icon="translate" Title="@L["SettingsLanguageTitle"]" Subtitle="@L["SettingsLanguageSubtitle"]">
         <div class="d-flex flex-column gap-2">

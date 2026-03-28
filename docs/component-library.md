@@ -19,6 +19,24 @@ Renders a Bootstrap Icon with consistent sizing.
 | `Size` | `IconSize` | `Default` | `Small` (0.875rem), `Default` (1.25rem), `Large` (2rem) |
 | `Class` | `string?` | `null` | Extra CSS classes |
 
+## Heading
+
+Semantic heading with optional icon and subtitle.
+
+```razor
+<Heading Level="HeadingLevel.Large" Icon="gear">Settings</Heading>
+<Heading Level="HeadingLevel.Medium" Subtitle="Configure your account">Profile</Heading>
+<Heading Level="HeadingLevel.Small">Section Title</Heading>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Level` | `HeadingLevel` | `Large` | `Large` (h1), `Medium` (h2), `Small` (h3) |
+| `Icon` | `string?` | `null` | Icon name (without `bi-` prefix) |
+| `Subtitle` | `string?` | `null` | Subtitle text below the heading |
+| `ChildContent` | `RenderFragment` (required) | — | Heading text/content |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
 ## Button
 
 Standard button with optional icon.
@@ -85,6 +103,125 @@ Minimal card container.
 | `ChildContent` | `RenderFragment` (required) | — | Card content |
 | `Class` | `string?` | `null` | Extra CSS classes |
 
+## NavigationItem
+
+Card-style navigation link with icon, title, optional subtitle, and chevron. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<NavigationItem Icon="person" Title="Personal Information"
+    Subtitle="Update your name and email address"
+    Href="/settings/personal-information" />
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Icon` | `string` (required) | — | Icon name without `bi-` prefix |
+| `Title` | `string` (required) | — | Navigation item title |
+| `Subtitle` | `string?` | `null` | Description text below the title |
+| `Href` | `string` (required) | — | Target URL |
+
+**Primitives used:** `Icon` (for icon and chevron)
+
+## ContentSection
+
+Card with header (icon + heading) and body for child content. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<ContentSection Icon="translate" Title="Language"
+    Subtitle="Choose your preferred display language">
+    <p>Content goes here.</p>
+</ContentSection>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Icon` | `string` (required) | — | Icon name without `bi-` prefix |
+| `Title` | `string` (required) | — | Section title |
+| `Subtitle` | `string?` | `null` | Subtitle text |
+| `ChildContent` | `RenderFragment?` | — | Section body content |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
+**Primitives used:** `Icon` (for header icon), `Heading` (for title/subtitle)
+
+## InfoHeader
+
+Page header with optional icon, subtitle, and toggleable help section. Located in `src/Feirb.Web/Components/`.
+
+```razor
+<InfoHeader Title="Settings" Icon="gear" Subtitle="Manage your account and preferences" />
+
+<InfoHeader Title="Mailboxes" Icon="envelope" Subtitle="Connect your email accounts">
+    <HelpContent>
+        Here you can add IMAP/SMTP mailboxes and test connectivity.
+    </HelpContent>
+</InfoHeader>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Title` | `string` (required) | — | Header title text |
+| `Level` | `HeadingLevel` | `Large` | `Large` (h1), `Medium` (h2), `Small` (h3) |
+| `Icon` | `string?` | `null` | Icon name without `bi-` prefix |
+| `Subtitle` | `string?` | `null` | Subtitle text below the title |
+| `HelpContent` | `RenderFragment?` | `null` | Collapsible help content (shows toggle button when set) |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
+**Primitives used:** `Heading` (for title/subtitle), `Icon` (for help icon), `CircularButton` (for toggle)
+
+## SidebarMenu
+
+Data-driven sidebar navigation with optional section headers and a bottom-pinned slot. Uses `NavLink` internally for active state tracking.
+
+```razor
+<SidebarMenu Sections="_sections" BottomItems="_bottomItems" />
+
+@code {
+    private IReadOnlyList<SidebarMenuSection> _sections =
+    [
+        new([new("speedometer2", "Dashboard", Href: "")]),
+        new(
+        [
+            new("inbox", "Inbox", Href: "mail/inbox"),
+            new("send", "Sent", Href: "mail/sent")
+        ], Label: "Main")
+    ];
+
+    private IReadOnlyList<SidebarMenuItem> _bottomItems =
+    [
+        new("gear", "Settings", Href: "settings"),
+        new("box-arrow-right", "Logout", OnClick: LogoutAsync)
+    ];
+}
+```
+
+### SidebarMenu Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Sections` | `IReadOnlyList<SidebarMenuSection>` (required) | — | Menu sections for the main scrollable area |
+| `BottomItems` | `IReadOnlyList<SidebarMenuItem>?` | `null` | Items pinned to the bottom |
+| `AriaLabel` | `string` | `"Sidebar navigation"` | Accessible label for the nav element |
+| `Class` | `string?` | `null` | Extra CSS classes |
+
+### SidebarMenuItem Record
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Icon` | `string` (required) | — | Bootstrap Icon name without `bi-` prefix |
+| `Label` | `string` (required) | — | Display text |
+| `Href` | `string?` | `null` | Navigation target (renders via `NavLink`) |
+| `OnClick` | `Func<Task>?` | `null` | Action callback (renders as `<button>` when set) |
+| `Visible` | `Func<bool>?` | `null` | Controls visibility; defaults to always visible |
+
+### SidebarMenuSection Record
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Items` | `IReadOnlyList<SidebarMenuItem>` (required) | — | Menu items in this section |
+| `Label` | `string?` | `null` | Optional section header text |
+
+**Primitives used:** `Icon` (for item icons)
+
 ## Enums
 
 Defined in `UIEnums.cs`:
@@ -93,6 +230,7 @@ Defined in `UIEnums.cs`:
 - **`ButtonVariant`**: `Primary`, `Secondary`, `Danger`, `Warning`
 - **`ButtonSize`**: `Small`, `Medium`, `Large`
 - **`IconPosition`**: `Left`, `Right`
+- **`HeadingLevel`**: `Large`, `Medium`, `Small`
 
 ## Design Tokens
 

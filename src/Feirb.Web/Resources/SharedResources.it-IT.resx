@@ -957,4 +957,124 @@
   <data name="ErrorLabelFailed" xml:space="preserve">
     <value>Si è verificato un errore durante l'elaborazione dell'etichetta.</value>
   </data>
+  <data name="SectionSmtpSubtitle" xml:space="preserve">
+    <value>Configura il server SMTP utilizzato per inviare le e-mail in uscita dal sistema.</value>
+  </data>
+  <data name="SectionSenderSubtitle" xml:space="preserve">
+    <value>Imposta l'identità del mittente predefinita che appare nei messaggi in uscita.</value>
+  </data>
+  <data name="SectionChangePasswordSubtitle" xml:space="preserve">
+    <value>Scegli una password sicura che non utilizzi su altri siti.</value>
+  </data>
+  <data name="SectionSessionsSubtitle" xml:space="preserve">
+    <value>Controlla e gestisci le sessioni di accesso attive su tutti i tuoi dispositivi.</value>
+  </data>
+  <data name="SectionMailboxGeneralSubtitle" xml:space="preserve">
+    <value>Informazioni di base della casella di posta come nome e indirizzo e-mail.</value>
+  </data>
+  <data name="SectionMailboxImapSubtitle" xml:space="preserve">
+    <value>Configura il server IMAP utilizzato per ricevere le e-mail in arrivo per questa casella di posta.</value>
+  </data>
+  <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
+    <value>Configura il server SMTP utilizzato per inviare le e-mail in uscita da questa casella di posta.</value>
+  </data>
+  <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
+    <value>Aggiorna il tuo nome utente e il tuo indirizzo e-mail.</value>
+  </data>
+  <data name="SectionPersonalInfoTitle" xml:space="preserve">
+    <value>Informazioni personali</value>
+  </data>
+  <data name="PageSubtitleSettings" xml:space="preserve">
+    <value>Gestisci account, caselle di posta e preferenze</value>
+  </data>
+  <data name="PageSubtitleAdmin" xml:space="preserve">
+    <value>Amministrazione e configurazione del sistema</value>
+  </data>
+  <data name="PageSubtitleSystemSettings" xml:space="preserve">
+    <value>Configura le impostazioni di posta e infrastruttura a livello di sistema</value>
+  </data>
+  <data name="PageSubtitleJobs" xml:space="preserve">
+    <value>Monitora e gestisci le attività in background e i job pianificati</value>
+  </data>
+  <data name="PageSubtitleLlmSettings" xml:space="preserve">
+    <value>Configura le funzionalità IA per categorizzazione, riassunto e risposte intelligenti</value>
+  </data>
+  <data name="PageSubtitleSystemPrompt" xml:space="preserve">
+    <value>Personalizza il prompt di sistema utilizzato dal modello IA per elaborare le e-mail</value>
+  </data>
+  <data name="PageSubtitleScheduling" xml:space="preserve">
+    <value>Imposta quando e con quale frequenza l'IA elabora le e-mail in arrivo</value>
+  </data>
+  <data name="PageSubtitleUsers" xml:space="preserve">
+    <value>Crea, modifica e gestisci account utente e permessi</value>
+  </data>
+  <data name="PageSubtitleInbox" xml:space="preserve">
+    <value>Visualizza e gestisci le e-mail in arrivo</value>
+  </data>
+  <data name="PageSubtitleMailboxes" xml:space="preserve">
+    <value>Connetti e gestisci i tuoi account e-mail</value>
+  </data>
+  <data name="PageSubtitlePersonalInfo" xml:space="preserve">
+    <value>Aggiorna i dettagli del tuo profilo</value>
+  </data>
+  <data name="PageSubtitleSecurity" xml:space="preserve">
+    <value>Gestisci la password e le sessioni attive</value>
+  </data>
+  <data name="PageSubtitleNewMailbox" xml:space="preserve">
+    <value>Connetti un nuovo account e-mail fornendo i dettagli dei server IMAP e SMTP</value>
+  </data>
+  <data name="PageSubtitleEditMailbox" xml:space="preserve">
+    <value>Aggiorna le impostazioni di connessione per questa casella di posta</value>
+  </data>
+  <data name="PageSubtitleOutgoingSmtp" xml:space="preserve">
+    <value>Configura il server SMTP di sistema e l'identità del mittente predefinita</value>
+  </data>
+  <data name="PageHelpSettings" xml:space="preserve">
+    <value>Configura il tuo profilo personale, connetti caselle di posta tramite IMAP e SMTP, gestisci le etichette per organizzare le tue e-mail e imposta la lingua preferita.</value>
+  </data>
+  <data name="PageHelpAdmin" xml:space="preserve">
+    <value>Gestisci gli account utente, configura le impostazioni di posta a livello di sistema e configura le funzionalità IA come la categorizzazione automatica e le risposte intelligenti.</value>
+  </data>
+  <data name="PageHelpSystemSettings" xml:space="preserve">
+    <value>Le impostazioni di sistema si applicano globalmente e riguardano tutti gli utenti. Configura il server di posta in uscita e gestisci i job di elaborazione in background.</value>
+  </data>
+  <data name="PageHelpJobs" xml:space="preserve">
+    <value>I job in background gestiscono attività come la sincronizzazione delle e-mail e l'elaborazione IA. Monitora il loro stato e gestisci la pianificazione qui.</value>
+  </data>
+  <data name="PageHelpLlmSettings" xml:space="preserve">
+    <value>Feirb utilizza un modello IA locale (Ollama/Qwen3) per categorizzare, riassumere e redigere risposte alle tue e-mail. Configura il comportamento del modello e il programma di elaborazione qui.</value>
+  </data>
+  <data name="PageHelpSystemPrompt" xml:space="preserve">
+    <value>Il prompt di sistema indica al modello IA come elaborare le tue e-mail. Personalizzalo in base alle tue preferenze per categorizzazione, tono e stile di riassunto.</value>
+  </data>
+  <data name="PageHelpScheduling" xml:space="preserve">
+    <value>Controlla la frequenza con cui l'IA elabora le nuove e-mail in arrivo. Un'elaborazione più frequente significa una categorizzazione più rapida ma un maggiore utilizzo delle risorse del tuo NAS.</value>
+  </data>
+  <data name="PageHelpUsers" xml:space="preserve">
+    <value>Crea e gestisci gli account utente della tua istanza Feirb. Ogni utente ha le proprie caselle di posta, etichette e preferenze. Gli amministratori possono reimpostare le password e gestire i ruoli.</value>
+  </data>
+  <data name="PageHelpInbox" xml:space="preserve">
+    <value>La tua casella di posta mostra tutti i messaggi in arrivo dalle caselle connesse. Usa le etichette e la categorizzazione IA per mantenere tutto organizzato.</value>
+  </data>
+  <data name="PageHelpMailboxes" xml:space="preserve">
+    <value>Ogni casella di posta si connette a un account e-mail tramite IMAP (in arrivo) e SMTP (in uscita). Puoi aggiungere più caselle e testare la connettività prima di salvare.</value>
+  </data>
+  <data name="PageHelpLabels" xml:space="preserve">
+    <value>Le etichette ti aiutano a organizzare le e-mail in categorie. Puoi creare etichette personalizzate con colori e l'IA può assegnare automaticamente etichette alle e-mail in arrivo in base alle tue regole di classificazione.</value>
+  </data>
+  <data name="PageHelpPersonalInfo" xml:space="preserve">
+    <value>Il tuo nome utente viene visualizzato nell'interfaccia e il tuo indirizzo e-mail viene utilizzato per il recupero dell'account.</value>
+  </data>
+  <data name="PageHelpSecurity" xml:space="preserve">
+    <value>Cambia regolarmente la password e controlla le sessioni attive per garantire la sicurezza del tuo account. La disconnessione di tutte le sessioni richiederà un nuovo accesso su ogni dispositivo.</value>
+  </data>
+  <data name="PageHelpNewMailbox" xml:space="preserve">
+    <value>Aggiungi un nuovo account e-mail inserendo i dettagli del server IMAP per la ricezione e SMTP per l'invio. Usa il pulsante di test per verificare la connettività prima di salvare.</value>
+  </data>
+  <data name="PageHelpEditMailbox" xml:space="preserve">
+    <value>Aggiorna le impostazioni di connessione per questa casella di posta. Lascia vuoti i campi password per mantenere le password esistenti. Usa i pulsanti di test per verificare le modifiche prima di salvare.</value>
+  </data>
+  <data name="PageHelpOutgoingSmtp" xml:space="preserve">
+    <value>Il server SMTP di sistema viene utilizzato per inviare notifiche di sistema e e-mail non legate a una casella di posta utente specifica. Configura la connessione al server e l'identità del mittente predefinita.</value>
+  </data>
 </root>

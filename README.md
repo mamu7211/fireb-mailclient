@@ -77,6 +77,10 @@ This seeds the database with:
 
 The seeding is idempotent — it checks whether the data already exists and skips if so.
 
+## Component Showcase
+
+Feirb includes a built-in component playground at `/components-showcase` for viewing, interacting with, and documenting all UI primitives. No authentication required — just start the app and navigate to the route.
+
 ## Documentation
 
 - **[Architecture](docs/ARCHITECTURE.md)** — System design, project structure, and technical decisions
