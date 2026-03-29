@@ -1146,4 +1146,61 @@
   <data name="SuccessThemeChanged" xml:space="preserve">
     <value>Tema cambiato in {0}.</value>
   </data>
+  <data name="JobsNoJobs" xml:space="preserve">
+    <value>Nessun job in background configurato.</value>
+  </data>
+  <data name="JobsEnabled" xml:space="preserve">
+    <value>Abilitato</value>
+  </data>
+  <data name="JobsDisabled" xml:space="preserve">
+    <value>Disabilitato</value>
+  </data>
+  <data name="JobsCronSchedule" xml:space="preserve">
+    <value>Pianificazione</value>
+  </data>
+  <data name="JobsLastRun" xml:space="preserve">
+    <value>Ultima esecuzione</value>
+  </data>
+  <data name="JobsLastStatus" xml:space="preserve">
+    <value>Ultimo stato</value>
+  </data>
+  <data name="JobsNeverRun" xml:space="preserve">
+    <value>Mai</value>
+  </data>
+  <data name="JobsRecentExecutions" xml:space="preserve">
+    <value>Esecuzioni recenti</value>
+  </data>
+  <data name="JobsEditTitle" xml:space="preserve">
+    <value>Modifica pianificazione job</value>
+  </data>
+  <data name="JobsSchedulePreset1Min" xml:space="preserve">
+    <value>1 min</value>
+  </data>
+  <data name="JobsSchedulePreset5Min" xml:space="preserve">
+    <value>5 min</value>
+  </data>
+  <data name="JobsSchedulePreset15Min" xml:space="preserve">
+    <value>15 min</value>
+  </data>
+  <data name="JobsSchedulePresetHourly" xml:space="preserve">
+    <value>Ogni ora</value>
+  </data>
+  <data name="JobsSchedulePresetCustom" xml:space="preserve">
+    <value>Personalizzato</value>
+  </data>
+  <data name="JobsCronExpression" xml:space="preserve">
+    <value>Espressione cron</value>
+  </data>
+  <data name="JobsCronInvalid" xml:space="preserve">
+    <value>Espressione cron non valida.</value>
+  </data>
+  <data name="JobsUpdateSuccess" xml:space="preserve">
+    <value>Pianificazione del job aggiornata con successo.</value>
+  </data>
+  <data name="JobsUpdateConflict" xml:space="preserve">
+    <value>Il job è stato modificato da un altro utente. Ricaricare e riprovare.</value>
+  </data>
+  <data name="JobsNoExecutions" xml:space="preserve">
+    <value>Nessuna esecuzione ancora.</value>
+  </data>
 </root>

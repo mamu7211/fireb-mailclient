@@ -3,6 +3,7 @@ using Feirb.Api.Services;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Feirb.Api.Tests;
@@ -43,8 +44,20 @@ public static class TestWebApplicationFactory
                     services.Remove(d);
 
                 services.AddSingleton<IImapSyncScheduler, NoOpImapSyncScheduler>();
+
+                // Replace IJobSettingsScheduler with a no-op for test DI
+                services.RemoveAll<IJobSettingsScheduler>();
+                services.RemoveAll<JobSettingsScheduler>();
+                services.AddSingleton<IJobSettingsScheduler, NoOpJobSettingsScheduler>();
             });
         });
+
+    private sealed class NoOpJobSettingsScheduler : IJobSettingsScheduler
+    {
+        public Task ScheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
+        public Task UnscheduleJobAsync(string jobName) => Task.CompletedTask;
+        public Task RescheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
+    }
 
     private sealed class NoOpImapSyncScheduler : IImapSyncScheduler
     {
