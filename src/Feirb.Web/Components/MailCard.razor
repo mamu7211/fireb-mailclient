@@ -10,7 +10,7 @@
         </div>
 
         <MailSubjectChip Subject="@Subject"
-                         Summary="@(Mode is MailCardMode.Medium ? Summary : null)"
+                         Summary="@(Mode is MailCardMode.Medium or MailCardMode.Small ? Summary : null)"
                          IsRead="IsRead"
                          HasAttachments="false" />
 
