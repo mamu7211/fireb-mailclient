@@ -50,7 +50,9 @@ else
                                 @msg.MailboxName
                             </span>
                         </TableCell>
-                        <TableCell>@msg.From</TableCell>
+                        <TableCell>
+                            <PersonChip Name="@msg.From" Size="PersonChipSize.Small" />
+                        </TableCell>
                         <TableCell>
                             @msg.Subject
                             @if (msg.HasAttachments)

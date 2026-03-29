@@ -10,16 +10,9 @@
         </div>
     }
 
-    <div class="mail-card-avatar @(Mode == MailCardMode.Row ? "mail-card-avatar-mini" : "")">
-        <Icon Name="person" Class="mail-card-avatar-icon" />
-    </div>
-
     <div class="mail-card-body">
         <div class="mail-card-header">
-            <div class="mail-card-sender">
-                <span class="mail-card-name">@SenderName</span>
-                <span class="mail-card-email">@SenderEmail</span>
-            </div>
+            <PersonChip Name="@SenderName" Email="@SenderEmail" Size="@PersonChipSizeForMode" />
             <div class="mail-card-date">
                 @if (Mode is MailCardMode.Small)
                 {
@@ -123,6 +116,13 @@
         MailCardMode.Small => 1,
         MailCardMode.Row => 4,
         _ => 3
+    };
+
+    private PersonChipSize PersonChipSizeForMode => Mode switch
+    {
+        MailCardMode.Small => PersonChipSize.Small,
+        MailCardMode.Row => PersonChipSize.Mini,
+        _ => PersonChipSize.Default
     };
 
     private LabelPillSize LabelPillSizeForMode => Mode switch
