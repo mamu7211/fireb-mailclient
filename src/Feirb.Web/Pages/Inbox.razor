@@ -68,8 +68,11 @@ else
     <Pagination CurrentPage="_currentPage"
                 TotalPages="TotalPages"
                 CurrentPageChanged="OnPageChangedAsync"
+                PageSize="_pageSize"
+                PageSizeChanged="OnPageSizeChangedAsync"
                 PreviousLabel="@L["PaginationPrevious"]"
                 NextLabel="@L["PaginationNext"]"
+                PerPageLabel="@L["PaginationPerPage"]"
                 Sticky />
 }
 
@@ -78,11 +81,11 @@ else
     private bool _isLoading = true;
     private string? _errorMessage;
     private int _currentPage = 1;
-    private const int PageSize = 25;
+    private int _pageSize = 5;
 
     private int TotalPages => _messages is null || _messages.TotalCount == 0
         ? 1
-        : (int)Math.Ceiling((double)_messages.TotalCount / PageSize);
+        : (int)Math.Ceiling((double)_messages.TotalCount / _pageSize);
 
     protected override async Task OnInitializedAsync() =>
         await LoadMessagesAsync();
@@ -94,7 +97,7 @@ else
         try
         {
             _messages = await Http.GetFromJsonAsync<PaginatedResponse<MessageListItemResponse>>(
-                $"/api/mail/messages?page={_currentPage}&pageSize={PageSize}");
+                $"/api/mail/messages?page={_currentPage}&pageSize={_pageSize}");
         }
         catch
         {
@@ -109,6 +112,13 @@ else
     private async Task OnPageChangedAsync(int page)
     {
         _currentPage = page;
+        await LoadMessagesAsync();
+    }
+
+    private async Task OnPageSizeChangedAsync(int size)
+    {
+        _pageSize = size;
+        _currentPage = 1;
         await LoadMessagesAsync();
     }
 

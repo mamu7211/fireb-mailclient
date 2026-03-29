@@ -810,6 +810,9 @@
   <data name="PaginationNext" xml:space="preserve">
     <value>Successivo</value>
   </data>
+  <data name="PaginationPerPage" xml:space="preserve">
+    <value>per pagina</value>
+  </data>
   <data name="PaginationPageOf" xml:space="preserve">
     <value>Pagina {0} di {1}</value>
   </data>
