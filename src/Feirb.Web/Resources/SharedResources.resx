@@ -768,6 +768,15 @@
   <data name="ColumnDate" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="DateFormatShort" xml:space="preserve">
+    <value>MMM d, yyyy</value>
+  </data>
+  <data name="TimeFormatShort" xml:space="preserve">
+    <value>h:mm tt</value>
+  </data>
+  <data name="LabelUncategorized" xml:space="preserve">
+    <value>Uncategorized</value>
+  </data>
   <data name="LoadingMessages" xml:space="preserve">
     <value>Loading messages...</value>
   </data>

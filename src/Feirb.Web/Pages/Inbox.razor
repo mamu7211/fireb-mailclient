@@ -54,13 +54,20 @@ else
                             <PersonChip Name="@msg.FromName" Email="@msg.FromEmail" Size="PersonChipSize.Small" />
                         </TableCell>
                         <TableCell>
-                            @msg.Subject
-                            @if (msg.HasAttachments)
-                            {
-                                <Icon Name="paperclip" Size="IconSize.Small" Class="ms-1" />
-                            }
+                            <div class="d-flex align-items-center gap-1">
+                                <span>@msg.Subject</span>
+                                @if (msg.HasAttachments)
+                                {
+                                    <Icon Name="paperclip" Size="IconSize.Small" />
+                                }
+                            </div>
+                            <span class="text-muted" style="font-size: 0.8125rem;">@L["LabelUncategorized"]</span>
                         </TableCell>
-                        <TableCell Class="text-nowrap">@msg.Date.LocalDateTime.ToString("g")</TableCell>
+                        <TableCell>
+                            <DateTimeChip Value="msg.Date"
+                                          DateFormat="@L["DateFormatShort"]"
+                                          TimeFormat="@L["TimeFormatShort"]" />
+                        </TableCell>
                     </TableRow>
                 }
             </TableBody>
