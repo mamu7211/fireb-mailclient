@@ -11,13 +11,26 @@ public static class JobSettingsEndpoints
     public static RouteGroupBuilder MapJobSettingsEndpoints(this RouteGroupBuilder group)
     {
         group.MapGet("/jobs", GetAllJobsAsync);
+        group.MapGet("/jobs/{id:guid}", GetJobByIdAsync);
         group.MapPut("/jobs/{id:guid}", UpdateJobAsync);
+        group.MapPost("/jobs/{id:guid}/run", TriggerJobRunAsync);
         group.MapGet("/jobs/{id:guid}/executions", GetJobExecutionsAsync);
         return group;
     }
 
     private static async Task<IResult> GetAllJobsAsync(IJobService jobService) =>
         Results.Ok(await jobService.GetAllAsync());
+
+    private static async Task<IResult> GetJobByIdAsync(
+        Guid id,
+        IJobService jobService,
+        IStringLocalizer<ApiMessages> localizer)
+    {
+        var result = await jobService.GetByIdAsync(id);
+        return result is not null
+            ? Results.Ok(result)
+            : Results.NotFound(new { message = localizer["JobNotFound"].Value });
+    }
 
     private static async Task<IResult> UpdateJobAsync(
         Guid id,
@@ -41,6 +54,17 @@ public static class JobSettingsEndpoints
         {
             return Results.Conflict(new { message = localizer["JobConcurrencyConflict"].Value });
         }
+    }
+
+    private static async Task<IResult> TriggerJobRunAsync(
+        Guid id,
+        IJobService jobService,
+        IStringLocalizer<ApiMessages> localizer)
+    {
+        var result = await jobService.TriggerRunAsync(id);
+        return result
+            ? Results.Accepted()
+            : Results.NotFound(new { message = localizer["JobNotFound"].Value });
     }
 
     private static async Task<IResult> GetJobExecutionsAsync(

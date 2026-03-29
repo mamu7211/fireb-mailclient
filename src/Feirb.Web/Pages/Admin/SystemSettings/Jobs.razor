@@ -1,9 +1,8 @@
-@page "/admin/system-settings/jobs"
+@page "/admin/jobs"
 @attribute [Authorize(Policy = "RequireAdmin")]
 @using Feirb.Shared.Admin.Jobs
 @inject HttpClient Http
 @inject IStringLocalizer<SharedResources> L
-@inject NotificationService Notifications
 
 <PageTitle>@L["AdminJobsTitle"] - Feirb</PageTitle>
 
@@ -36,155 +35,20 @@ else
     <div class="d-flex flex-column gap-3">
         @foreach (var job in _jobs)
         {
-            <Card>
-                <div class="d-flex justify-content-between align-items-start">
-                    <div class="flex-grow-1">
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <Heading Level="HeadingLevel.Small">@job.JobName</Heading>
-                            @if (job.Enabled)
-                            {
-                                <span class="badge bg-success">@L["JobsEnabled"]</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">@L["JobsDisabled"]</span>
-                            }
-                        </div>
-                        <p class="text-muted small mb-2">@job.Description</p>
-                        <div class="d-flex gap-4 small text-muted">
-                            <div>
-                                <strong>@L["JobsCronSchedule"]:</strong>
-                                <code>@job.Cron</code>
-                            </div>
-                            <div>
-                                <strong>@L["JobsLastRun"]:</strong>
-                                @(job.LastRunAt?.ToString("g") ?? L["JobsNeverRun"])
-                            </div>
-                            @if (job.LastStatus is not null)
-                            {
-                                <div>
-                                    <strong>@L["JobsLastStatus"]:</strong>
-                                    <span class="@GetStatusTextClass(job.LastStatus)">
-                                        @job.LastStatus
-                                    </span>
-                                </div>
-                            }
-                        </div>
-                        @if (job.RecentExecutions.Count > 0)
-                        {
-                            <div class="mt-2">
-                                <small class="text-muted">@L["JobsRecentExecutions"]:</small>
-                                <div class="d-flex gap-1 mt-1">
-                                    @foreach (var execution in job.RecentExecutions)
-                                    {
-                                        <span class="badge @GetStatusBadgeClass(execution.Status)"
-                                              title="@execution.StartedAt.ToString("g") - @(execution.Error ?? execution.Status)">
-                                            @execution.StartedAt.ToString("HH:mm")
-                                        </span>
-                                    }
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <div class="d-flex gap-2">
-                        <CircularButton AriaLabel="@L["ButtonEdit"]" Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="() => OpenEditModal(job)">
-                            <Icon Name="pencil" Size="IconSize.Small" />
-                        </CircularButton>
-                    </div>
-                </div>
-            </Card>
+            <NavigationItem Icon="gear"
+                            Title="@job.JobName"
+                            Subtitle="@job.Description"
+                            Href="@($"/admin/jobs/{job.Id}")" />
         }
-    </div>
-}
-
-@* Edit Modal *@
-@if (_showEditModal && _editingJob is not null)
-{
-    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">@L["JobsEditTitle"]</h5>
-                    <button type="button" class="btn-close" @onclick="CloseEditModal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">@L["JobsCronSchedule"]</label>
-                        <ToggleButtonGroup Items="_schedulePresets" SelectedId="@_selectedPreset" SelectedIdChanged="OnPresetChanged" />
-                    </div>
-                    @if (_selectedPreset == "custom")
-                    {
-                        <div class="mb-3">
-                            <label for="cronExpression" class="form-label">@L["JobsCronExpression"]</label>
-                            <input id="cronExpression" type="text" class="form-control @(_cronValidationError is not null ? "is-invalid" : "")"
-                                   @bind="_customCron" @bind:event="oninput" @bind:after="ValidateCron" />
-                            @if (_cronValidationError is not null)
-                            {
-                                <div class="invalid-feedback">@_cronValidationError</div>
-                            }
-                        </div>
-                    }
-                    <div class="mb-3">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="jobEnabled" @bind="_editEnabled" />
-                            <label class="form-check-label" for="jobEnabled">
-                                @(_editEnabled ? L["JobsEnabled"] : L["JobsDisabled"])
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <Button Variant="ButtonVariant.Secondary" OnClick="CloseEditModal">@L["ButtonCancel"]</Button>
-                    <Button Variant="ButtonVariant.Primary" OnClick="HandleSaveAsync" Disabled="@(_isSaving || _cronValidationError is not null)">
-                        @if (_isSaving)
-                        {
-                            <span class="spinner-border spinner-border-sm me-1" role="status"></span>
-                        }
-                        @L["ButtonSave"]
-                    </Button>
-                </div>
-            </div>
-        </div>
     </div>
 }
 
 @code {
     private List<JobSettingsResponse>? _jobs;
     private bool _isLoading = true;
-    private bool _isSaving;
     private string? _errorMessage;
 
-    private bool _showEditModal;
-    private JobSettingsResponse? _editingJob;
-    private string _selectedPreset = "custom";
-    private string _customCron = "";
-    private bool _editEnabled;
-    private string? _cronValidationError;
-
-    private IReadOnlyList<ToggleButtonItem> _schedulePresets = [];
-
-    private static readonly Dictionary<string, string> _presetCrons = new()
-    {
-        ["1min"] = "0 * * * * ?",
-        ["5min"] = "0 */5 * * * ?",
-        ["15min"] = "0 */15 * * * ?",
-        ["hourly"] = "0 0 * * * ?",
-    };
-
     protected override async Task OnInitializedAsync()
-    {
-        _schedulePresets =
-        [
-            new("1min", L["JobsSchedulePreset1Min"]),
-            new("5min", L["JobsSchedulePreset5Min"]),
-            new("15min", L["JobsSchedulePreset15Min"]),
-            new("hourly", L["JobsSchedulePresetHourly"]),
-            new("custom", L["JobsSchedulePresetCustom"]),
-        ];
-        await LoadJobsAsync();
-    }
-
-    private async Task LoadJobsAsync()
     {
         try
         {
@@ -199,113 +63,4 @@ else
             _isLoading = false;
         }
     }
-
-    private void OpenEditModal(JobSettingsResponse job)
-    {
-        _editingJob = job;
-        _editEnabled = job.Enabled;
-        _cronValidationError = null;
-
-        var matchingPreset = _presetCrons.FirstOrDefault(p => p.Value == job.Cron);
-        if (matchingPreset.Key is not null)
-        {
-            _selectedPreset = matchingPreset.Key;
-            _customCron = job.Cron;
-        }
-        else
-        {
-            _selectedPreset = "custom";
-            _customCron = job.Cron;
-        }
-
-        _showEditModal = true;
-    }
-
-    private void CloseEditModal()
-    {
-        _showEditModal = false;
-        _editingJob = null;
-    }
-
-    private void OnPresetChanged(string presetId)
-    {
-        _selectedPreset = presetId;
-        if (_presetCrons.TryGetValue(presetId, out var cron))
-        {
-            _customCron = cron;
-            _cronValidationError = null;
-        }
-    }
-
-    private void ValidateCron()
-    {
-        if (string.IsNullOrWhiteSpace(_customCron))
-        {
-            _cronValidationError = L["JobsCronInvalid"];
-            return;
-        }
-
-        // Basic client-side check: Quartz cron uses 6-7 space-separated fields.
-        // Full validation happens on the API side via Quartz.CronExpression.
-        var parts = _customCron.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        _cronValidationError = parts.Length is 6 or 7 ? null : (string?)L["JobsCronInvalid"];
-    }
-
-    private string GetEffectiveCron() =>
-        _presetCrons.TryGetValue(_selectedPreset, out var cron) ? cron : _customCron;
-
-    private async Task HandleSaveAsync()
-    {
-        if (_isSaving || _editingJob is null) return;
-        _isSaving = true;
-        _errorMessage = null;
-
-        try
-        {
-            var effectiveCron = GetEffectiveCron();
-            var request = new UpdateJobSettingsRequest(effectiveCron, _editEnabled, _editingJob.RowVersion);
-            var response = await Http.PutAsJsonAsync($"/api/admin/jobs/{_editingJob.Id}", request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Notifications.Add(L["JobsUpdateSuccess"], NotificationSeverity.Success);
-                CloseEditModal();
-                _isLoading = true;
-                await LoadJobsAsync();
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-            {
-                _errorMessage = L["JobsUpdateConflict"];
-            }
-            else
-            {
-                var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-                _errorMessage = error?.Message ?? L["JobsUpdateFailed"];
-            }
-        }
-        catch
-        {
-            _errorMessage = L["JobsUpdateFailed"];
-        }
-        finally
-        {
-            _isSaving = false;
-        }
-    }
-
-    private static string GetStatusTextClass(string? status) => status switch
-    {
-        "Success" => "text-success",
-        "Cancelled" => "text-warning",
-        _ => "text-danger",
-    };
-
-    private static string GetStatusBadgeClass(string status) => status switch
-    {
-        "Success" => "bg-success",
-        "Cancelled" => "bg-warning",
-        _ => "bg-danger",
-    };
-
-    private sealed record ErrorResponse(string Message);
 }

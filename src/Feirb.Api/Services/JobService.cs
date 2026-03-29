@@ -9,6 +9,8 @@ namespace Feirb.Api.Services;
 public class JobService(
     FeirbDbContext db,
     IJobSettingsScheduler scheduler,
+    ISchedulerFactory schedulerFactory,
+    ManagedJobRegistry registry,
     ILogger<JobService> logger) : IJobService
 {
     public async Task<List<JobSettingsResponse>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -22,6 +24,18 @@ public class JobService(
             .ToListAsync(cancellationToken);
 
         return jobs.Select(MapToResponse).ToList();
+    }
+
+    public async Task<JobSettingsResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var job = await db.JobSettings
+            .Include(j => j.Executions
+                .OrderByDescending(e => e.StartedAt)
+                .Take(5))
+            .AsNoTracking()
+            .FirstOrDefaultAsync(j => j.Id == id, cancellationToken);
+
+        return job is null ? null : MapToResponse(job);
     }
 
     public async Task<PaginatedJobExecutionsResponse?> GetExecutionsAsync(
@@ -97,6 +111,48 @@ public class JobService(
         }
 
         return MapToResponse(job);
+    }
+
+    public async Task<bool> TriggerRunAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var job = await db.JobSettings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(j => j.Id == id, cancellationToken);
+
+        if (job is null)
+            return false;
+
+        if (!registry.HasJob(job.JobName))
+        {
+            logger.LogWarning("No managed job registered for '{JobName}', cannot trigger", job.JobName);
+            return false;
+        }
+
+        var quartzScheduler = await schedulerFactory.GetScheduler(cancellationToken);
+        var jobKey = new JobKey($"managed-{job.JobName}", "managed-jobs");
+
+        if (await quartzScheduler.CheckExists(jobKey, cancellationToken))
+        {
+            await quartzScheduler.TriggerJob(jobKey, cancellationToken);
+        }
+        else
+        {
+            var jobType = registry.GetJobType(job.JobName);
+            var adhocKey = new JobKey($"managed-adhoc-{job.JobName}-{Guid.NewGuid():N}", "managed-jobs");
+            var quartzJob = JobBuilder.Create(jobType)
+                .WithIdentity(adhocKey)
+                .UsingJobData(ManagedJob.JobNameKey, job.JobName)
+                .StoreDurably(false)
+                .Build();
+            var trigger = TriggerBuilder.Create()
+                .ForJob(adhocKey)
+                .StartNow()
+                .Build();
+            await quartzScheduler.ScheduleJob(quartzJob, trigger, cancellationToken);
+        }
+
+        logger.LogInformation("Job '{JobName}' triggered manually", job.JobName);
+        return true;
     }
 
     private static JobSettingsResponse MapToResponse(JobSettings job) =>

@@ -185,6 +185,48 @@ public class JobSettingsEndpointsTests : IDisposable
         result![0].RecentExecutions.Should().HaveCount(5);
     }
 
+    [Fact]
+    public async Task GetJobById_AsAdmin_ReturnsJobAsync()
+    {
+        var tokens = await SetupAndLoginAsAdminAsync();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
+
+        var jobs = await _client.GetFromJsonAsync<List<JobSettingsResponse>>("/api/admin/jobs");
+        var job = jobs![0];
+
+        var response = await _client.GetAsync($"/api/admin/jobs/{job.Id}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var result = await response.Content.ReadFromJsonAsync<JobSettingsResponse>();
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(job.Id);
+        result.JobName.Should().Be("Classification");
+        result.Cron.Should().Be("0 * * * * ?");
+        result.RecentExecutions.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task GetJobById_NonExistentId_ReturnsNotFoundAsync()
+    {
+        var tokens = await SetupAndLoginAsAdminAsync();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
+
+        var response = await _client.GetAsync($"/api/admin/jobs/{Guid.NewGuid()}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task TriggerJobRun_NonExistentId_ReturnsNotFoundAsync()
+    {
+        var tokens = await SetupAndLoginAsAdminAsync();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
+
+        var response = await _client.PostAsync($"/api/admin/jobs/{Guid.NewGuid()}/run", null);
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
     // --- Helper Methods ---
 
     private async Task<TokenResponse> SetupAndLoginAsAdminAsync()

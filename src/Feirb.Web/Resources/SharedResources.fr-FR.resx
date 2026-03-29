@@ -1275,4 +1275,82 @@
   <data name="Loading" xml:space="preserve">
     <value>Chargement...</value>
   </data>
+  <data name="ColumnJob" xml:space="preserve">
+    <value>Job</value>
+  </data>
+  <data name="ColumnLastRun" xml:space="preserve">
+    <value>Dernier lancement</value>
+  </data>
+  <data name="ColumnHistory" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="CronEveryMinute" xml:space="preserve">
+    <value>Chaque minute</value>
+  </data>
+  <data name="CronEvery5Minutes" xml:space="preserve">
+    <value>Toutes les 5 minutes</value>
+  </data>
+  <data name="CronEvery15Minutes" xml:space="preserve">
+    <value>Toutes les 15 minutes</value>
+  </data>
+  <data name="CronEveryHour" xml:space="preserve">
+    <value>Toutes les heures</value>
+  </data>
+  <data name="JobDetailPageTitle" xml:space="preserve">
+    <value>Parametres du job</value>
+  </data>
+  <data name="JobDetailSubtitle" xml:space="preserve">
+    <value>Configurer la planification et voir l'historique des executions</value>
+  </data>
+  <data name="JobDetailHelp" xml:space="preserve">
+    <value>Modifier la planification cron, activer ou desactiver le job, declencher une execution manuelle et consulter les executions passees.</value>
+  </data>
+  <data name="JobDetailSectionSchedule" xml:space="preserve">
+    <value>Planification</value>
+  </data>
+  <data name="JobDetailSectionScheduleSubtitle" xml:space="preserve">
+    <value>Configurer quand ce job s'execute</value>
+  </data>
+  <data name="JobDetailSectionHistory" xml:space="preserve">
+    <value>Historique des executions</value>
+  </data>
+  <data name="JobDetailSectionHistorySubtitle" xml:space="preserve">
+    <value>Executions passees de ce job</value>
+  </data>
+  <data name="ColumnTimestamp" xml:space="preserve">
+    <value>Horodatage</value>
+  </data>
+  <data name="ColumnDuration" xml:space="preserve">
+    <value>Duree</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="ColumnError" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="JobDetailNoExecutions" xml:space="preserve">
+    <value>Aucune execution enregistree pour le moment.</value>
+  </data>
+  <data name="ButtonRunNow" xml:space="preserve">
+    <value>Executer maintenant</value>
+  </data>
+  <data name="JobRunNowSuccess" xml:space="preserve">
+    <value>Job declenche avec succes.</value>
+  </data>
+  <data name="JobRunNowFailed" xml:space="preserve">
+    <value>Impossible de declencher le job.</value>
+  </data>
+  <data name="JobDetailLoadFailed" xml:space="preserve">
+    <value>Impossible de charger les details du job.</value>
+  </data>
+  <data name="JobDetailNotFound" xml:space="preserve">
+    <value>Job introuvable.</value>
+  </data>
+  <data name="JobDetailExecutionsLoadFailed" xml:space="preserve">
+    <value>Impossible de charger l'historique des executions.</value>
+  </data>
+  <data name="JobDetailRunning" xml:space="preserve">
+    <value>En cours...</value>
+  </data>
 </root>

@@ -1275,4 +1275,82 @@
   <data name="Loading" xml:space="preserve">
     <value>Wird geladen...</value>
   </data>
+  <data name="ColumnJob" xml:space="preserve">
+    <value>Job</value>
+  </data>
+  <data name="ColumnLastRun" xml:space="preserve">
+    <value>Letzter Lauf</value>
+  </data>
+  <data name="ColumnHistory" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="CronEveryMinute" xml:space="preserve">
+    <value>Jede Minute</value>
+  </data>
+  <data name="CronEvery5Minutes" xml:space="preserve">
+    <value>Alle 5 Minuten</value>
+  </data>
+  <data name="CronEvery15Minutes" xml:space="preserve">
+    <value>Alle 15 Minuten</value>
+  </data>
+  <data name="CronEveryHour" xml:space="preserve">
+    <value>Jede Stunde</value>
+  </data>
+  <data name="JobDetailPageTitle" xml:space="preserve">
+    <value>Job-Einstellungen</value>
+  </data>
+  <data name="JobDetailSubtitle" xml:space="preserve">
+    <value>Zeitplan konfigurieren und Ausfuehrungsverlauf anzeigen</value>
+  </data>
+  <data name="JobDetailHelp" xml:space="preserve">
+    <value>Cron-Zeitplan bearbeiten, Job aktivieren/deaktivieren, manuell ausfuehren und vergangene Ausfuehrungen pruefen.</value>
+  </data>
+  <data name="JobDetailSectionSchedule" xml:space="preserve">
+    <value>Zeitplan</value>
+  </data>
+  <data name="JobDetailSectionScheduleSubtitle" xml:space="preserve">
+    <value>Konfigurieren, wann dieser Job ausgefuehrt wird</value>
+  </data>
+  <data name="JobDetailSectionHistory" xml:space="preserve">
+    <value>Ausfuehrungsverlauf</value>
+  </data>
+  <data name="JobDetailSectionHistorySubtitle" xml:space="preserve">
+    <value>Vergangene Ausfuehrungen dieses Jobs</value>
+  </data>
+  <data name="ColumnTimestamp" xml:space="preserve">
+    <value>Zeitstempel</value>
+  </data>
+  <data name="ColumnDuration" xml:space="preserve">
+    <value>Dauer</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ColumnError" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="JobDetailNoExecutions" xml:space="preserve">
+    <value>Noch keine Ausfuehrungen aufgezeichnet.</value>
+  </data>
+  <data name="ButtonRunNow" xml:space="preserve">
+    <value>Jetzt ausfuehren</value>
+  </data>
+  <data name="JobRunNowSuccess" xml:space="preserve">
+    <value>Job erfolgreich ausgeloest.</value>
+  </data>
+  <data name="JobRunNowFailed" xml:space="preserve">
+    <value>Job konnte nicht ausgeloest werden.</value>
+  </data>
+  <data name="JobDetailLoadFailed" xml:space="preserve">
+    <value>Job-Details konnten nicht geladen werden.</value>
+  </data>
+  <data name="JobDetailNotFound" xml:space="preserve">
+    <value>Job nicht gefunden.</value>
+  </data>
+  <data name="JobDetailExecutionsLoadFailed" xml:space="preserve">
+    <value>Ausfuehrungsverlauf konnte nicht geladen werden.</value>
+  </data>
+  <data name="JobDetailRunning" xml:space="preserve">
+    <value>Laeuft...</value>
+  </data>
 </root>
