@@ -64,7 +64,7 @@ else
                             {
                                 <div>
                                     <strong>@L["JobsLastStatus"]:</strong>
-                                    <span class="@(job.LastStatus == "Success" ? "text-success" : "text-danger")">
+                                    <span class="@GetStatusTextClass(job.LastStatus)">
                                         @job.LastStatus
                                     </span>
                                 </div>
@@ -77,7 +77,7 @@ else
                                 <div class="d-flex gap-1 mt-1">
                                     @foreach (var execution in job.RecentExecutions)
                                     {
-                                        <span class="badge @(execution.Status == "Success" ? "bg-success" : "bg-danger")"
+                                        <span class="badge @GetStatusBadgeClass(execution.Status)"
                                               title="@execution.StartedAt.ToString("g") - @(execution.Error ?? execution.Status)">
                                             @execution.StartedAt.ToString("HH:mm")
                                         </span>
@@ -161,14 +161,7 @@ else
     private bool _editEnabled;
     private string? _cronValidationError;
 
-    private static readonly IReadOnlyList<ToggleButtonItem> _schedulePresets =
-    [
-        new("1min", "1 min"),
-        new("5min", "5 min"),
-        new("15min", "15 min"),
-        new("hourly", "Hourly"),
-        new("custom", "Custom"),
-    ];
+    private IReadOnlyList<ToggleButtonItem> _schedulePresets = [];
 
     private static readonly Dictionary<string, string> _presetCrons = new()
     {
@@ -180,6 +173,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        _schedulePresets =
+        [
+            new("1min", L["JobsSchedulePreset1Min"]),
+            new("5min", L["JobsSchedulePreset5Min"]),
+            new("15min", L["JobsSchedulePreset15Min"]),
+            new("hourly", L["JobsSchedulePresetHourly"]),
+            new("custom", L["JobsSchedulePresetCustom"]),
+        ];
         await LoadJobsAsync();
     }
 
@@ -191,7 +192,7 @@ else
         }
         catch
         {
-            _errorMessage = "Failed to load jobs.";
+            _errorMessage = L["JobsLoadFailed"];
         }
         finally
         {
@@ -279,18 +280,32 @@ else
             else
             {
                 var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-                _errorMessage = error?.Message ?? "Failed to update job.";
+                _errorMessage = error?.Message ?? L["JobsUpdateFailed"];
             }
         }
         catch
         {
-            _errorMessage = "Failed to update job.";
+            _errorMessage = L["JobsUpdateFailed"];
         }
         finally
         {
             _isSaving = false;
         }
     }
+
+    private static string GetStatusTextClass(string? status) => status switch
+    {
+        "Success" => "text-success",
+        "Cancelled" => "text-warning",
+        _ => "text-danger",
+    };
+
+    private static string GetStatusBadgeClass(string status) => status switch
+    {
+        "Success" => "bg-success",
+        "Cancelled" => "bg-warning",
+        _ => "bg-danger",
+    };
 
     private sealed record ErrorResponse(string Message);
 }

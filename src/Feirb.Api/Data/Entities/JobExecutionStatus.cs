@@ -4,4 +4,5 @@ public enum JobExecutionStatus
 {
     Success,
     Failed,
+    Cancelled,
 }

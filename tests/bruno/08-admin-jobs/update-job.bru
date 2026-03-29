@@ -34,7 +34,7 @@ tests {
   });
 
   test("should return updated job", function() {
-    expect(res.body.cron).to.equal("*/5 * * * *");
+    expect(res.body.cron).to.equal("0 */5 * * * ?");
     expect(res.body).to.have.property("rowVersion");
   });
 }

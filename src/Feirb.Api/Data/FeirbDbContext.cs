@@ -151,7 +151,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.LastStatus)
                 .HasConversion<string>()
                 .HasMaxLength(20);
-            entity.Property(e => e.RowVersion);
+            entity.Property(e => e.RowVersion).IsConcurrencyToken();
             entity.HasData(new JobSettings
             {
                 Id = new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"),

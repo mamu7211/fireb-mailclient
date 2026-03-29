@@ -1203,4 +1203,10 @@
   <data name="JobsNoExecutions" xml:space="preserve">
     <value>Aucune exécution pour le moment.</value>
   </data>
+  <data name="JobsLoadFailed" xml:space="preserve">
+    <value>Impossible de charger les jobs.</value>
+  </data>
+  <data name="JobsUpdateFailed" xml:space="preserve">
+    <value>Impossible de mettre à jour le job.</value>
+  </data>
 </root>

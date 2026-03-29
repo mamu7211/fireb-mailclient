@@ -7,7 +7,7 @@ public class JobSettings
     public required string Description { get; set; }
     public required string Cron { get; set; }
     public bool Enabled { get; set; }
-    public DateTime? LastRunAt { get; set; }
+    public DateTimeOffset? LastRunAt { get; set; }
     public JobExecutionStatus? LastStatus { get; set; }
     public Guid RowVersion { get; set; } = Guid.NewGuid();
     public List<JobExecution> Executions { get; set; } = [];

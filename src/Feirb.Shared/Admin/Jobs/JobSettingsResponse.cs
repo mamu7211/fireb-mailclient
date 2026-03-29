@@ -6,7 +6,7 @@ public record JobSettingsResponse(
     string Description,
     string Cron,
     bool Enabled,
-    DateTime? LastRunAt,
+    DateTimeOffset? LastRunAt,
     string? LastStatus,
     Guid RowVersion,
     List<JobExecutionResponse> RecentExecutions);

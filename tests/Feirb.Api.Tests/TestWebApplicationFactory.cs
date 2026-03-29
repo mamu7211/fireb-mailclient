@@ -32,6 +32,7 @@ public static class TestWebApplicationFactory
                     d.ServiceType == typeof(IHostedService) &&
                     (d.ImplementationType?.FullName?.Contains("Quartz") == true ||
                      d.ImplementationType == typeof(ImapSyncScheduler) ||
+                     d.ImplementationType == typeof(JobSettingsScheduler) ||
                      d.ImplementationFactory is not null)).ToList();
                 foreach (var d in hostedServiceDescriptors)
                     services.Remove(d);
@@ -51,13 +52,6 @@ public static class TestWebApplicationFactory
                 services.AddSingleton<IJobSettingsScheduler, NoOpJobSettingsScheduler>();
             });
         });
-
-    private sealed class NoOpJobSettingsScheduler : IJobSettingsScheduler
-    {
-        public Task ScheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
-        public Task UnscheduleJobAsync(string jobName) => Task.CompletedTask;
-        public Task RescheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
-    }
 
     private sealed class NoOpImapSyncScheduler : IImapSyncScheduler
     {

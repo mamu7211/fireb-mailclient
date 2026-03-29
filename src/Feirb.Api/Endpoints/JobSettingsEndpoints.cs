@@ -47,12 +47,17 @@ public static class JobSettingsEndpoints
         Guid id,
         int page,
         int pageSize,
-        IJobService jobService)
+        IJobService jobService,
+        IStringLocalizer<ApiMessages> localizer)
     {
         if (page < 1) page = 1;
         if (pageSize < 1) pageSize = 10;
         if (pageSize > 100) pageSize = 100;
 
-        return Results.Ok(await jobService.GetExecutionsAsync(id, page, pageSize));
+        var result = await jobService.GetExecutionsAsync(id, page, pageSize);
+        if (result is null)
+            return Results.NotFound(new { message = localizer["JobNotFound"].Value });
+
+        return Results.Ok(result);
     }
 }

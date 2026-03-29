@@ -24,9 +24,13 @@ public class JobService(
         return jobs.Select(MapToResponse).ToList();
     }
 
-    public async Task<PaginatedJobExecutionsResponse> GetExecutionsAsync(
+    public async Task<PaginatedJobExecutionsResponse?> GetExecutionsAsync(
         Guid jobId, int page, int pageSize, CancellationToken cancellationToken = default)
     {
+        var jobExists = await db.JobSettings.AnyAsync(j => j.Id == jobId, cancellationToken);
+        if (!jobExists)
+            return null;
+
         var query = db.JobExecutions
             .Where(e => e.JobSettingsId == jobId)
             .OrderByDescending(e => e.StartedAt);
@@ -65,8 +69,7 @@ public class JobService(
         if (!CronExpression.IsValidExpression(request.Cron))
             throw new ArgumentException("Invalid cron expression.");
 
-        if (job.RowVersion != request.RowVersion)
-            throw new DbUpdateConcurrencyException("The job was modified by another user.");
+        db.Entry(job).Property(j => j.RowVersion).OriginalValue = request.RowVersion;
 
         var wasEnabled = job.Enabled;
         var oldCron = job.Cron;

@@ -33,7 +33,7 @@ public abstract class ManagedJob(IServiceScopeFactory scopeFactory, ILogger logg
         {
             Id = Guid.NewGuid(),
             JobSettingsId = jobSettings.Id,
-            StartedAt = DateTime.UtcNow,
+            StartedAt = DateTimeOffset.UtcNow,
             Status = JobExecutionStatus.Success,
         };
         db.JobExecutions.Add(execution);
@@ -42,47 +42,57 @@ public abstract class ManagedJob(IServiceScopeFactory scopeFactory, ILogger logg
         {
             await RunAsync(scope.ServiceProvider, context.CancellationToken);
             execution.Status = JobExecutionStatus.Success;
-            execution.FinishedAt = DateTime.UtcNow;
+            execution.FinishedAt = DateTimeOffset.UtcNow;
 
             jobSettings.LastRunAt = execution.FinishedAt;
             jobSettings.LastStatus = JobExecutionStatus.Success;
-            jobSettings.RowVersion = Guid.NewGuid();
 
             await db.SaveChangesAsync(context.CancellationToken);
+        }
+        catch (OperationCanceledException) when (context.CancellationToken.IsCancellationRequested)
+        {
+            logger.LogInformation("Job '{JobName}' was cancelled", jobName);
+            execution.Status = JobExecutionStatus.Cancelled;
+            execution.FinishedAt = DateTimeOffset.UtcNow;
+
+            jobSettings.LastRunAt = execution.FinishedAt;
+            jobSettings.LastStatus = JobExecutionStatus.Cancelled;
+
+            await db.SaveChangesAsync(CancellationToken.None);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Job '{JobName}' failed", jobName);
             execution.Status = JobExecutionStatus.Failed;
             execution.Error = ex.Message.Length > 4096 ? ex.Message[..4096] : ex.Message;
-            execution.FinishedAt = DateTime.UtcNow;
+            execution.FinishedAt = DateTimeOffset.UtcNow;
 
             jobSettings.LastRunAt = execution.FinishedAt;
             jobSettings.LastStatus = JobExecutionStatus.Failed;
-            jobSettings.RowVersion = Guid.NewGuid();
 
-            await db.SaveChangesAsync(context.CancellationToken);
-            await CheckConsecutiveFailuresAsync(db, jobSettings, scope.ServiceProvider, context.CancellationToken);
+            await db.SaveChangesAsync(CancellationToken.None);
+            await CheckConsecutiveFailuresAsync(db, jobSettings, scope.ServiceProvider);
         }
     }
 
     protected abstract Task RunAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken);
 
     private async Task CheckConsecutiveFailuresAsync(
-        FeirbDbContext db, JobSettings jobSettings, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+        FeirbDbContext db, JobSettings jobSettings, IServiceProvider serviceProvider)
     {
         var recentStatuses = await db.JobExecutions
             .Where(e => e.JobSettingsId == jobSettings.Id)
             .OrderByDescending(e => e.StartedAt)
             .Take(_consecutiveFailureThreshold)
             .Select(e => e.Status)
-            .ToListAsync(cancellationToken);
+            .ToListAsync();
 
         if (recentStatuses.Count == _consecutiveFailureThreshold
             && recentStatuses.All(s => s == JobExecutionStatus.Failed))
         {
             jobSettings.Enabled = false;
-            await db.SaveChangesAsync(cancellationToken);
+            jobSettings.RowVersion = Guid.NewGuid();
+            await db.SaveChangesAsync();
 
             var scheduler = serviceProvider.GetRequiredService<IJobSettingsScheduler>();
             await scheduler.UnscheduleJobAsync(jobSettings.JobName);

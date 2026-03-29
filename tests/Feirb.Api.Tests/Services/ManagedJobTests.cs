@@ -1,6 +1,7 @@
 using Feirb.Api.Data;
 using Feirb.Api.Data.Entities;
 using Feirb.Api.Services;
+using Feirb.Api.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -167,12 +168,5 @@ public class ManagedJobTests : IDisposable
                 throw new InvalidOperationException(errorMessage ?? "Test failure");
             return Task.CompletedTask;
         }
-    }
-
-    private sealed class NoOpJobSettingsScheduler : IJobSettingsScheduler
-    {
-        public Task ScheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
-        public Task UnscheduleJobAsync(string jobName) => Task.CompletedTask;
-        public Task RescheduleJobAsync(string jobName, string cronExpression) => Task.CompletedTask;
     }
 }
