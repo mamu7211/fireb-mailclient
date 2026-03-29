@@ -1,6 +1,7 @@
 @page "/mail/inbox"
 @attribute [Authorize]
 @using Feirb.Shared.Mail
+@using Feirb.Web.Components.UI
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject IStringLocalizer<SharedResources> L
@@ -30,42 +31,39 @@ else if (_messages is null || _messages.Items.Count == 0)
 }
 else
 {
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>@L["ColumnMailbox"]</th>
-                    <th>@L["ColumnFrom"]</th>
-                    <th>@L["ColumnSubject"]</th>
-                    <th>@L["ColumnDate"]</th>
-                </tr>
-            </thead>
-            <tbody>
+    <ContentSection Title="@L["NavInbox"]" Icon="envelope">
+        <Table Hover>
+            <TableHeader>
+                <TableColumn>@L["ColumnMailbox"]</TableColumn>
+                <TableColumn>@L["ColumnFrom"]</TableColumn>
+                <TableColumn>@L["ColumnSubject"]</TableColumn>
+                <TableColumn>@L["ColumnDate"]</TableColumn>
+            </TableHeader>
+            <TableBody>
                 @foreach (var msg in _messages.Items)
                 {
-                    <tr role="button" tabindex="0"
-                        @onclick="() => NavigateToMessage(msg.Id)"
-                        @onkeydown="e => OnRowKeyDownAsync(e, msg.Id)"
-                        style="cursor: pointer;">
-                        <td>
+                    <TableRow OnClick="() => NavigateToMessage(msg.Id)"
+                              OnKeyDown="e => OnRowKeyDownAsync(e, msg.Id)"
+                              role="button" tabindex="0">
+                        <TableCell>
                             <span class="badge" style="background-color: @(msg.MailboxBadgeColor ?? "#6c757d");">
                                 @msg.MailboxName
                             </span>
-                        </td>
-                        <td>@msg.From</td>
-                        <td>
+                        </TableCell>
+                        <TableCell>@msg.From</TableCell>
+                        <TableCell>
                             @msg.Subject
                             @if (msg.HasAttachments)
                             {
-                                <i class="bi bi-paperclip ms-1" style="font-size: 1rem; vertical-align: middle;"></i>
+                                <Icon Name="paperclip" Size="IconSize.Small" Class="ms-1" />
                             }
-                        </td>
-                        <td class="text-nowrap">@msg.Date.LocalDateTime.ToString("g")</td>
-                    </tr>
+                        </TableCell>
+                        <TableCell Class="text-nowrap">@msg.Date.LocalDateTime.ToString("g")</TableCell>
+                    </TableRow>
                 }
-            </tbody>
-        </table>
-    </div>
+            </TableBody>
+        </Table>
+    </ContentSection>
 
     @if (TotalPages > 1)
     {

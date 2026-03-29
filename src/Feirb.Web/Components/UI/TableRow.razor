@@ -3,6 +3,7 @@
 @* Table row with optional click handler. *@
 <tr class="@(OnClick.HasDelegate ? "feirb-table-row-clickable" : "") @Class"
     @onclick="OnClick"
+    @onkeydown="OnKeyDown"
     @attributes="AdditionalAttributes">
     @ChildContent
 </tr>
@@ -15,6 +16,10 @@
     /// <summary>Click event on the row.</summary>
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    /// <summary>Keyboard event on the row.</summary>
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
 
     /// <summary>Additional CSS classes.</summary>
     [Parameter]
