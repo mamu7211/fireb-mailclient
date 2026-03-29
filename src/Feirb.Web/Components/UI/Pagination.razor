@@ -1,0 +1,65 @@
+@namespace Feirb.Web.Components.UI
+
+@* Theme-aware pagination control with previous/next and page indicator. *@
+@if (TotalPages > 1)
+{
+    <nav class="feirb-pagination @Class" aria-label="Pagination">
+        <button type="button"
+                class="feirb-pagination-btn"
+                disabled="@(CurrentPage <= 1)"
+                @onclick="OnPreviousAsync">
+            <Icon Name="chevron-left" Size="IconSize.Small" />
+            @PreviousLabel
+        </button>
+
+        <span class="feirb-pagination-info">
+            @CurrentPage / @TotalPages
+        </span>
+
+        <button type="button"
+                class="feirb-pagination-btn"
+                disabled="@(CurrentPage >= TotalPages)"
+                @onclick="OnNextAsync">
+            @NextLabel
+            <Icon Name="chevron-right" Size="IconSize.Small" />
+        </button>
+    </nav>
+}
+
+@code {
+    /// <summary>Current active page (1-based).</summary>
+    [Parameter, EditorRequired]
+    public int CurrentPage { get; set; }
+
+    /// <summary>Total number of pages.</summary>
+    [Parameter, EditorRequired]
+    public int TotalPages { get; set; }
+
+    /// <summary>Fires when the page changes. Provides the new page number.</summary>
+    [Parameter, EditorRequired]
+    public EventCallback<int> CurrentPageChanged { get; set; }
+
+    /// <summary>Label for the previous button.</summary>
+    [Parameter]
+    public string PreviousLabel { get; set; } = "Previous";
+
+    /// <summary>Label for the next button.</summary>
+    [Parameter]
+    public string NextLabel { get; set; } = "Next";
+
+    /// <summary>Additional CSS classes.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    private async Task OnPreviousAsync()
+    {
+        if (CurrentPage > 1)
+            await CurrentPageChanged.InvokeAsync(CurrentPage - 1);
+    }
+
+    private async Task OnNextAsync()
+    {
+        if (CurrentPage < TotalPages)
+            await CurrentPageChanged.InvokeAsync(CurrentPage + 1);
+    }
+}

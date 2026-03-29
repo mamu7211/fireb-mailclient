@@ -65,22 +65,11 @@ else
         </Table>
     </ContentSection>
 
-    @if (TotalPages > 1)
-    {
-        <nav aria-label="pagination">
-            <ul class="pagination justify-content-center">
-                <li class="page-item @(_currentPage <= 1 ? "disabled" : "")">
-                    <button class="page-link" @onclick="PreviousPageAsync" disabled="@(_currentPage <= 1)">@L["PaginationPrevious"]</button>
-                </li>
-                <li class="page-item disabled">
-                    <span class="page-link">@string.Format(L["PaginationPageOf"], _currentPage, TotalPages)</span>
-                </li>
-                <li class="page-item @(_currentPage >= TotalPages ? "disabled" : "")">
-                    <button class="page-link" @onclick="NextPageAsync" disabled="@(_currentPage >= TotalPages)">@L["PaginationNext"]</button>
-                </li>
-            </ul>
-        </nav>
-    }
+    <Pagination CurrentPage="_currentPage"
+                TotalPages="TotalPages"
+                CurrentPageChanged="OnPageChangedAsync"
+                PreviousLabel="@L["PaginationPrevious"]"
+                NextLabel="@L["PaginationNext"]" />
 }
 
 @code {
@@ -116,22 +105,10 @@ else
         }
     }
 
-    private async Task PreviousPageAsync()
+    private async Task OnPageChangedAsync(int page)
     {
-        if (_currentPage > 1)
-        {
-            _currentPage--;
-            await LoadMessagesAsync();
-        }
-    }
-
-    private async Task NextPageAsync()
-    {
-        if (_currentPage < TotalPages)
-        {
-            _currentPage++;
-            await LoadMessagesAsync();
-        }
+        _currentPage = page;
+        await LoadMessagesAsync();
     }
 
     private void OnRowKeyDownAsync(KeyboardEventArgs e, Guid id)
