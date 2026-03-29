@@ -68,7 +68,7 @@ public class UnsavedChangesServiceTests
     }
 
     [Fact]
-    public async Task SaveAllAsync_NoForms_ReturnsTrue()
+    public async Task SaveAllAsync_NoForms_ReturnsTrueAsync()
     {
         var result = await _sut.SaveAllAsync();
 
@@ -76,7 +76,7 @@ public class UnsavedChangesServiceTests
     }
 
     [Fact]
-    public async Task SaveAllAsync_CallsSubmitOnDirtyFormsOnly()
+    public async Task SaveAllAsync_CallsSubmitOnDirtyFormsOnlyAsync()
     {
         var clean = new FakeTrackedForm();
         var dirty = new FakeTrackedForm { HasUnsavedChanges = true };
@@ -90,7 +90,7 @@ public class UnsavedChangesServiceTests
     }
 
     [Fact]
-    public async Task SaveAllAsync_AllSucceed_ReturnsTrue()
+    public async Task SaveAllAsync_AllSucceed_ReturnsTrueAsync()
     {
         var form1 = new FakeTrackedForm { HasUnsavedChanges = true };
         var form2 = new FakeTrackedForm { HasUnsavedChanges = true };
@@ -103,7 +103,7 @@ public class UnsavedChangesServiceTests
     }
 
     [Fact]
-    public async Task SaveAllAsync_FirstFails_StopsAndReturnsFalse()
+    public async Task SaveAllAsync_FirstFails_StopsAndReturnsFalseAsync()
     {
         var failing = new FakeTrackedForm { HasUnsavedChanges = true, SubmitResult = false };
         var second = new FakeTrackedForm { HasUnsavedChanges = true };
