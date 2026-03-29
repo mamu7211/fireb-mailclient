@@ -36,9 +36,13 @@
             if (_editContext is not null)
                 _editContext.OnFieldChanged -= OnFieldChanged;
 
+            var wasDirty = _hasUnsavedChanges;
             _hasUnsavedChanges = false;
             _editContext = new EditContext(Model);
             _editContext.OnFieldChanged += OnFieldChanged;
+
+            if (wasDirty)
+                UnsavedChanges.NotifyChanged();
         }
     }
 
@@ -80,7 +84,9 @@
 
     public void Dispose()
     {
-        _editContext.OnFieldChanged -= OnFieldChanged;
+        if (_editContext is not null)
+            _editContext.OnFieldChanged -= OnFieldChanged;
+
         UnsavedChanges.Unregister(this);
     }
 }
