@@ -765,6 +765,9 @@
   <data name="ColumnSubject" xml:space="preserve">
     <value>Betreff</value>
   </data>
+  <data name="ColumnCategory" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
   <data name="ColumnDate" xml:space="preserve">
     <value>Datum</value>
   </data>
@@ -773,6 +776,9 @@
   </data>
   <data name="TimeFormatShort" xml:space="preserve">
     <value>HH:mm</value>
+  </data>
+  <data name="LabelNone" xml:space="preserve">
+    <value>Keine</value>
   </data>
   <data name="LabelUncategorized" xml:space="preserve">
     <value>Nicht kategorisiert</value>
