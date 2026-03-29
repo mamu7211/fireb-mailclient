@@ -1,9 +1,9 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table body section. *@
-<tbody>
+@* Table body section with ARIA rowgroup semantics. *@
+<div role="rowgroup" class="feirb-table-body">
     @ChildContent
-</tbody>
+</div>
 
 @code {
     /// <summary>Body content (TableRow elements).</summary>

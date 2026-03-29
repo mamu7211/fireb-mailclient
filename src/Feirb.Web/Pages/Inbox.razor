@@ -32,13 +32,13 @@ else if (_messages is null || _messages.Items.Count == 0)
 else
 {
     <ContentSection Title="@L["NavInbox"]" Icon="envelope">
-        <Table Hover Class="inbox-table">
+        <Table Hover>
             <TableHeader>
-                <TableColumn Class="inbox-col-mailbox">@L["ColumnMailbox"]</TableColumn>
-                <TableColumn Class="inbox-col-from">@L["ColumnFrom"]</TableColumn>
-                <TableColumn Class="inbox-col-subject">@L["ColumnSubject"]</TableColumn>
-                <TableColumn Class="inbox-col-category">@L["ColumnCategory"]</TableColumn>
-                <TableColumn Class="inbox-col-date">@L["ColumnDate"]</TableColumn>
+                <TableColumn Width="8rem">@L["ColumnMailbox"]</TableColumn>
+                <TableColumn Width="2fr">@L["ColumnFrom"]</TableColumn>
+                <TableColumn Width="3fr">@L["ColumnSubject"]</TableColumn>
+                <TableColumn Width="1fr">@L["ColumnCategory"]</TableColumn>
+                <TableColumn Width="10rem">@L["ColumnDate"]</TableColumn>
             </TableHeader>
             <TableBody>
                 @foreach (var msg in _messages.Items)

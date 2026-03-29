@@ -1,11 +1,11 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table header section. Renders thead with a single row. *@
-<thead>
-    <tr>
+@* Table header section with ARIA rowgroup and row semantics. *@
+<div role="rowgroup" class="feirb-table-header">
+    <div role="row" class="feirb-table-row">
         @ChildContent
-    </tr>
-</thead>
+    </div>
+</div>
 
 @code {
     /// <summary>Header content (TableColumn elements).</summary>

@@ -1,12 +1,13 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table row with optional click handler. *@
-<tr class="@(OnClick.HasDelegate ? "feirb-table-row-clickable" : "") @Class"
-    @onclick="OnClick"
-    @onkeydown="OnKeyDown"
-    @attributes="AdditionalAttributes">
+@* Table row with ARIA row semantics and optional click handler. *@
+<div role="row"
+     class="feirb-table-row @(OnClick.HasDelegate ? "feirb-table-row-clickable" : "") @Class"
+     @onclick="OnClick"
+     @onkeydown="OnKeyDown"
+     @attributes="AdditionalAttributes">
     @ChildContent
-</tr>
+</div>
 
 @code {
     /// <summary>Row content (TableCell elements).</summary>

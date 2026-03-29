@@ -1,12 +1,18 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table container with consistent theme-aware styling. *@
-<table class="feirb-table @SizeCss @(Hover ? "feirb-table-hover" : "") @(Striped ? "feirb-table-striped" : "") @Class"
-       @attributes="AdditionalAttributes">
-    @ChildContent
-</table>
+@* Grid-based table with ARIA semantics and theme-aware styling. *@
+<CascadingValue Value="this" IsFixed>
+    <div role="table"
+         class="feirb-table @SizeCss @(Hover ? "feirb-table-hover" : "") @(Striped ? "feirb-table-striped" : "") @Class"
+         style="@GridStyle"
+         @attributes="AdditionalAttributes">
+        @ChildContent
+    </div>
+</CascadingValue>
 
 @code {
+    private readonly List<string> _columnWidths = [];
+
     /// <summary>Table content (TableHeader, TableBody).</summary>
     [Parameter, EditorRequired]
     public RenderFragment ChildContent { get; set; } = null!;
@@ -30,6 +36,17 @@
     /// <summary>Any extra HTML attributes.</summary>
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    internal void RegisterColumn(string width)
+    {
+        _columnWidths.Add(width);
+        StateHasChanged();
+    }
+
+    private string GridStyle =>
+        _columnWidths.Count > 0
+            ? $"grid-template-columns: {string.Join(" ", _columnWidths)};"
+            : "";
 
     private string SizeCss => Size switch
     {

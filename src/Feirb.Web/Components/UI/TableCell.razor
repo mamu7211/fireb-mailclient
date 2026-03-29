@@ -1,11 +1,12 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table cell with optional click handler. *@
-<td class="@Class"
-    @onclick="OnClick"
-    @attributes="AdditionalAttributes">
+@* Table cell with ARIA cell semantics and optional click handler. *@
+<div role="cell"
+     class="feirb-table-cell @Class"
+     @onclick="OnClick"
+     @attributes="AdditionalAttributes">
     @ChildContent
-</td>
+</div>
 
 @code {
     /// <summary>Cell content.</summary>

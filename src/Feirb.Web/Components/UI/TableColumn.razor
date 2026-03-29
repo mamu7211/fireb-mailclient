@@ -1,14 +1,18 @@
 @namespace Feirb.Web.Components.UI
 
-@* Table header column. *@
-<th class="@Class" @attributes="AdditionalAttributes">
+@* Table header column with ARIA columnheader semantics. *@
+<div role="columnheader" class="feirb-table-cell feirb-table-column @Class" @attributes="AdditionalAttributes">
     @ChildContent
-</th>
+</div>
 
 @code {
     /// <summary>Column header content.</summary>
     [Parameter, EditorRequired]
     public RenderFragment ChildContent { get; set; } = null!;
+
+    /// <summary>Column width (CSS value, e.g. "8rem", "1fr", "2fr"). Defaults to "1fr".</summary>
+    [Parameter]
+    public string Width { get; set; } = "1fr";
 
     /// <summary>Additional CSS classes.</summary>
     [Parameter]
@@ -17,4 +21,12 @@
     /// <summary>Any extra HTML attributes.</summary>
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [CascadingParameter]
+    private Table? ParentTable { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ParentTable?.RegisterColumn(Width);
+    }
 }
