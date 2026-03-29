@@ -8,67 +8,167 @@ public class UnsavedChangesServiceTests
     private readonly UnsavedChangesService _sut = new();
 
     [Fact]
-    public void SetUnsavedChanges_WithTrue_SetsHasUnsavedChanges()
+    public void HasUnsavedChanges_NoForms_ReturnsFalse() =>
+        _sut.HasUnsavedChanges.Should().BeFalse();
+
+    [Fact]
+    public void HasUnsavedChanges_CleanForm_ReturnsFalse()
     {
-        _sut.SetUnsavedChanges(true);
+        var form = new FakeTrackedForm();
+
+        _sut.Register(form);
+
+        _sut.HasUnsavedChanges.Should().BeFalse();
+    }
+
+    [Fact]
+    public void HasUnsavedChanges_DirtyForm_ReturnsTrue()
+    {
+        var form = new FakeTrackedForm { HasUnsavedChanges = true };
+
+        _sut.Register(form);
 
         _sut.HasUnsavedChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void SetUnsavedChanges_WithFalse_ClearsHasUnsavedChanges()
+    public void HasUnsavedChanges_MixedForms_ReturnsTrue()
     {
-        _sut.SetUnsavedChanges(true);
+        var clean = new FakeTrackedForm();
+        var dirty = new FakeTrackedForm { HasUnsavedChanges = true };
 
-        _sut.SetUnsavedChanges(false);
+        _sut.Register(clean);
+        _sut.Register(dirty);
+
+        _sut.HasUnsavedChanges.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Unregister_RemovesForm()
+    {
+        var form = new FakeTrackedForm { HasUnsavedChanges = true };
+        _sut.Register(form);
+
+        _sut.Unregister(form);
 
         _sut.HasUnsavedChanges.Should().BeFalse();
     }
 
     [Fact]
-    public void SetUnsavedChanges_StoresCallbacks()
+    public void Unregister_RaisesOnChange()
     {
-        Func<Task<bool>> save = () => Task.FromResult(true);
-        Func<Task> discard = () => Task.CompletedTask;
-
-        _sut.SetUnsavedChanges(true, save, discard);
-
-        _sut.SaveAsync.Should().BeSameAs(save);
-        _sut.DiscardAsync.Should().BeSameAs(discard);
-    }
-
-    [Fact]
-    public void SetUnsavedChanges_RaisesOnChange()
-    {
+        var form = new FakeTrackedForm();
+        _sut.Register(form);
         var changed = false;
         _sut.OnChange += () => changed = true;
 
-        _sut.SetUnsavedChanges(true);
+        _sut.Unregister(form);
 
         changed.Should().BeTrue();
     }
 
     [Fact]
-    public void Clear_ResetsAllState()
+    public async Task SaveAllAsync_NoForms_ReturnsTrue()
     {
-        _sut.SetUnsavedChanges(true, () => Task.FromResult(true), () => Task.CompletedTask);
+        var result = await _sut.SaveAllAsync();
 
-        _sut.Clear();
-
-        _sut.HasUnsavedChanges.Should().BeFalse();
-        _sut.SaveAsync.Should().BeNull();
-        _sut.DiscardAsync.Should().BeNull();
+        result.Should().BeTrue();
     }
 
     [Fact]
-    public void Clear_RaisesOnChange()
+    public async Task SaveAllAsync_CallsSubmitOnDirtyFormsOnly()
     {
-        _sut.SetUnsavedChanges(true);
+        var clean = new FakeTrackedForm();
+        var dirty = new FakeTrackedForm { HasUnsavedChanges = true };
+        _sut.Register(clean);
+        _sut.Register(dirty);
+
+        await _sut.SaveAllAsync();
+
+        clean.SubmitCallCount.Should().Be(0);
+        dirty.SubmitCallCount.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task SaveAllAsync_AllSucceed_ReturnsTrue()
+    {
+        var form1 = new FakeTrackedForm { HasUnsavedChanges = true };
+        var form2 = new FakeTrackedForm { HasUnsavedChanges = true };
+        _sut.Register(form1);
+        _sut.Register(form2);
+
+        var result = await _sut.SaveAllAsync();
+
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task SaveAllAsync_FirstFails_StopsAndReturnsFalse()
+    {
+        var failing = new FakeTrackedForm { HasUnsavedChanges = true, SubmitResult = false };
+        var second = new FakeTrackedForm { HasUnsavedChanges = true };
+        _sut.Register(failing);
+        _sut.Register(second);
+
+        var result = await _sut.SaveAllAsync();
+
+        result.Should().BeFalse();
+        second.SubmitCallCount.Should().Be(0);
+    }
+
+    [Fact]
+    public void DiscardAll_ResetsAllForms()
+    {
+        var form1 = new FakeTrackedForm { HasUnsavedChanges = true };
+        var form2 = new FakeTrackedForm { HasUnsavedChanges = true };
+        _sut.Register(form1);
+        _sut.Register(form2);
+
+        _sut.DiscardAll();
+
+        form1.ResetCallCount.Should().Be(1);
+        form2.ResetCallCount.Should().Be(1);
+    }
+
+    [Fact]
+    public void DiscardAll_RaisesOnChange()
+    {
         var changed = false;
         _sut.OnChange += () => changed = true;
 
-        _sut.Clear();
+        _sut.DiscardAll();
 
         changed.Should().BeTrue();
+    }
+
+    [Fact]
+    public void NotifyChanged_RaisesOnChange()
+    {
+        var changed = false;
+        _sut.OnChange += () => changed = true;
+
+        _sut.NotifyChanged();
+
+        changed.Should().BeTrue();
+    }
+
+    private sealed class FakeTrackedForm : ITrackedForm
+    {
+        public bool HasUnsavedChanges { get; set; }
+        public bool SubmitResult { get; set; } = true;
+        public int SubmitCallCount { get; private set; }
+        public int ResetCallCount { get; private set; }
+
+        public Task<bool> SubmitAsync()
+        {
+            SubmitCallCount++;
+            return Task.FromResult(SubmitResult);
+        }
+
+        public void ResetDirtyState()
+        {
+            ResetCallCount++;
+            HasUnsavedChanges = false;
+        }
     }
 }

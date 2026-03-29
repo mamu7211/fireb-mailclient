@@ -6,6 +6,7 @@
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
 @inject NotificationService Notifications
+@inject UnsavedChangesService UnsavedChanges
 @implements IDisposable
 
 <PageTitle>@L["PageTitleEditMailbox"]</PageTitle>
@@ -215,7 +216,7 @@ else if (_model is not null)
         _toolbarActions =
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings/mailboxes"); return Task.CompletedTask; }, "x-lg"),
-            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await HandleSaveAsync(); }, "check-lg"),
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg"),
             new ToolbarAction(L["ButtonDelete"], ButtonVariant.Danger, () => { _showDeleteModal = true; StateHasChanged(); return Task.CompletedTask; }, "trash")
         ];
         ToolbarState.AddActions(_toolbarActions);

@@ -8,6 +8,7 @@
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
 @inject NotificationService Notifications
+@inject UnsavedChangesService UnsavedChanges
 @implements IDisposable
 
 <PageTitle>@L["AdminOutgoingSmtpTitle"] - Feirb</PageTitle>
@@ -42,7 +43,7 @@
 }
 else if (_model is not null)
 {
-    <EditForm Model="_model" OnValidSubmit="HandleSaveAsync">
+    <TrackedEditForm Model="_model" OnSave="HandleSaveAsync">
         <DataAnnotationsValidator />
 
         <ContentSection Icon="send" Title="@L["MailboxSectionSmtp"]" Subtitle="@L["SectionSmtpSubtitle"]" Class="mb-4">
@@ -108,7 +109,7 @@ else if (_model is not null)
                     </div>
                 </div>
         </ContentSection>
-    </EditForm>
+    </TrackedEditForm>
 }
 
 @code {
@@ -128,7 +129,7 @@ else if (_model is not null)
         _toolbarActions =
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/admin"); return Task.CompletedTask; }, "x-lg"),
-            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, HandleSaveAsync, "check-lg")
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg")
         ];
         ToolbarState.AddActions(_toolbarActions);
 
@@ -161,9 +162,9 @@ else if (_model is not null)
 
     public void Dispose() => ToolbarState.RemoveActions(_toolbarActions);
 
-    private async Task HandleSaveAsync()
+    private async Task<bool> HandleSaveAsync()
     {
-        if (_isSaving || _model is null) return;
+        if (_isSaving || _model is null) return false;
         _isSaving = true;
         _errorMessage = null;
         _successMessage = null;
@@ -182,12 +183,11 @@ else if (_model is not null)
                 _model.Password = null;
                 _successMessage = L["SuccessSmtpSettingsUpdated"];
                 Notifications.Add(L["SuccessSmtpSettingsUpdated"], NotificationSeverity.Success);
+                return true;
             }
-            else
-            {
-                var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-                _errorMessage = error?.Message ?? L["ErrorSmtpSettingsFailed"];
-            }
+
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            _errorMessage = error?.Message ?? L["ErrorSmtpSettingsFailed"];
         }
         catch
         {
@@ -197,6 +197,8 @@ else if (_model is not null)
         {
             _isSaving = false;
         }
+
+        return false;
     }
 
     private async Task TestSmtpAsync()

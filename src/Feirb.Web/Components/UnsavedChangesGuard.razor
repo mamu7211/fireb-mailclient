@@ -28,12 +28,9 @@
                     <Button Variant="ButtonVariant.Danger" OnClick="HandleDiscardAsync">
                         @L["ButtonDiscard"]
                     </Button>
-                    @if (UnsavedChanges.SaveAsync is not null)
-                    {
-                        <Button Variant="ButtonVariant.Primary" OnClick="HandleSaveAsync">
-                            @L["ButtonSave"]
-                        </Button>
-                    }
+                    <Button Variant="ButtonVariant.Primary" OnClick="HandleSaveAsync">
+                        @L["ButtonSave"]
+                    </Button>
                 </div>
             </div>
         </div>
@@ -62,29 +59,23 @@
 
     private async Task HandleSaveAsync()
     {
-        if (UnsavedChanges.SaveAsync is not null)
+        var success = await UnsavedChanges.SaveAllAsync();
+        if (!success)
         {
-            var success = await UnsavedChanges.SaveAsync();
-            if (!success)
-            {
-                _showModal = false;
-                _pendingUri = null;
-                StateHasChanged();
-                return;
-            }
+            _showModal = false;
+            _pendingUri = null;
+            StateHasChanged();
+            return;
         }
 
         NavigateToPending();
     }
 
-    private async Task HandleDiscardAsync()
+    private Task HandleDiscardAsync()
     {
-        if (UnsavedChanges.DiscardAsync is not null)
-        {
-            await UnsavedChanges.DiscardAsync();
-        }
-
+        UnsavedChanges.DiscardAll();
         NavigateToPending();
+        return Task.CompletedTask;
     }
 
     private Task HandleCancelAsync()
@@ -100,7 +91,6 @@
         var uri = _pendingUri;
         _showModal = false;
         _pendingUri = null;
-        UnsavedChanges.Clear();
 
         if (uri is not null)
         {

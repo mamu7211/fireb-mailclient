@@ -1,6 +1,6 @@
-@using Feirb.Web.Extensions
 @using Feirb.Web.Services
 @inject UnsavedChangesService UnsavedChanges
+@implements ITrackedForm
 @implements IDisposable
 
 <EditForm EditContext="_editContext"
@@ -11,7 +11,7 @@
 
 @code {
     private EditContext _editContext = null!;
-    private IDisposable? _unsavedChangesTracker;
+    private bool _hasUnsavedChanges;
 
     [Parameter, EditorRequired]
     public object Model { get; set; } = null!;
@@ -22,34 +22,65 @@
     [Parameter, EditorRequired]
     public Func<Task<bool>> OnSave { get; set; } = null!;
 
-    [Parameter]
-    public Func<Task>? OnDiscard { get; set; }
-
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    public bool HasUnsavedChanges => _hasUnsavedChanges;
+
+    protected override void OnInitialized() => UnsavedChanges.Register(this);
 
     protected override void OnParametersSet()
     {
         if (_editContext?.Model != Model)
         {
-            _unsavedChangesTracker?.Dispose();
+            if (_editContext is not null)
+                _editContext.OnFieldChanged -= OnFieldChanged;
+
+            _hasUnsavedChanges = false;
             _editContext = new EditContext(Model);
-            _unsavedChangesTracker = _editContext.EnableUnsavedChangesTracking(
-                UnsavedChanges, OnSave, OnDiscard);
+            _editContext.OnFieldChanged += OnFieldChanged;
         }
     }
 
-    private async Task HandleValidSubmitAsync()
+    private void OnFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (!_hasUnsavedChanges)
+        {
+            _hasUnsavedChanges = true;
+            UnsavedChanges.NotifyChanged();
+        }
+    }
+
+    public async Task<bool> SubmitAsync()
+    {
+        if (_editContext.Validate())
+        {
+            return await HandleValidSubmitAsync();
+        }
+
+        return false;
+    }
+
+    public void ResetDirtyState()
+    {
+        _hasUnsavedChanges = false;
+    }
+
+    private async Task<bool> HandleValidSubmitAsync()
     {
         var success = await OnSave();
         if (success)
         {
-            UnsavedChanges.Clear();
+            _hasUnsavedChanges = false;
+            UnsavedChanges.NotifyChanged();
         }
+
+        return success;
     }
 
     public void Dispose()
     {
-        _unsavedChangesTracker?.Dispose();
+        _editContext.OnFieldChanged -= OnFieldChanged;
+        UnsavedChanges.Unregister(this);
     }
 }
