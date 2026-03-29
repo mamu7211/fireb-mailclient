@@ -77,9 +77,7 @@ else
                               OnKeyDown="e => OnRowKeyDownAsync(e, msg.Id)"
                               role="button" tabindex="0">
                         <TableCell>
-                            <span class="badge" style="background-color: @(msg.MailboxBadgeColor ?? "#6c757d");">
-                                @msg.MailboxName
-                            </span>
+                            <MailboxChip Name="@msg.MailboxName" Color="@msg.MailboxBadgeColor" />
                         </TableCell>
                         <TableCell>
                             <PersonChip Name="@msg.FromName" Email="@msg.FromEmail" Size="PersonChipSize.Small" />
