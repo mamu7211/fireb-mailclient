@@ -1,4 +1,6 @@
 @namespace Feirb.Web.Components.UI
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
 
 @* Mutually exclusive toggle button group with radio semantics. *@
     <div class="feirb-toggle-group @Class"
@@ -37,9 +39,16 @@
     [Parameter]
     public int MaxPerRow { get; set; } = 8;
 
+    /// <summary>Optional model field expression for EditContext change tracking.</summary>
+    [Parameter]
+    public Expression<Func<string>>? For { get; set; }
+
     /// <summary>Additional CSS classes.</summary>
     [Parameter]
     public string? Class { get; set; }
+
+    [CascadingParameter]
+    private EditContext? EditContext { get; set; }
 
     private int ColumnCount
     {
@@ -56,6 +65,11 @@
         if (id == SelectedId) return;
         SelectedId = id;
         await SelectedIdChanged.InvokeAsync(id);
+
+        if (EditContext is not null && For is not null)
+        {
+            EditContext.NotifyFieldChanged(FieldIdentifier.Create(For));
+        }
     }
 
     private async Task HandleKeyDownAsync(KeyboardEventArgs e)

@@ -6,6 +6,7 @@
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
 @inject NotificationService Notifications
+@inject UnsavedChangesService UnsavedChanges
 @implements IDisposable
 
 <PageTitle>@L["PageTitlePersonalInformation"]</PageTitle>
@@ -77,7 +78,7 @@ else if (_model is not null)
         _toolbarActions =
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings"); return Task.CompletedTask; }, "x-lg"),
-            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await HandleSaveAsync(); }, "check-lg")
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg")
         ];
         ToolbarState.AddActions(_toolbarActions);
 

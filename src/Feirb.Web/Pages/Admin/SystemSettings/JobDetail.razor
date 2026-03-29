@@ -39,15 +39,15 @@ else if (_model is not null)
         <ContentSection Icon="calendar-event" Title="@L["JobDetailSectionSchedule"]" Subtitle="@L["JobDetailSectionScheduleSubtitle"]" Class="mb-4">
             <div class="mb-3">
                 <label class="form-label">@L["JobsCronSchedule"]</label>
-                <ToggleButtonGroup Items="_schedulePresets" SelectedId="@_selectedPreset" SelectedIdChanged="OnPresetChanged" />
+                <ToggleButtonGroup Items="_schedulePresets" SelectedId="@_selectedPreset" SelectedIdChanged="OnPresetChanged" For="() => _model.Cron" />
             </div>
             @if (_selectedPreset == "custom")
             {
                 <div class="mb-3">
                     <label for="cronExpression" class="form-label">@L["JobsCronExpression"]</label>
-                    <input id="cronExpression" type="text"
-                           class="form-control @(_cronValidationError is not null ? "is-invalid" : "")"
-                           @bind="_model.Cron" @bind:event="oninput" @bind:after="ValidateCron" />
+                    <InputText id="cronExpression"
+                               class="@CronInputCssClass"
+                               @bind-Value="_model.Cron" @bind-Value:after="ValidateCron" />
                     @if (_cronValidationError is not null)
                     {
                         <div class="invalid-feedback">@_cronValidationError</div>
@@ -164,7 +164,7 @@ else if (_model is not null)
         [
             new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning,
                 () => { Navigation.NavigateTo("/admin/jobs"); return Task.CompletedTask; }, "x-lg"),
-            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await HandleSaveAsync(); }, "check-lg"),
+            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg"),
             new ToolbarAction(L["ButtonRunNow"], ButtonVariant.Danger, HandleRunNowAsync, "play-fill"),
         ];
         ToolbarState.AddActions(_toolbarActions);
@@ -247,8 +247,6 @@ else if (_model is not null)
                     _model.Enabled = updated.Enabled;
                 }
 
-                // TODO #156 - Workaround: Toolbar Save bypasses TrackedEditForm, clear dirty state manually
-                UnsavedChanges.Clear();
                 Notifications.Add(L["JobsUpdateSuccess"], NotificationSeverity.Success);
                 return true;
             }
@@ -306,7 +304,11 @@ else if (_model is not null)
             _model.Cron = cron;
             _cronValidationError = null;
         }
+
     }
+
+    private string CronInputCssClass =>
+        _cronValidationError is not null ? "form-control is-invalid" : "form-control";
 
     private void ValidateCron()
     {

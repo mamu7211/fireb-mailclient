@@ -2,27 +2,38 @@ namespace Feirb.Web.Services;
 
 public sealed class UnsavedChangesService
 {
-    public bool HasUnsavedChanges { get; private set; }
+    private readonly List<ITrackedForm> _forms = [];
 
-    public Func<Task<bool>>? SaveAsync { get; private set; }
-
-    public Func<Task>? DiscardAsync { get; private set; }
+    public bool HasUnsavedChanges => _forms.Exists(f => f.HasUnsavedChanges);
 
     public event Action? OnChange;
 
-    public void SetUnsavedChanges(bool hasChanges, Func<Task<bool>>? saveAsync = null, Func<Task>? discardAsync = null)
+    public void Register(ITrackedForm form) => _forms.Add(form);
+
+    public void Unregister(ITrackedForm form)
     {
-        HasUnsavedChanges = hasChanges;
-        SaveAsync = saveAsync;
-        DiscardAsync = discardAsync;
+        _forms.Remove(form);
         OnChange?.Invoke();
     }
 
-    public void Clear()
+    public async Task<bool> SaveAllAsync()
     {
-        HasUnsavedChanges = false;
-        SaveAsync = null;
-        DiscardAsync = null;
+        foreach (var form in _forms.Where(f => f.HasUnsavedChanges).ToList())
+        {
+            if (!await form.SubmitAsync())
+                return false;
+        }
+
+        return true;
+    }
+
+    public void DiscardAll()
+    {
+        foreach (var form in _forms)
+            form.ResetDirtyState();
+
         OnChange?.Invoke();
     }
+
+    public void NotifyChanged() => OnChange?.Invoke();
 }
