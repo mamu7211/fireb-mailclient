@@ -765,8 +765,23 @@
   <data name="ColumnSubject" xml:space="preserve">
     <value>Objet</value>
   </data>
+  <data name="ColumnCategory" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
   <data name="ColumnDate" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="DateFormatShort" xml:space="preserve">
+    <value>d MMM yyyy</value>
+  </data>
+  <data name="TimeFormatShort" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+  <data name="LabelNone" xml:space="preserve">
+    <value>Aucune</value>
+  </data>
+  <data name="LabelUncategorized" xml:space="preserve">
+    <value>Non catégorisé</value>
   </data>
   <data name="LoadingMessages" xml:space="preserve">
     <value>Chargement des messages...</value>
@@ -809,6 +824,9 @@
   </data>
   <data name="PaginationNext" xml:space="preserve">
     <value>Suivant</value>
+  </data>
+  <data name="PaginationPerPage" xml:space="preserve">
+    <value>par page</value>
   </data>
   <data name="PaginationPageOf" xml:space="preserve">
     <value>Page {0} sur {1}</value>
