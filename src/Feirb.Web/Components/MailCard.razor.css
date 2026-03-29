@@ -32,7 +32,7 @@
     flex: 1;
 }
 
-/* Header: sender + date */
+/* Header: PersonChip + DateTimeChip */
 .mail-card-header {
     display: flex;
     align-items: flex-start;
@@ -40,48 +40,10 @@
     gap: 0.75rem;
 }
 
-.mail-card-date {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-shrink: 0;
-    font-size: 0.8125rem;
-    color: var(--feirb-on-surface-variant);
-    white-space: nowrap;
-}
-
-.mail-card-time {
-    font-size: 0.75rem;
-}
-
-/* Subject */
-.mail-card-subject {
-    font-weight: 700;
-    color: var(--bs-body-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Summary */
-.mail-card-summary {
-    font-size: 0.875rem;
-    color: var(--feirb-on-surface-variant);
-    margin: 0;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-}
-
-.mail-card-summary-2 {
-    -webkit-line-clamp: 2;
-}
-
-/* Footer: labels + read icon */
+/* Footer: labels */
 .mail-card-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 0.5rem;
     margin-top: 0.25rem;
 }
@@ -104,18 +66,6 @@
     white-space: nowrap;
 }
 
-::deep .mail-card-read-icon {
-    color: var(--feirb-on-surface-variant);
-    flex-shrink: 0;
-}
-
-/* Read indicator for Row mode (far-left) */
-.mail-card-read-indicator {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-
 /* === Mode: Row === */
 .mail-card-row {
     align-items: center;
@@ -133,22 +83,6 @@
     min-width: 10rem;
 }
 
-.mail-card-row .mail-card-sender {
-    flex-direction: row;
-    gap: 0.5rem;
-    align-items: baseline;
-}
-
-.mail-card-row .mail-card-subject {
-    flex: 1;
-    min-width: 0;
-}
-
-.mail-card-row .mail-card-date {
-    flex-direction: row;
-    gap: 0.25rem;
-}
-
 .mail-card-row .mail-card-footer {
     margin-top: 0;
     flex-shrink: 0;
@@ -158,4 +92,3 @@
 .mail-card-small {
     padding: 0.75rem 1rem;
 }
-

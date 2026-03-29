@@ -3,42 +3,16 @@
 @* Card component for displaying mail items across different layout contexts. *@
 <a href="@Href" class="mail-card mail-card-@ModeCss @(IsRead ? "" : "mail-card-unread") @Class"
    title="@Subject">
-    @if (Mode == MailCardMode.Row)
-    {
-        <div class="mail-card-read-indicator">
-            <Icon Name="@(IsRead ? "envelope-open" : "envelope-fill")" Size="IconSize.Small" Class="mail-card-read-icon" />
-        </div>
-    }
-
     <div class="mail-card-body">
         <div class="mail-card-header">
             <PersonChip Name="@SenderName" Email="@SenderEmail" Size="@PersonChipSizeForMode" />
-            <div class="mail-card-date">
-                @if (Mode is MailCardMode.Small)
-                {
-                    <span>@ReceivedAt.ToString("MMM d")</span>
-                }
-                else if (Mode is MailCardMode.Row)
-                {
-                    <span>@ReceivedAt.ToString("MMM d, HH:mm")</span>
-                }
-                else
-                {
-                    <span>@ReceivedAt.ToString("MMM d")</span>
-                    <span class="mail-card-time">@ReceivedAt.ToString("HH:mm")</span>
-                }
-
-            </div>
+            <DateTimeChip Value="new DateTimeOffset(ReceivedAt)" />
         </div>
 
-        <span class="mail-card-subject">@Subject</span>
-
-        @if (Mode is MailCardMode.Medium && !string.IsNullOrWhiteSpace(Summary))
-        {
-            <p class="mail-card-summary mail-card-summary-2">
-                @Summary
-            </p>
-        }
+        <MailSubjectChip Subject="@Subject"
+                         Summary="@(Mode is MailCardMode.Medium ? Summary : null)"
+                         IsRead="IsRead"
+                         HasAttachments="false" />
 
         <div class="mail-card-footer">
             <div class="mail-card-labels">
@@ -52,11 +26,6 @@
                     <span class="mail-card-label-overflow">+@(Labels.Count - maxLabels)</span>
                 }
             </div>
-
-            @if (Mode != MailCardMode.Row)
-            {
-                <Icon Name="@(IsRead ? "envelope-open" : "envelope-fill")" Size="IconSize.Small" Class="mail-card-read-icon" />
-            }
         </div>
     </div>
 </a>
@@ -78,7 +47,7 @@
     [Parameter, EditorRequired]
     public string Subject { get; set; } = default!;
 
-    /// <summary>Mail summary text (shown in Large and Medium modes).</summary>
+    /// <summary>Mail summary text (shown in Medium mode).</summary>
     [Parameter]
     public string? Summary { get; set; }
 
