@@ -25,11 +25,8 @@
                             var angle = i * 30.0 - 90.0;
                             var startAngle = angle - 15.0;
                             var endAngle = angle + 15.0;
-                            var isSelected = string.Equals(_pendingValue, color.Hex, StringComparison.OrdinalIgnoreCase);
                             <path d="@GetArcPath(100, 100, 65, 95, startAngle, endAngle)"
                                   fill="@color.Hex"
-                                  stroke="@(isSelected ? "var(--feirb-on-surface)" : "var(--bs-body-bg)")"
-                                  stroke-width="@(isSelected ? 3 : 1.5)"
                                   class="feirb-color-ring-segment"
                                   role="button"
                                   tabindex="0"
