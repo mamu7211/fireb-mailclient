@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Feirb.Api.Data.Migrations
 {
     [DbContext(typeof(FeirbDbContext))]
-    [Migration("20260330165348_AddJobSettingsOwnership")]
+    [Migration("20260330172024_AddJobSettingsOwnership")]
     partial class AddJobSettingsOwnership
     {
         /// <inheritdoc />
@@ -246,8 +246,8 @@ namespace Feirb.Api.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("ResourceType")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<Guid>("RowVersion")
                         .IsConcurrencyToken()
@@ -639,12 +639,10 @@ namespace Feirb.Api.Data.Migrations
 
             modelBuilder.Entity("Feirb.Api.Data.Entities.JobSettings", b =>
                 {
-                    b.HasOne("Feirb.Api.Data.Entities.User", "User")
+                    b.HasOne("Feirb.Api.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Feirb.Api.Data.Entities.Label", b =>

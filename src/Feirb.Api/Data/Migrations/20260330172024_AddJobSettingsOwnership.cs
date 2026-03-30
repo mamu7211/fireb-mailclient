@@ -27,8 +27,8 @@ namespace Feirb.Api.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "ResourceType",
                 table: "JobSettings",
-                type: "character varying(50)",
-                maxLength: 50,
+                type: "character varying(500)",
+                maxLength: 500,
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
