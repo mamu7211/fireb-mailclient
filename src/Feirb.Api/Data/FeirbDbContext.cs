@@ -151,12 +151,12 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.JobType).HasMaxLength(50);
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.Cron).HasMaxLength(100);
-            entity.Property(e => e.ResourceType).HasMaxLength(50);
+            entity.Property(e => e.ResourceType).HasMaxLength(500);
             entity.Property(e => e.LastStatus)
                 .HasConversion<string>()
                 .HasMaxLength(20);
             entity.Property(e => e.RowVersion).IsConcurrencyToken();
-            entity.HasOne(e => e.User)
+            entity.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.SetNull);

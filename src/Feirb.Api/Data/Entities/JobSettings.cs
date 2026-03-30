@@ -9,7 +9,6 @@ public class JobSettings
     public required string Cron { get; set; }
     public bool Enabled { get; set; }
     public Guid? UserId { get; set; }
-    public User? User { get; set; }
     public Guid? ResourceId { get; set; }
     public string? ResourceType { get; set; }
     public DateTimeOffset? LastRunAt { get; set; }
