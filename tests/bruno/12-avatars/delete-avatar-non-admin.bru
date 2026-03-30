@@ -1,0 +1,21 @@
+meta {
+  name: Delete Avatar Non Admin
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/api/avatars/994171873e8ab734a7f67ba5895948c8
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{aliceAccessToken}}
+}
+
+tests {
+  test("should return 403", function() {
+    expect(res.status).to.equal(403);
+  });
+}

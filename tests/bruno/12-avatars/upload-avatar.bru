@@ -1,0 +1,27 @@
+meta {
+  name: Upload Avatar
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/avatars/994171873e8ab734a7f67ba5895948c8
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:pre-request {
+  // Bruno CLI does not support @file() in multipart forms.
+  // This test must be run from the Bruno GUI or via curl:
+  //   curl -X PUT /api/avatars/<hash> -H "Authorization: Bearer <token>" -F "file=@avatar-test.png"
+  // The upload flow is fully covered by xUnit integration tests.
+}
+
+tests {
+  // Skip: Bruno CLI cannot send file uploads.
+  // Upload is covered by AvatarEndpointsTests (xUnit).
+}

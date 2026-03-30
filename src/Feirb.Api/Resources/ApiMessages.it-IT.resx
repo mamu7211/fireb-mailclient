@@ -138,4 +138,13 @@
   <data name="JobConcurrencyConflict" xml:space="preserve">
     <value>Il job è stato modificato da un altro utente. Ricaricare e riprovare.</value>
   </data>
+  <data name="AvatarNotFound" xml:space="preserve">
+    <value>Avatar non trovato.</value>
+  </data>
+  <data name="AvatarDeleted" xml:space="preserve">
+    <value>Avatar eliminato con successo.</value>
+  </data>
+  <data name="AvatarInvalidImage" xml:space="preserve">
+    <value>Il file caricato non è un'immagine valida.</value>
+  </data>
 </root>

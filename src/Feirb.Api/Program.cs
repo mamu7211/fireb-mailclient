@@ -163,6 +163,9 @@ mailGroup.MapMailTestEndpoints();
 mailGroup.MapMessageEndpoints();
 mailGroup.MapMailStatsEndpoints();
 
+// Avatar endpoints (per-user, JWT required)
+apiGroup.MapAvatarEndpoints();
+
 // Dashboard endpoints (per-user, JWT required)
 var dashboardGroup = apiGroup.MapGroup("/dashboard");
 dashboardGroup.MapDashboardEndpoints();
