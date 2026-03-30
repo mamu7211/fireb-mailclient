@@ -15,6 +15,7 @@ public static class MailboxEndpoints
     private const string _imapPasswordPurpose = "MailboxImapPassword";
     private const string _smtpPasswordPurpose = "MailboxSmtpPassword";
     private const string _imapSyncJobType = "imap-sync";
+    private const string _defaultSyncCron = "0 0 * * * ?"; // hourly
 
     public static RouteGroupBuilder MapMailboxEndpoints(this RouteGroupBuilder group)
     {
@@ -76,14 +77,13 @@ public static class MailboxEndpoints
             UpdatedAt = DateTime.UtcNow,
         };
 
-        var cronExpression = PollIntervalToCron(mailbox.PollIntervalMinutes);
         var jobSettings = new JobSettings
         {
             Id = Guid.NewGuid(),
             JobName = $"imap-sync:{mailbox.Id}",
             JobType = _imapSyncJobType,
             Description = $"IMAP sync for {mailbox.Name}",
-            Cron = cronExpression,
+            Cron = _defaultSyncCron,
             Enabled = true,
             UserId = userId,
             ResourceId = mailbox.Id,
@@ -94,7 +94,7 @@ public static class MailboxEndpoints
         db.JobSettings.Add(jobSettings);
         await db.SaveChangesAsync();
 
-        await jobScheduler.ScheduleJobAsync(jobSettings.JobName, _imapSyncJobType, cronExpression);
+        await jobScheduler.ScheduleJobAsync(jobSettings.JobName, _imapSyncJobType, _defaultSyncCron);
 
         return Results.Created($"/api/settings/mailboxes/{mailbox.Id}", ToDetailResponse(mailbox));
     }
@@ -119,8 +119,7 @@ public static class MailboxEndpoints
         HttpContext httpContext,
         FeirbDbContext db,
         IDataProtectionProvider dataProtection,
-        IStringLocalizer<ApiMessages> localizer,
-        IJobSettingsScheduler jobScheduler)
+        IStringLocalizer<ApiMessages> localizer)
     {
         var userId = GetCurrentUserId(httpContext);
         var mailbox = await db.Mailboxes.FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
@@ -129,8 +128,6 @@ public static class MailboxEndpoints
 
         var imapProtector = dataProtection.CreateProtector(_imapPasswordPurpose);
         var smtpProtector = dataProtection.CreateProtector(_smtpPasswordPurpose);
-
-        var oldPollInterval = mailbox.PollIntervalMinutes;
 
         mailbox.Name = request.Name;
         mailbox.EmailAddress = request.EmailAddress;
@@ -151,26 +148,7 @@ public static class MailboxEndpoints
         mailbox.SmtpRequiresAuth = request.SmtpRequiresAuth;
         mailbox.UpdatedAt = DateTime.UtcNow;
 
-        if (oldPollInterval != mailbox.PollIntervalMinutes)
-        {
-            var jobName = $"imap-sync:{mailbox.Id}";
-            var newCron = PollIntervalToCron(mailbox.PollIntervalMinutes);
-
-            var job = await db.JobSettings.FirstOrDefaultAsync(
-                j => j.JobType == _imapSyncJobType && j.ResourceId == mailbox.Id);
-            if (job is not null)
-            {
-                job.Cron = newCron;
-                job.RowVersion = Guid.NewGuid();
-            }
-
-            await db.SaveChangesAsync();
-            await jobScheduler.RescheduleJobAsync(jobName, _imapSyncJobType, newCron);
-        }
-        else
-        {
-            await db.SaveChangesAsync();
-        }
+        await db.SaveChangesAsync();
 
         return Results.Ok(ToDetailResponse(mailbox));
     }
@@ -223,8 +201,4 @@ public static class MailboxEndpoints
     private static Guid GetCurrentUserId(HttpContext httpContext) =>
         Guid.Parse(httpContext.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-    internal static string PollIntervalToCron(int pollIntervalMinutes) =>
-        pollIntervalMinutes >= 60
-            ? $"0 0 */{pollIntervalMinutes / 60} * * ?"
-            : $"0 */{pollIntervalMinutes} * * * ?";
 }

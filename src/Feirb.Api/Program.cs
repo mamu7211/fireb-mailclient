@@ -141,12 +141,15 @@ app.MapGet("/api/dev/config", (IConfiguration config) => Results.Ok(new
 var setupGroup = app.MapGroup(ApiRoutes.Setup).AllowAnonymous();
 setupGroup.MapSetupEndpoints();
 
+// Job endpoints (role-based filtering: admin sees all, user sees own + system)
+var jobsGroup = apiGroup.MapGroup("/jobs").RequireAuthorization();
+jobsGroup.MapJobSettingsEndpoints();
+
 // Admin endpoints require admin role
 var adminGroup = apiGroup.MapGroup("/admin").RequireAuthorization("RequireAdmin");
 adminGroup.MapAdminEndpoints();
 var systemSettingsGroup = adminGroup.MapGroup("/system-settings");
 systemSettingsGroup.MapSystemSettingsEndpoints();
-adminGroup.MapJobSettingsEndpoints();
 
 // Settings endpoints (per-user, JWT required)
 var settingsGroup = apiGroup.MapGroup("/settings");

@@ -163,6 +163,10 @@ else if (_model is not null)
             }
         </ContentSection>
     </TrackedEditForm>
+
+    <ContentSection Icon="clock" Title="@L["MailboxSectionSyncSchedule"]" Subtitle="@L["SectionMailboxSyncScheduleSubtitle"]" Class="mb-4">
+        <JobSettingsPanel ResourceType="Mailbox" ResourceId="@Id" />
+    </ContentSection>
 }
 
 @* Delete Confirmation Modal *@

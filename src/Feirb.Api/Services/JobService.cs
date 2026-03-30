@@ -26,6 +26,35 @@ public class JobService(
         return jobs.Select(MapToResponse).ToList();
     }
 
+    public async Task<List<JobSettingsResponse>> GetForUserAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var jobs = await db.JobSettings
+            .Include(j => j.Executions
+                .OrderByDescending(e => e.StartedAt)
+                .Take(5))
+            .Where(j => j.UserId == userId || j.UserId == null)
+            .OrderBy(j => j.JobName)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return jobs.Select(MapToResponse).ToList();
+    }
+
+    public async Task<List<JobSettingsResponse>> GetByResourceAsync(
+        string resourceType, Guid resourceId, CancellationToken cancellationToken = default)
+    {
+        var jobs = await db.JobSettings
+            .Include(j => j.Executions
+                .OrderByDescending(e => e.StartedAt)
+                .Take(5))
+            .Where(j => j.ResourceType == resourceType && j.ResourceId == resourceId)
+            .OrderBy(j => j.JobName)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return jobs.Select(MapToResponse).ToList();
+    }
+
     public async Task<JobSettingsResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var job = await db.JobSettings
@@ -159,11 +188,14 @@ public class JobService(
         new(
             job.Id,
             job.JobName,
+            job.JobType,
             job.Description,
             job.Cron,
             job.Enabled,
             job.LastRunAt,
             job.LastStatus?.ToString(),
+            job.ResourceId,
+            job.ResourceType,
             job.RowVersion,
             job.Executions
                 .OrderByDescending(e => e.StartedAt)
