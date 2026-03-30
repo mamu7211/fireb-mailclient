@@ -1,0 +1,17 @@
+meta {
+  name: Get Avatar Unauthorized
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/api/avatars/00000000000000000000000000000000
+  body: none
+  auth: none
+}
+
+tests {
+  test("should return 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}

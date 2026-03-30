@@ -1,0 +1,21 @@
+meta {
+  name: Get Avatar Not Found
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/avatars/00000000000000000000000000000000
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+tests {
+  test("should return 404", function() {
+    expect(res.status).to.equal(404);
+  });
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Get Avatar After Upload
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/avatars/994171873e8ab734a7f67ba5895948c8
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+tests {
+  // Skip: depends on upload which Bruno CLI cannot do.
+  // GET after upload is covered by AvatarEndpointsTests (xUnit).
+}
