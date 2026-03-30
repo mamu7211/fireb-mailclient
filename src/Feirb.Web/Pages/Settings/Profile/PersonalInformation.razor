@@ -1,7 +1,9 @@
 @page "/settings/personal-information"
 @attribute [Authorize]
+@using Feirb.Shared.Avatars
 @using Feirb.Shared.Settings
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 @inject NavigationManager Navigation
 @inject IStringLocalizer<SharedResources> L
 @inject ToolbarStateService ToolbarState
@@ -44,10 +46,23 @@ else if (_model is not null)
     <TrackedEditForm Model="_model" OnSave="HandleSaveAsync">
         <DataAnnotationsValidator />
 
-        <div class="d-flex justify-content-center mb-4">
-            <div style="width: 96px; height: 96px; border: 2px dashed #dee2e6; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                <i class="bi bi-person text-muted" style="font-size: 48px;"></i>
-            </div>
+        <div class="d-flex flex-column align-items-center mb-4 gap-2">
+            @if (_avatarUrl is not null)
+            {
+                <img src="@_avatarUrl" alt="@L["AvatarAlt"]" class="avatar-display" />
+            }
+            else
+            {
+                <div class="avatar-fallback">
+                    <Icon Name="person-circle" Size="IconSize.Large" Class="avatar-fallback-icon" />
+                </div>
+            }
+            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" Icon="camera"
+                    OnClick="TriggerFilePickerAsync">
+                @L["AvatarUploadPhoto"]
+            </Button>
+            <InputFile @ref="_fileInput" OnChange="OnFileSelectedAsync" accept="image/png,image/jpeg,image/webp"
+                       class="d-none" />
         </div>
 
         <ContentSection Icon="person" Title="@L["SectionPersonalInfoTitle"]" Subtitle="@L["SectionPersonalInfoSubtitle"]">
@@ -65,6 +80,8 @@ else if (_model is not null)
     </TrackedEditForm>
 }
 
+<AvatarCropModal @ref="_cropModal" OnCropped="OnCroppedAsync" />
+
 @code {
     private ProfileFormModel? _model;
     private bool _isLoading = true;
@@ -72,6 +89,10 @@ else if (_model is not null)
     private ToolbarAction[] _toolbarActions = [];
     private string? _successMessage;
     private string? _errorMessage;
+    private string? _avatarUrl;
+    private string? _emailHash;
+    private InputFile? _fileInput;
+    private AvatarCropModal? _cropModal;
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,19 +113,106 @@ else if (_model is not null)
                     Username = profile.Username,
                     Email = profile.Email,
                 };
+                _emailHash = AvatarHashHelper.ComputeEmailHash(profile.Email);
             }
         }
         catch
         {
-            _errorMessage = L["ErrorProfileFailed"];
+            Notifications.Add(L["ErrorProfileFailed"], NotificationSeverity.Error);
         }
         finally
         {
             _isLoading = false;
         }
+
+        // Load avatar separately so a missing avatar doesn't block the profile form
+        try
+        {
+            await LoadAvatarAsync();
+        }
+        catch
+        {
+            // Avatar loading is non-critical; silently fall back to placeholder
+        }
     }
 
     public void Dispose() => ToolbarState.RemoveActions(_toolbarActions);
+
+    private async Task LoadAvatarAsync()
+    {
+        if (_emailHash is null) return;
+
+        var response = await Http.GetAsync($"/api/avatars/{_emailHash}");
+        if (response.IsSuccessStatusCode)
+        {
+            _avatarUrl = $"/api/avatars/{_emailHash}?v={DateTime.UtcNow.Ticks}";
+        }
+        else
+        {
+            _avatarUrl = null;
+        }
+    }
+
+    private async Task TriggerFilePickerAsync()
+    {
+        if (_fileInput?.Element is not null)
+        {
+            await JsRuntime.InvokeVoidAsync("clickElement", _fileInput.Element);
+        }
+    }
+
+    private async Task OnFileSelectedAsync(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file.Size > 10 * 1024 * 1024)
+        {
+            _errorMessage = L["AvatarInvalidFormat"];
+            return;
+        }
+
+        var buffer = new byte[file.Size];
+        await using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+        await stream.ReadExactlyAsync(buffer);
+
+        var base64 = Convert.ToBase64String(buffer);
+        var dataUrl = $"data:{file.ContentType};base64,{base64}";
+
+        if (_cropModal is not null)
+        {
+            await _cropModal.ShowAsync(dataUrl);
+        }
+    }
+
+    private async Task OnCroppedAsync(byte[] imageBytes)
+    {
+        if (_emailHash is null) return;
+
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            var fileContent = new ByteArrayContent(imageBytes);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+            content.Add(fileContent, "file", "avatar.png");
+
+            var response = await Http.PutAsync($"/api/avatars/{_emailHash}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadAvatarAsync();
+                Notifications.Add(L["AvatarUploadSuccess"], NotificationSeverity.Success);
+            }
+            else
+            {
+                Notifications.Add(L["AvatarUploadError"], NotificationSeverity.Error);
+            }
+        }
+        catch
+        {
+            Notifications.Add(L["AvatarUploadError"], NotificationSeverity.Error);
+        }
+
+        StateHasChanged();
+    }
 
     private async Task<bool> HandleSaveAsync()
     {
@@ -122,6 +230,18 @@ else if (_model is not null)
             {
                 _successMessage = L["SuccessProfileUpdated"];
                 Notifications.Add(L["SuccessProfileUpdated"], NotificationSeverity.Success);
+
+                // Update avatar hash if email changed
+                if (_model.Email is not null)
+                {
+                    var newHash = AvatarHashHelper.ComputeEmailHash(_model.Email);
+                    if (newHash != _emailHash)
+                    {
+                        _emailHash = newHash;
+                        await LoadAvatarAsync();
+                    }
+                }
+
                 return true;
             }
 

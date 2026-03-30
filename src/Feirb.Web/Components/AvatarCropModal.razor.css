@@ -1,0 +1,15 @@
+.avatar-crop-container {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.avatar-crop-image {
+    display: block;
+    max-width: 100%;
+}
+
+/* Circular crop guide overlay */
+::deep .cropper-view-box,
+::deep .cropper-face {
+    border-radius: 50%;
+}

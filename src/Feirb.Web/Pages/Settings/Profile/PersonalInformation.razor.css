@@ -1,0 +1,22 @@
+.avatar-display {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--feirb-outline);
+}
+
+.avatar-fallback {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px dashed var(--feirb-outline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--feirb-on-surface-dim);
+}
+
+::deep .avatar-fallback-icon {
+    font-size: 48px;
+}

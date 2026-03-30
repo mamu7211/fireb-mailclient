@@ -1356,4 +1356,28 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Ungueltiger Quartz-Cron-Ausdruck.</value>
   </data>
+  <data name="AvatarUploadPhoto" xml:space="preserve">
+    <value>Foto hochladen</value>
+  </data>
+  <data name="AvatarCropTitle" xml:space="preserve">
+    <value>Avatar zuschneiden</value>
+  </data>
+  <data name="AvatarSave" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="AvatarCancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="AvatarUploadError" xml:space="preserve">
+    <value>Avatar konnte nicht hochgeladen werden.</value>
+  </data>
+  <data name="AvatarUploadSuccess" xml:space="preserve">
+    <value>Avatar erfolgreich aktualisiert.</value>
+  </data>
+  <data name="AvatarInvalidFormat" xml:space="preserve">
+    <value>Die ausgewaehlte Datei ist zu gross oder kein gueltiges Bild.</value>
+  </data>
+  <data name="AvatarAlt" xml:space="preserve">
+    <value>Profilbild</value>
+  </data>
 </root>

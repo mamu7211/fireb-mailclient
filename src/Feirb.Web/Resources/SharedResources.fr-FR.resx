@@ -1356,4 +1356,28 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Expression cron Quartz invalide.</value>
   </data>
+  <data name="AvatarUploadPhoto" xml:space="preserve">
+    <value>Importer une photo</value>
+  </data>
+  <data name="AvatarCropTitle" xml:space="preserve">
+    <value>Recadrer l'avatar</value>
+  </data>
+  <data name="AvatarSave" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="AvatarCancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="AvatarUploadError" xml:space="preserve">
+    <value>Impossible de telecharger l'avatar.</value>
+  </data>
+  <data name="AvatarUploadSuccess" xml:space="preserve">
+    <value>Avatar mis a jour avec succes.</value>
+  </data>
+  <data name="AvatarInvalidFormat" xml:space="preserve">
+    <value>Le fichier selectionne est trop volumineux ou n'est pas une image valide.</value>
+  </data>
+  <data name="AvatarAlt" xml:space="preserve">
+    <value>Avatar du profil</value>
+  </data>
 </root>
