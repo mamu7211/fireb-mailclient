@@ -123,6 +123,7 @@ internal static class DatabaseSeeder
             ImapUsername = user.Email,
             ImapEncryptedPassword = imapProtector.Protect(user.Email),
             ImapUseTls = false,
+            ImapRequiresAuth = false,
             SmtpHost = "localhost",
             SmtpPort = 3025,
             SmtpUsername = user.Email,

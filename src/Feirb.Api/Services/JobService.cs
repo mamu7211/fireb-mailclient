@@ -146,14 +146,14 @@ public class JobService(
 
         await db.SaveChangesAsync(cancellationToken);
 
-        if (job.JobType is null || !registry.HasJobType(job.JobType))
-        {
-            logger.LogWarning("No managed job registered for JobType '{JobType}', skipping schedule update", job.JobType);
-        }
-        else if (wasEnabled && !job.Enabled)
+        if (wasEnabled && !job.Enabled)
         {
             await scheduler.UnscheduleJobAsync(job.JobName);
             logger.LogInformation("Job '{JobName}' disabled", job.JobName);
+        }
+        else if (job.JobType is null || !registry.HasJobType(job.JobType))
+        {
+            logger.LogWarning("No managed job registered for JobType '{JobType}', skipping schedule update", job.JobType);
         }
         else if (!wasEnabled && job.Enabled)
         {

@@ -187,6 +187,26 @@ public class JobServiceTests : IDisposable
     }
 
     [Fact]
+    public async Task UpdateAsync_DisablingJobWithNullJobType_CallsUnscheduleAsync()
+    {
+        var mockScheduler = Substitute.For<IJobSettingsScheduler>();
+        var jobId = SeedUserJob(_adminUserId, jobType: null!);
+
+        using var db = new FeirbDbContext(_dbOptions);
+        var job = db.JobSettings.First(j => j.Id == jobId);
+        var rowVersion = job.RowVersion;
+        var jobName = job.JobName;
+
+        var sut = CreateService(scheduler: mockScheduler);
+        var request = new Feirb.Shared.Admin.Jobs.UpdateJobSettingsRequest("0 */5 * * * ?", false, rowVersion);
+        var result = await sut.UpdateAsync(jobId, request, _adminUserId, isAdmin: true);
+
+        result.Should().NotBeNull();
+        result!.Enabled.Should().BeFalse();
+        await mockScheduler.Received(1).UnscheduleJobAsync(jobName);
+    }
+
+    [Fact]
     public async Task UpdateAsync_AsUser_CannotUpdateSystemJobAsync()
     {
         var jobId = GetSeededJobId();
@@ -201,10 +221,10 @@ public class JobServiceTests : IDisposable
 
     // --- Helpers ---
 
-    private JobService CreateService(ManagedJobRegistry? registry = null) =>
+    private JobService CreateService(ManagedJobRegistry? registry = null, IJobSettingsScheduler? scheduler = null) =>
         new(
             new FeirbDbContext(_dbOptions),
-            _scheduler,
+            scheduler ?? _scheduler,
             _schedulerFactory,
             registry ?? _registry,
             NullLoggerFactory.Instance.CreateLogger<JobService>());

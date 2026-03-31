@@ -131,7 +131,7 @@ else
         try
         {
             _jobs = await Http.GetFromJsonAsync<List<JobSettingsResponse>>(
-                $"/api/jobs/by-resource/{ResourceType}/{ResourceId}") ?? [];
+                $"/api/jobs/by-resource/{Uri.EscapeDataString(ResourceType)}/{ResourceId}") ?? [];
             _customCrons = _jobs.ToDictionary(j => j.Id, j => j.Cron);
         }
         catch

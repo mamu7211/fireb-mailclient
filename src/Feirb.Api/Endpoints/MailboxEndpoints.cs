@@ -67,6 +67,7 @@ public static class MailboxEndpoints
             ImapEncryptedPassword = !string.IsNullOrEmpty(request.ImapPassword)
                 ? imapProtector.Protect(request.ImapPassword) : null,
             ImapUseTls = request.ImapUseTls,
+            ImapRequiresAuth = request.ImapRequiresAuth,
             SmtpHost = request.SmtpHost,
             SmtpPort = request.SmtpPort,
             SmtpUsername = request.SmtpUsername,
@@ -149,6 +150,7 @@ public static class MailboxEndpoints
         if (!string.IsNullOrEmpty(request.ImapPassword))
             mailbox.ImapEncryptedPassword = imapProtector.Protect(request.ImapPassword);
         mailbox.ImapUseTls = request.ImapUseTls;
+        mailbox.ImapRequiresAuth = request.ImapRequiresAuth;
         mailbox.SmtpHost = request.SmtpHost;
         mailbox.SmtpPort = request.SmtpPort;
         mailbox.SmtpUsername = request.SmtpUsername;
@@ -200,6 +202,7 @@ public static class MailboxEndpoints
             mailbox.ImapPort,
             mailbox.ImapUsername,
             mailbox.ImapUseTls,
+            mailbox.ImapRequiresAuth,
             mailbox.SmtpHost,
             mailbox.SmtpPort,
             mailbox.SmtpUsername,
