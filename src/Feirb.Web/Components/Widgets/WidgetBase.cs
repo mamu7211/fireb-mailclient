@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Components;
 
 namespace Feirb.Web.Components.Widgets;
@@ -27,6 +28,10 @@ public abstract class WidgetBase : ComponentBase
         try
         {
             await LoadDataAsync();
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode is HttpStatusCode.Forbidden or HttpStatusCode.Unauthorized)
+        {
+            State = WidgetState.AccessDenied;
         }
         catch (Exception ex)
         {

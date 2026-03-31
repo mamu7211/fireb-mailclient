@@ -1,0 +1,108 @@
+@inherits WidgetBase
+@inject HttpClient Http
+@inject IStringLocalizer<SharedResources> L
+@inject NavigationManager Nav
+
+<WidgetCard InstanceId="@InstanceId"
+            EditMode="EditMode"
+            OnRemove="OnRemove">
+    <Content>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-muted small">@L["WidgetJobHealthName"]</span>
+        </div>
+        <WidgetStateView State="State" ErrorMessage="ErrorMessage" OnRetry="RetryAsync">
+            @if (_response is { TotalCount: 0 })
+            {
+                <div class="d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center gap-2">
+                    <Icon Name="check-circle" Size="IconSize.Large" Class="text-success" />
+                    <span class="small text-muted">@L["WidgetAllJobsHealthy"]</span>
+                </div>
+            }
+            else if (_response is not null)
+            {
+                <div class="d-flex flex-column flex-grow-1" style="min-height: 0;">
+                    <div style="flex: 1; overflow-y: auto;">
+                        <Table Size="TableSize.Small" Hover>
+                            <TableHeader>
+                                <TableColumn Width="1fr">@L["ColumnJobName"]</TableColumn>
+                                <TableColumn Width="8rem">@L["ColumnLastRun"]</TableColumn>
+                                <TableColumn Width="5rem">@L["ColumnStatus"]</TableColumn>
+                                <TableColumn Width="1fr">@L["ColumnError"]</TableColumn>
+                            </TableHeader>
+                            <TableBody>
+                                @foreach (var job in _response.Items)
+                                {
+                                    <TableRow>
+                                        <TableCell>
+                                            <a href="admin/jobs/@job.Id" class="text-decoration-none">@job.JobName</a>
+                                        </TableCell>
+                                        <TableCell>
+                                            @if (job.LastRunAt is not null)
+                                            {
+                                                <DateTimeChip Value="job.LastRunAt.Value" DateFormat="@L["DateFormatShort"]" TimeFormat="@L["TimeFormatShort"]" />
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                            <span class="badge @GetStatusBadgeClass(job.Status)">
+                                                @(job.Status == "Disabled" ? L["JobStatusDisabled"] : L["JobStatusFailed"])
+                                            </span>
+                                        </TableCell>
+                                        <TableCell>
+                                            @if (!string.IsNullOrEmpty(job.LastError))
+                                            {
+                                                <span class="text-danger" style="font-size: 0.8rem;" title="@job.LastError">
+                                                    @Truncate(job.LastError, 60)
+                                                </span>
+                                            }
+                                        </TableCell>
+                                    </TableRow>
+                                }
+                            </TableBody>
+                        </Table>
+                    </div>
+                    @if (TotalPages > 1)
+                    {
+                        <Pagination CurrentPage="_currentPage"
+                                    TotalPages="TotalPages"
+                                    CurrentPageChanged="OnPageChangedAsync"
+                                    PreviousLabel="@L["PaginationPrevious"]"
+                                    NextLabel="@L["PaginationNext"]" />
+                    }
+                    <div class="text-center mt-1">
+                        <a href="admin/jobs" class="small text-decoration-none">@L["WidgetViewAllJobs"]</a>
+                    </div>
+                </div>
+            }
+        </WidgetStateView>
+    </Content>
+</WidgetCard>
+
+@code {
+    private const int PageSize = 5;
+    private UnhealthyJobsResponse? _response;
+    private int _currentPage = 1;
+
+    private int TotalPages => _response is null ? 0 : (int)Math.Ceiling((double)_response.TotalCount / PageSize);
+
+    protected override async Task OnInitializedAsync() =>
+        await ExecuteLoadAsync();
+
+    protected override async Task LoadDataAsync()
+    {
+        _response = await Http.GetFromJsonAsync<UnhealthyJobsResponse>(
+            $"/api/admin/jobs/unhealthy?page={_currentPage}&pageSize={PageSize}");
+        State = WidgetState.Ready;
+    }
+
+    private async Task OnPageChangedAsync(int page)
+    {
+        _currentPage = page;
+        await ExecuteLoadAsync();
+    }
+
+    private static string GetStatusBadgeClass(string status) =>
+        status == "Disabled" ? "bg-warning text-dark" : "bg-danger";
+
+    private static string Truncate(string text, int maxLength) =>
+        text.Length <= maxLength ? text : string.Concat(text.AsSpan(0, maxLength), "...");
+}

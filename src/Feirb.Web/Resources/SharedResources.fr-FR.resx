@@ -1371,4 +1371,40 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Expression cron Quartz invalide.</value>
   </data>
+  <data name="WidgetJobExecutionsName" xml:space="preserve">
+    <value>Executions de jobs par jour</value>
+  </data>
+  <data name="WidgetJobExecutionsDescription" xml:space="preserve">
+    <value>Diagramme en barres empilees des resultats de jobs dans le temps</value>
+  </data>
+  <data name="WidgetJobHealthName" xml:space="preserve">
+    <value>Etat des jobs</value>
+  </data>
+  <data name="WidgetJobHealthDescription" xml:space="preserve">
+    <value>Liste les jobs en echec ou automatiquement desactives</value>
+  </data>
+  <data name="WidgetAllJobsHealthy" xml:space="preserve">
+    <value>Tous les jobs sont fonctionnels.</value>
+  </data>
+  <data name="WidgetViewAllJobs" xml:space="preserve">
+    <value>Voir tous les jobs</value>
+  </data>
+  <data name="WidgetAccessDenied" xml:space="preserve">
+    <value>Vous n'avez pas la permission de voir ce widget.</value>
+  </data>
+  <data name="JobStatusSuccess" xml:space="preserve">
+    <value>Succes</value>
+  </data>
+  <data name="JobStatusFailed" xml:space="preserve">
+    <value>Echoue</value>
+  </data>
+  <data name="JobStatusCancelled" xml:space="preserve">
+    <value>Annule</value>
+  </data>
+  <data name="JobStatusDisabled" xml:space="preserve">
+    <value>Desactive</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Job</value>
+  </data>
 </root>

@@ -1371,4 +1371,40 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Ungueltiger Quartz-Cron-Ausdruck.</value>
   </data>
+  <data name="WidgetJobExecutionsName" xml:space="preserve">
+    <value>Job-Ausfuehrungen pro Tag</value>
+  </data>
+  <data name="WidgetJobExecutionsDescription" xml:space="preserve">
+    <value>Gestapeltes Balkendiagramm der Job-Ergebnisse im Zeitverlauf</value>
+  </data>
+  <data name="WidgetJobHealthName" xml:space="preserve">
+    <value>Job-Status</value>
+  </data>
+  <data name="WidgetJobHealthDescription" xml:space="preserve">
+    <value>Listet fehlgeschlagene oder automatisch deaktivierte Jobs auf</value>
+  </data>
+  <data name="WidgetAllJobsHealthy" xml:space="preserve">
+    <value>Alle Jobs fehlerfrei.</value>
+  </data>
+  <data name="WidgetViewAllJobs" xml:space="preserve">
+    <value>Alle Jobs anzeigen</value>
+  </data>
+  <data name="WidgetAccessDenied" xml:space="preserve">
+    <value>Sie haben keine Berechtigung, dieses Widget anzuzeigen.</value>
+  </data>
+  <data name="JobStatusSuccess" xml:space="preserve">
+    <value>Erfolgreich</value>
+  </data>
+  <data name="JobStatusFailed" xml:space="preserve">
+    <value>Fehlgeschlagen</value>
+  </data>
+  <data name="JobStatusCancelled" xml:space="preserve">
+    <value>Abgebrochen</value>
+  </data>
+  <data name="JobStatusDisabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Job</value>
+  </data>
 </root>

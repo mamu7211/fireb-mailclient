@@ -33,6 +33,13 @@
         </div>
         break;
 
+    case WidgetState.AccessDenied:
+        <div class="d-flex flex-grow-1 flex-column align-items-center justify-content-center text-center gap-2">
+            <Icon Name="shield-lock" Size="IconSize.Large" Class="text-muted" />
+            <span class="small text-muted">@L["WidgetAccessDenied"]</span>
+        </div>
+        break;
+
     case WidgetState.Ready:
         @ChildContent
         break;

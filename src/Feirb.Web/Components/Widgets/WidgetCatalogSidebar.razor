@@ -1,4 +1,5 @@
 @inject IStringLocalizer<SharedResources> L
+@inject AuthenticationStateProvider AuthStateProvider
 
 <div class="widget-catalog-sidebar border-start shadow-sm p-3" style="width: 300px; overflow-y: auto; background-color: var(--feirb-surface);">
     <h6 class="fw-bold mb-3">@L["WidgetCatalogTitle"]</h6>
@@ -23,11 +24,21 @@
     public EventCallback<WidgetDefinition> OnWidgetSelected { get; set; }
 
     private string _searchTerm = string.Empty;
+    private bool _isAdmin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        _isAdmin = authState.User.IsInRole("Admin");
+    }
+
+    private IEnumerable<WidgetDefinition> AvailableWidgets =>
+        WidgetRegistry.All.Where(w => !w.RequiresAdmin || _isAdmin);
 
     private IEnumerable<WidgetDefinition> FilteredWidgets =>
         string.IsNullOrWhiteSpace(_searchTerm)
-            ? WidgetRegistry.All
-            : WidgetRegistry.All.Where(w =>
+            ? AvailableWidgets
+            : AvailableWidgets.Where(w =>
                 L[w.NameKey].Value.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
                 L[w.DescriptionKey].Value.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
 }

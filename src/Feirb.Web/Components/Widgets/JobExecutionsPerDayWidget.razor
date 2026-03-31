@@ -1,0 +1,94 @@
+@inherits WidgetBase
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject IStringLocalizer<SharedResources> L
+@implements IAsyncDisposable
+
+<WidgetCard InstanceId="@InstanceId"
+            EditMode="EditMode"
+            OnRemove="OnRemove"
+            OnConfigLoaded="OnConfigLoadedAsync"
+            GetPendingConfig="GetPendingConfig">
+    <Content>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-muted small">@L["WidgetJobExecutionsName"]</span>
+        </div>
+        <WidgetStateView State="State" ErrorMessage="ErrorMessage" OnRetry="RetryAsync">
+            <div class="flex-grow-1" style="position: relative; min-height: 0;">
+                <canvas id="@_canvasId"></canvas>
+            </div>
+        </WidgetStateView>
+    </Content>
+    <ConfigDialog>
+        <div class="mb-3">
+            <label class="form-label">@L["WidgetMailsPerDaySettingsRange"]</label>
+            <select class="form-select" value="@_pendingDays" @onchange="OnPendingDaysChanged">
+                <option value="7">@L["ChartRange7Days"]</option>
+                <option value="14">@L["ChartRange14Days"]</option>
+                <option value="30">@L["ChartRange1Month"]</option>
+                <option value="90">@L["ChartRange3Months"]</option>
+                <option value="180">@L["ChartRange6Months"]</option>
+                <option value="365">@L["ChartRange1Year"]</option>
+            </select>
+        </div>
+    </ConfigDialog>
+</WidgetCard>
+
+@code {
+    private readonly string _canvasId = $"chart-{Guid.NewGuid():N}";
+    private int _selectedDays = 7;
+    private int _pendingDays = 7;
+
+    private async Task OnConfigLoadedAsync(string? config)
+    {
+        if (int.TryParse(config, out var days))
+        {
+            _selectedDays = days;
+            _pendingDays = days;
+        }
+
+        await ExecuteLoadAsync();
+    }
+
+    private void OnPendingDaysChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var days))
+            _pendingDays = days;
+    }
+
+    private string? GetPendingConfig() => _pendingDays.ToString();
+
+    protected override async Task LoadDataAsync()
+    {
+        var stats = await Http.GetFromJsonAsync<JobExecutionStatsResponse>($"/api/admin/jobs/stats?days={_selectedDays}");
+        if (stats is null) return;
+
+        State = WidgetState.Ready;
+        StateHasChanged();
+        await Task.Yield();
+
+        var labels = stats.TimeSeries.Select(d => d.Label).ToArray();
+
+        var datasets = new[]
+        {
+            new { label = L["JobStatusSuccess"].Value, color = "#198754", data = stats.TimeSeries.Select(d => d.SuccessCount).ToArray() },
+            new { label = L["JobStatusFailed"].Value, color = "#dc3545", data = stats.TimeSeries.Select(d => d.FailedCount).ToArray() },
+            new { label = L["JobStatusCancelled"].Value, color = "#ffc107", data = stats.TimeSeries.Select(d => d.CancelledCount).ToArray() },
+        };
+
+        await JS.InvokeVoidAsync("chartjsInterop.renderStackedBarChart",
+            _canvasId, labels, datasets);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("chartjsInterop.destroyChart", _canvasId);
+        }
+        catch (JSDisconnectedException)
+        {
+            // Ignored during disposal
+        }
+    }
+}
