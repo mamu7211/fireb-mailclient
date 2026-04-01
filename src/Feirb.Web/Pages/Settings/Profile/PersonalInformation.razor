@@ -172,7 +172,7 @@ else if (_model is not null)
             return;
         }
 
-        var buffer = new byte[file.Size];
+        var buffer = new byte[checked((int)file.Size)];
         await using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
         await stream.ReadExactlyAsync(buffer);
 
