@@ -996,6 +996,21 @@
   <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
     <value>Konfigurieren Sie den SMTP-Server, der zum Versenden ausgehender E-Mails aus diesem Postfach verwendet wird.</value>
   </data>
+  <data name="MailboxSectionSyncSchedule" xml:space="preserve">
+    <value>Synchronisierungsplan</value>
+  </data>
+  <data name="SectionMailboxSyncScheduleSubtitle" xml:space="preserve">
+    <value>Legen Sie fest, wie oft dieses Postfach nach neuen E-Mails sucht.</value>
+  </data>
+  <data name="JobSettingsPanelNoJobs" xml:space="preserve">
+    <value>Keine geplanten Aufgaben für diese Ressource.</value>
+  </data>
+  <data name="JobSettingsPanelLoadError" xml:space="preserve">
+    <value>Aufgabeneinstellungen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.</value>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
   <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
     <value>Aktualisieren Sie Ihren Benutzernamen und Ihre E-Mail-Adresse.</value>
   </data>
@@ -1379,5 +1394,41 @@
   </data>
   <data name="AvatarAlt" xml:space="preserve">
     <value>Profilbild</value>
+  </data>
+  <data name="WidgetJobExecutionsName" xml:space="preserve">
+    <value>Job-Ausfuehrungen pro Tag</value>
+  </data>
+  <data name="WidgetJobExecutionsDescription" xml:space="preserve">
+    <value>Gestapeltes Balkendiagramm der Job-Ergebnisse im Zeitverlauf</value>
+  </data>
+  <data name="WidgetJobHealthName" xml:space="preserve">
+    <value>Job-Status</value>
+  </data>
+  <data name="WidgetJobHealthDescription" xml:space="preserve">
+    <value>Listet fehlgeschlagene oder automatisch deaktivierte Jobs auf</value>
+  </data>
+  <data name="WidgetAllJobsHealthy" xml:space="preserve">
+    <value>Alle Jobs fehlerfrei.</value>
+  </data>
+  <data name="WidgetViewAllJobs" xml:space="preserve">
+    <value>Alle Jobs anzeigen</value>
+  </data>
+  <data name="WidgetAccessDenied" xml:space="preserve">
+    <value>Sie haben keine Berechtigung, dieses Widget anzuzeigen.</value>
+  </data>
+  <data name="JobStatusSuccess" xml:space="preserve">
+    <value>Erfolgreich</value>
+  </data>
+  <data name="JobStatusFailed" xml:space="preserve">
+    <value>Fehlgeschlagen</value>
+  </data>
+  <data name="JobStatusCancelled" xml:space="preserve">
+    <value>Abgebrochen</value>
+  </data>
+  <data name="JobStatusDisabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Job</value>
   </data>
 </root>

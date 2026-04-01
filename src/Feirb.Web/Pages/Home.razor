@@ -4,6 +4,7 @@
 @inject HttpClient Http
 @inject IJSRuntime JS
 @inject ToolbarStateService ToolbarState
+@inject AuthenticationStateProvider AuthStateProvider
 @implements IAsyncDisposable
 
 <PageTitle>@L["PageTitleDashboard"]</PageTitle>
@@ -35,12 +36,16 @@
     private bool _editMode;
     private bool _gridInitialized;
     private bool _needsGridInit;
+    private bool _isAdmin;
     private ToolbarAction[] _toolbarActions = [];
     private DotNetObjectReference<Home>? _dotNetRef;
     private readonly List<ActiveWidget> _activeWidgets = [];
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        _isAdmin = authState.User.IsInRole("Admin");
+
         try
         {
             var response = await Http.GetFromJsonAsync<DashboardLayoutResponse>("/api/dashboard/layout");
@@ -188,7 +193,7 @@
 
             var widgetTypeId = ExtractWidgetTypeId(item.Id);
             var definition = WidgetRegistry.GetById(widgetTypeId);
-            if (definition is not null)
+            if (definition is not null && (!definition.RequiresAdmin || _isAdmin))
             {
                 _activeWidgets.Add(new ActiveWidget(item.Id, definition, item.X, item.Y, item.W, item.H));
             }

@@ -996,6 +996,21 @@
   <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
     <value>Configure the SMTP server used to send outgoing mail from this mailbox.</value>
   </data>
+  <data name="MailboxSectionSyncSchedule" xml:space="preserve">
+    <value>Sync Schedule</value>
+  </data>
+  <data name="SectionMailboxSyncScheduleSubtitle" xml:space="preserve">
+    <value>Configure how often this mailbox checks for new mail.</value>
+  </data>
+  <data name="JobSettingsPanelNoJobs" xml:space="preserve">
+    <value>No scheduled jobs for this resource.</value>
+  </data>
+  <data name="JobSettingsPanelLoadError" xml:space="preserve">
+    <value>Failed to load job settings. Please try again later.</value>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
   <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
     <value>Update your username and email address.</value>
   </data>
@@ -1379,5 +1394,41 @@
   </data>
   <data name="AvatarAlt" xml:space="preserve">
     <value>Profile avatar</value>
+  </data>
+  <data name="WidgetJobExecutionsName" xml:space="preserve">
+    <value>Job executions per day</value>
+  </data>
+  <data name="WidgetJobExecutionsDescription" xml:space="preserve">
+    <value>Stacked bar chart showing job execution results over time</value>
+  </data>
+  <data name="WidgetJobHealthName" xml:space="preserve">
+    <value>Job health</value>
+  </data>
+  <data name="WidgetJobHealthDescription" xml:space="preserve">
+    <value>Lists jobs that have failed or been auto-disabled</value>
+  </data>
+  <data name="WidgetAllJobsHealthy" xml:space="preserve">
+    <value>All jobs healthy.</value>
+  </data>
+  <data name="WidgetViewAllJobs" xml:space="preserve">
+    <value>View all jobs</value>
+  </data>
+  <data name="WidgetAccessDenied" xml:space="preserve">
+    <value>You don't have permission to view this widget.</value>
+  </data>
+  <data name="JobStatusSuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="JobStatusFailed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="JobStatusCancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="JobStatusDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Job</value>
   </data>
 </root>

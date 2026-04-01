@@ -996,6 +996,21 @@
   <data name="SectionMailboxSmtpSubtitle" xml:space="preserve">
     <value>Configura il server SMTP utilizzato per inviare le e-mail in uscita da questa casella di posta.</value>
   </data>
+  <data name="MailboxSectionSyncSchedule" xml:space="preserve">
+    <value>Pianificazione sincronizzazione</value>
+  </data>
+  <data name="SectionMailboxSyncScheduleSubtitle" xml:space="preserve">
+    <value>Configura la frequenza con cui questa casella di posta controlla la presenza di nuove e-mail.</value>
+  </data>
+  <data name="JobSettingsPanelNoJobs" xml:space="preserve">
+    <value>Nessuna attività pianificata per questa risorsa.</value>
+  </data>
+  <data name="JobSettingsPanelLoadError" xml:space="preserve">
+    <value>Impossibile caricare le impostazioni delle attività. Riprova più tardi.</value>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Applica</value>
+  </data>
   <data name="SectionPersonalInfoSubtitle" xml:space="preserve">
     <value>Aggiorna il tuo nome utente e il tuo indirizzo e-mail.</value>
   </data>
@@ -1379,5 +1394,41 @@
   </data>
   <data name="AvatarAlt" xml:space="preserve">
     <value>Avatar del profilo</value>
+  </data>
+  <data name="WidgetJobExecutionsName" xml:space="preserve">
+    <value>Esecuzioni job al giorno</value>
+  </data>
+  <data name="WidgetJobExecutionsDescription" xml:space="preserve">
+    <value>Grafico a barre impilate dei risultati dei job nel tempo</value>
+  </data>
+  <data name="WidgetJobHealthName" xml:space="preserve">
+    <value>Stato dei job</value>
+  </data>
+  <data name="WidgetJobHealthDescription" xml:space="preserve">
+    <value>Elenca i job falliti o disattivati automaticamente</value>
+  </data>
+  <data name="WidgetAllJobsHealthy" xml:space="preserve">
+    <value>Tutti i job sono funzionanti.</value>
+  </data>
+  <data name="WidgetViewAllJobs" xml:space="preserve">
+    <value>Visualizza tutti i job</value>
+  </data>
+  <data name="WidgetAccessDenied" xml:space="preserve">
+    <value>Non hai i permessi per visualizzare questo widget.</value>
+  </data>
+  <data name="JobStatusSuccess" xml:space="preserve">
+    <value>Successo</value>
+  </data>
+  <data name="JobStatusFailed" xml:space="preserve">
+    <value>Fallito</value>
+  </data>
+  <data name="JobStatusCancelled" xml:space="preserve">
+    <value>Annullato</value>
+  </data>
+  <data name="JobStatusDisabled" xml:space="preserve">
+    <value>Disattivato</value>
+  </data>
+  <data name="ColumnJobName" xml:space="preserve">
+    <value>Job</value>
   </data>
 </root>
