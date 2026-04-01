@@ -6,9 +6,9 @@ namespace Feirb.Web.Tests.Components;
 public class WidgetRegistryTests
 {
     [Fact]
-    public void All_ContainsThreeWidgets()
+    public void All_ContainsFiveWidgets()
     {
-        WidgetRegistry.All.Should().HaveCount(3);
+        WidgetRegistry.All.Should().HaveCount(5);
     }
 
     [Fact]

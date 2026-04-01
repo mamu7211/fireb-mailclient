@@ -8,4 +8,5 @@ public sealed record WidgetDefinition(
     string Icon = "bi-puzzle",
     int DefaultWidth = 4,
     int DefaultHeight = 2,
-    string? DefaultConfig = null);
+    string? DefaultConfig = null,
+    bool RequiresAdmin = false);

@@ -5,5 +5,6 @@ public enum WidgetState
     Loading,
     Ready,
     Error,
-    Empty
+    Empty,
+    AccessDenied
 }
