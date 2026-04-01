@@ -163,7 +163,7 @@ mailGroup.MapMailTestEndpoints();
 mailGroup.MapMessageEndpoints();
 mailGroup.MapMailStatsEndpoints();
 
-// Avatar endpoints (per-user, JWT required)
+// Avatar endpoints (GET is public, PUT/DELETE require JWT)
 apiGroup.MapAvatarEndpoints();
 
 // Dashboard endpoints (per-user, JWT required)

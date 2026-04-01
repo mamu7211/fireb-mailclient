@@ -19,7 +19,7 @@ public class AvatarHashHelperTests
     {
         var hash = AvatarHashHelper.ComputeEmailHash("user@example.com");
 
-        hash.Should().MatchRegex("^[0-9a-f]{32}$");
+        hash.Should().MatchRegex("^[A-Za-z0-9_-]+$");
     }
 
     [Theory]

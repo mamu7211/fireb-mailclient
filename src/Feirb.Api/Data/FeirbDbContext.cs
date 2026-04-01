@@ -191,7 +191,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
         {
             entity.HasKey(e => e.Id);
             entity.HasIndex(e => e.EmailHash).IsUnique();
-            entity.Property(e => e.EmailHash).HasMaxLength(32);
+            entity.Property(e => e.EmailHash).HasMaxLength(512);
             entity.Property(e => e.Email).HasMaxLength(256);
         });
     }

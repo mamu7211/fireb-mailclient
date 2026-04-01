@@ -9,6 +9,7 @@
 @inject ToolbarStateService ToolbarState
 @inject NotificationService Notifications
 @inject UnsavedChangesService UnsavedChanges
+@inject ILogger<PersonalInformation> Logger
 @implements IDisposable
 
 <PageTitle>@L["PageTitlePersonalInformation"]</PageTitle>
@@ -116,8 +117,9 @@ else if (_model is not null)
                 _emailHash = AvatarHashHelper.ComputeEmailHash(profile.Email);
             }
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.LogError(ex, "Failed to load profile");
             Notifications.Add(L["ErrorProfileFailed"], NotificationSeverity.Error);
         }
         finally
@@ -130,9 +132,9 @@ else if (_model is not null)
         {
             await LoadAvatarAsync();
         }
-        catch
+        catch (Exception ex)
         {
-            // Avatar loading is non-critical; silently fall back to placeholder
+            Logger.LogWarning(ex, "Failed to load avatar");
         }
     }
 

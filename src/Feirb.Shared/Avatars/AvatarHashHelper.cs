@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Feirb.Shared.Avatars;
@@ -10,7 +9,9 @@ public static class AvatarHashHelper
         ArgumentNullException.ThrowIfNull(email);
 
         var normalized = email.Trim().ToLowerInvariant();
-        var bytes = MD5.HashData(Encoding.UTF8.GetBytes(normalized));
-        return Convert.ToHexStringLower(bytes);
+        return Convert.ToBase64String(Encoding.UTF8.GetBytes(normalized))
+            .Replace('+', '-')
+            .Replace('/', '_')
+            .TrimEnd('=');
     }
 }
