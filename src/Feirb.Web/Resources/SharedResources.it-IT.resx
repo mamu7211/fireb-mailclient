@@ -1375,7 +1375,7 @@
     <value>Avatar aggiornato con successo.</value>
   </data>
   <data name="AvatarInvalidFormat" xml:space="preserve">
-    <value>Il file selezionato e troppo grande o non e un'immagine valida.</value>
+    <value>Il file selezionato è troppo grande o non è un'immagine valida.</value>
   </data>
   <data name="AvatarAlt" xml:space="preserve">
     <value>Avatar del profilo</value>
