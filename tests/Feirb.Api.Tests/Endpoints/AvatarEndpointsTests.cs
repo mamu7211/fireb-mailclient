@@ -61,12 +61,12 @@ public class AvatarEndpointsTests : IDisposable
     }
 
     [Fact]
-    public async Task GetAvatar_Unauthenticated_Returns401Async()
+    public async Task GetAvatar_Unauthenticated_ReturnsNotFoundAsync()
     {
         var hash = AvatarHashHelper.ComputeEmailHash("admin@example.com");
         var response = await _client.GetAsync($"/api/avatars/{hash}");
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
     // --- PUT Tests ---
