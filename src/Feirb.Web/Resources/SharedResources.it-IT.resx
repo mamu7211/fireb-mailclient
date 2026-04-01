@@ -1371,6 +1371,30 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Espressione cron Quartz non valida.</value>
   </data>
+  <data name="AvatarUploadPhoto" xml:space="preserve">
+    <value>Carica foto</value>
+  </data>
+  <data name="AvatarCropTitle" xml:space="preserve">
+    <value>Ritaglia avatar</value>
+  </data>
+  <data name="AvatarSave" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="AvatarCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="AvatarUploadError" xml:space="preserve">
+    <value>Impossibile caricare l'avatar.</value>
+  </data>
+  <data name="AvatarUploadSuccess" xml:space="preserve">
+    <value>Avatar aggiornato con successo.</value>
+  </data>
+  <data name="AvatarInvalidFormat" xml:space="preserve">
+    <value>Il file selezionato è troppo grande o non è un'immagine valida.</value>
+  </data>
+  <data name="AvatarAlt" xml:space="preserve">
+    <value>Avatar del profilo</value>
+  </data>
   <data name="WidgetJobExecutionsName" xml:space="preserve">
     <value>Esecuzioni job al giorno</value>
   </data>

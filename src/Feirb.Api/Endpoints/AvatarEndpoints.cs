@@ -15,7 +15,7 @@ public static class AvatarEndpoints
 
     public static RouteGroupBuilder MapAvatarEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/avatars/{md5hash}", GetAvatarAsync);
+        group.MapGet("/avatars/{md5hash}", GetAvatarAsync).AllowAnonymous();
         group.MapPut("/avatars/{md5hash}", UploadAvatarAsync).DisableAntiforgery();
         group.MapDelete("/avatars/{md5hash}", DeleteAvatarAsync);
         return group;

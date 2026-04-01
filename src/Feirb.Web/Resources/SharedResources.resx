@@ -1371,6 +1371,30 @@
   <data name="CronInputInvalid" xml:space="preserve">
     <value>Invalid Quartz cron expression.</value>
   </data>
+  <data name="AvatarUploadPhoto" xml:space="preserve">
+    <value>Upload photo</value>
+  </data>
+  <data name="AvatarCropTitle" xml:space="preserve">
+    <value>Crop avatar</value>
+  </data>
+  <data name="AvatarSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="AvatarCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AvatarUploadError" xml:space="preserve">
+    <value>Failed to upload avatar.</value>
+  </data>
+  <data name="AvatarUploadSuccess" xml:space="preserve">
+    <value>Avatar updated successfully.</value>
+  </data>
+  <data name="AvatarInvalidFormat" xml:space="preserve">
+    <value>The selected file is too large or not a valid image.</value>
+  </data>
+  <data name="AvatarAlt" xml:space="preserve">
+    <value>Profile avatar</value>
+  </data>
   <data name="WidgetJobExecutionsName" xml:space="preserve">
     <value>Job executions per day</value>
   </data>
