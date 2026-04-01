@@ -15,6 +15,11 @@ auth:bearer {
 }
 
 tests {
-  // Skip: depends on upload which Bruno CLI cannot do.
-  // GET after upload is covered by AvatarEndpointsTests (xUnit).
+  test("should return 200", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("should return PNG image", function() {
+    expect(res.headers["content-type"]).to.equal("image/png");
+  });
 }

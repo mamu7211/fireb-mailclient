@@ -6,7 +6,7 @@ meta {
 
 put {
   url: {{baseUrl}}/api/avatars/994171873e8ab734a7f67ba5895948c8
-  body: none
+  body: multipart-form
   auth: bearer
 }
 
@@ -14,7 +14,16 @@ auth:bearer {
   token: {{accessToken}}
 }
 
+body:multipart-form {
+  file: @file(invalid-file.txt)
+}
+
 tests {
-  // Skip: Bruno CLI cannot send file uploads.
-  // Invalid file rejection is covered by AvatarEndpointsTests (xUnit).
+  test("should return 400", function() {
+    expect(res.status).to.equal(400);
+  });
+
+  test("should return error message", function() {
+    expect(res.body.message).to.be.a("string");
+  });
 }

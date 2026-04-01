@@ -25,6 +25,7 @@
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.16.1" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.13.13" />
     <PackageReference Include="SkiaSharp" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.0" />
   </ItemGroup>
 
   <ItemGroup>

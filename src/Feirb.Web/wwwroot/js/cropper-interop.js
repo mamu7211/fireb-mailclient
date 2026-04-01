@@ -7,17 +7,27 @@ window.cropperInterop = {
 
     init: function (imageElement) {
         this.destroy();
-        this._instance = new Cropper(imageElement, {
-            aspectRatio: 1,
-            viewMode: 1,
-            dragMode: 'move',
-            autoCropArea: 1,
-            cropBoxResizable: true,
-            cropBoxMovable: true,
-            guides: false,
-            center: false,
-            highlight: false,
-            background: false
+        return new Promise(function (resolve, reject) {
+            try {
+                var cropper = new Cropper(imageElement, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    cropBoxResizable: true,
+                    cropBoxMovable: true,
+                    guides: false,
+                    center: false,
+                    highlight: false,
+                    background: false,
+                    ready: function () {
+                        window.cropperInterop._instance = cropper;
+                        resolve(true);
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
         });
     },
 

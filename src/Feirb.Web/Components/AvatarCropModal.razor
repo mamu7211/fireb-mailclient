@@ -1,5 +1,6 @@
 @inject IJSRuntime JsRuntime
 @inject IStringLocalizer<SharedResources> L
+@inject NotificationService Notifications
 @implements IAsyncDisposable
 
 @if (_visible)
@@ -34,6 +35,7 @@
 
     private bool _visible;
     private bool _isSaving;
+    private bool _initReady;
     private string? _imageSrc;
     private ElementReference _imageRef;
 
@@ -41,11 +43,19 @@
     {
         _imageSrc = dataUrl;
         _visible = true;
+        _initReady = false;
         StateHasChanged();
 
-        // Wait for the DOM to render, then initialize Cropper.js
-        await Task.Delay(100);
-        await JsRuntime.InvokeVoidAsync("cropperInterop.init", _imageRef);
+        // Cropper.js init is deferred to OnAfterRenderAsync once the img element is in the DOM
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_visible && !_initReady && _imageSrc is not null)
+        {
+            _initReady = true;
+            await JsRuntime.InvokeAsync<bool>("cropperInterop.init", _imageRef);
+        }
     }
 
     private async Task SaveAsync()
@@ -63,6 +73,8 @@
                 await OnCropped.InvokeAsync(bytes);
                 return;
             }
+
+            Notifications.Add(L["AvatarUploadError"], NotificationSeverity.Error);
         }
         finally
         {
