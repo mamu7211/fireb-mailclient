@@ -11,6 +11,7 @@ public class JobSettings
     public Guid? UserId { get; set; }
     public Guid? ResourceId { get; set; }
     public string? ResourceType { get; set; }
+    public string? Configuration { get; set; }
     public DateTimeOffset? LastRunAt { get; set; }
     public JobExecutionStatus? LastStatus { get; set; }
     public Guid RowVersion { get; set; } = Guid.NewGuid();
