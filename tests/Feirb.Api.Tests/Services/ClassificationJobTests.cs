@@ -79,7 +79,7 @@ public class ClassificationJobTests : IDisposable
     }
 
     [Fact]
-    public async Task Execute_RespectsBatchSizeFromConfiguration_Async()
+    public async Task Execute_RespectsBatchSizeFromConfigurationAsync()
     {
         SeedJobSettings(configuration: """{"batchSize":1}""");
         SeedMessageWithQueueItem();

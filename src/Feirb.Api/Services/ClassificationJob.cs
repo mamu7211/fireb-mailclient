@@ -47,7 +47,7 @@ public class ClassificationJob(IServiceScopeFactory scopeFactory, ILogger<Classi
             {
                 var result = await classificationService.ClassifyAsync(item.CachedMessage, cancellationToken);
 
-                if (result.Success)
+                if (result.Success && result.Result is not null)
                 {
                     item.Status = ClassificationQueueItemStatus.Classified;
 
@@ -55,9 +55,14 @@ public class ClassificationJob(IServiceScopeFactory scopeFactory, ILogger<Classi
                     {
                         Id = Guid.NewGuid(),
                         CachedMessageId = item.CachedMessageId,
-                        Result = result.Result!,
+                        Result = result.Result,
                         ClassifiedAt = DateTimeOffset.UtcNow,
                     });
+                }
+                else if (result.Success)
+                {
+                    item.Status = ClassificationQueueItemStatus.Failed;
+                    item.Error = "Classification service returned success but no result";
                 }
                 else
                 {
@@ -80,7 +85,7 @@ public class ClassificationJob(IServiceScopeFactory scopeFactory, ILogger<Classi
         logger.LogInformation("Classification complete: {Classified} classified, {Failed} failed", classified, failed);
     }
 
-    private static int GetBatchSize(JobSettings jobSettings)
+    private int GetBatchSize(JobSettings jobSettings)
     {
         if (string.IsNullOrEmpty(jobSettings.Configuration))
             return _defaultBatchSize;
@@ -97,7 +102,9 @@ public class ClassificationJob(IServiceScopeFactory scopeFactory, ILogger<Classi
         }
         catch (JsonException)
         {
-            // Invalid JSON, use default
+            logger.LogWarning(
+                "Job '{JobName}' has invalid JSON in Configuration, using default batch size {BatchSize}",
+                jobSettings.JobName, _defaultBatchSize);
         }
 
         return _defaultBatchSize;

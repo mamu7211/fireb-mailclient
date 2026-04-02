@@ -7,7 +7,7 @@ namespace Feirb.Api.Tests.Services;
 public class NoopClassificationServiceTests
 {
     [Fact]
-    public async Task ClassifyAsync_ReturnsSuccessWithPlaceholderResultAsync()
+    public async Task Classify_ReturnsSuccessWithPlaceholderResultAsync()
     {
         var service = new NoopClassificationService();
         var message = new CachedMessage
