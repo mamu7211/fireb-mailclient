@@ -91,6 +91,14 @@ public class ImapSyncService(
 
                 var cached = MapToCachedMessage(message, mailboxId, uid);
                 db.CachedMessages.Add(cached);
+                db.ClassificationQueueItems.Add(new CachedMessageClassificationQueueItem
+                {
+                    Id = Guid.NewGuid(),
+                    CachedMessageId = cached.Id,
+                    Status = ClassificationQueueItemStatus.Pending,
+                    AttemptNumber = 1,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                });
                 existingMessageIds.Add(cached.MessageId);
                 pendingCount++;
 

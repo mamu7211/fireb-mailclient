@@ -17,6 +17,8 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
     public DbSet<Label> Labels => Set<Label>();
     public DbSet<JobSettings> JobSettings => Set<JobSettings>();
     public DbSet<JobExecution> JobExecutions => Set<JobExecution>();
+    public DbSet<CachedMessageClassificationQueueItem> ClassificationQueueItems => Set<CachedMessageClassificationQueueItem>();
+    public DbSet<ClassificationResult> ClassificationResults => Set<ClassificationResult>();
     public DbSet<Avatar> Avatars => Set<Avatar>();
     public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
 
@@ -150,6 +152,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.Property(e => e.JobType).HasMaxLength(50);
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.Cron).HasMaxLength(100);
+            entity.Property(e => e.Configuration).HasMaxLength(4096);
             entity.Property(e => e.ResourceType).HasMaxLength(500);
             entity.Property(e => e.LastStatus)
                 .HasConversion<string>()
@@ -167,6 +170,7 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
                 Description = "Classifies new mail messages using AI-powered label detection.",
                 Cron = "0 * * * * ?",
                 Enabled = false,
+                Configuration = """{"batchSize":10}""",
                 RowVersion = new Guid("00000000-0000-0000-0000-000000000001"),
             });
         });
@@ -183,6 +187,32 @@ public class FeirbDbContext(DbContextOptions<FeirbDbContext> options) : DbContex
             entity.HasOne(e => e.JobSettings)
                 .WithMany(j => j.Executions)
                 .HasForeignKey(e => e.JobSettingsId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<CachedMessageClassificationQueueItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.CachedMessageId);
+            entity.HasIndex(e => new { e.Status, e.Ordinal });
+            entity.Property(e => e.Status)
+                .HasConversion<string>()
+                .HasMaxLength(20);
+            entity.Property(e => e.Ordinal).ValueGeneratedOnAdd();
+            entity.Property(e => e.Error).HasMaxLength(4096);
+            entity.HasOne(e => e.CachedMessage)
+                .WithMany()
+                .HasForeignKey(e => e.CachedMessageId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ClassificationResult>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.CachedMessageId).IsUnique();
+            entity.HasOne(e => e.CachedMessage)
+                .WithMany()
+                .HasForeignKey(e => e.CachedMessageId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 

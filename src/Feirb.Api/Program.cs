@@ -81,11 +81,13 @@ builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete
 // Managed job infrastructure
 builder.Services.AddManagedJobInfrastructure();
 builder.Services.AddManagedJob<ImapSyncJob>("imap-sync");
+builder.Services.AddManagedJob<ClassificationJob>("classification");
 
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IImapSyncService, ImapSyncService>();
+builder.Services.AddScoped<IClassificationService, NoopClassificationService>();
 
 var app = builder.Build();
 
