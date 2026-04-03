@@ -121,6 +121,20 @@ public class ClassificationRuleEndpointsTests : IDisposable
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    public async Task CreateRule_EmptyOrWhitespaceInstruction_ReturnsBadRequestAsync(string instruction)
+    {
+        var tokens = await SetupAndLoginAsAdminAsync();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
+
+        var request = new CreateClassificationRuleRequest(instruction);
+        var response = await _client.PostAsJsonAsync("/api/settings/rules", request);
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
     // --- Update Tests ---
 
     [Fact]
