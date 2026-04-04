@@ -49,19 +49,22 @@ test.describe("SMTP Require Authentication toggle hides credentials", () => {
 
   test.describe("Admin Outgoing SMTP settings", () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      const statusResponse = await page.request.get("/api/setup/status");
+      const status = await statusResponse.json();
 
-      if (page.url().includes("/login") || page.url().includes("/setup")) {
-        await page.goto("/login");
-        await expect(page.locator("#username")).toBeVisible({ timeout: 10000 });
-        await page.locator("#username").fill(ADMIN_USERNAME);
-        await page.locator("#password").fill(ADMIN_PASSWORD);
-        await page.getByRole("button", { name: "Log In" }).click();
-        await expect(
-          page.getByLabel("breadcrumb").getByText("Dashboard"),
-        ).toBeVisible({ timeout: 15000 });
+      if (!status.isComplete) {
+        test.skip();
+        return;
       }
+
+      await page.goto("/login");
+      await expect(page.locator("#username")).toBeVisible({ timeout: 10000 });
+      await page.locator("#username").fill(ADMIN_USERNAME);
+      await page.locator("#password").fill(ADMIN_PASSWORD);
+      await page.getByRole("button", { name: "Log In" }).click();
+      await expect(
+        page.getByLabel("breadcrumb").getByText("Dashboard"),
+      ).toBeVisible({ timeout: 15000 });
     });
 
     test("credentials are visible when Require Authentication is checked", async ({

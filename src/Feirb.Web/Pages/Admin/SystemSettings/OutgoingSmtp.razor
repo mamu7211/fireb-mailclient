@@ -80,7 +80,7 @@ else if (_model is not null)
                             <label for="smtpUseTls" class="form-check-label">@L["LabelSmtpUseTlsMailbox"]</label>
                         </div>
                         <div class="form-check">
-                            <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_model.RequiresAuth" @bind-Value:after="StateHasChanged" />
+                            <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_model.RequiresAuth" />
                             <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuthMailbox"]</label>
                         </div>
                     </div>
