@@ -20,17 +20,17 @@ Run SQL queries against the Feirb PostgreSQL database in the Aspire-managed cont
    ```bash
    CRUNTIME=$(command -v podman &>/dev/null && echo podman || echo docker)
    PG_CONTAINER=$($CRUNTIME ps --format '{{.Names}}' | grep postgres)
-   PG_PASS=$($CRUNTIME exec "$PG_CONTAINER" bash -c 'echo $POSTGRES_PASSWORD')
+   PG_PASS=$($CRUNTIME exec "$PG_CONTAINER" printenv POSTGRES_PASSWORD)
    ```
 
 2. **Run the query via local psql:**
    ```bash
-   PGPASSWORD="$PG_PASS" psql -h localhost -U postgres mailclientdb -c '<SQL>'
+   PGPASSWORD="$PG_PASS" psql -h localhost -p 15432 -U postgres mailclientdb -c '<SQL>'
    ```
 
    For multi-line or complex queries, use a heredoc:
    ```bash
-   PGPASSWORD="$PG_PASS" psql -h localhost -U postgres mailclientdb <<EOF
+   PGPASSWORD="$PG_PASS" psql -h localhost -p 15432 -U postgres mailclientdb <<EOF
    SELECT * FROM "Users";
    EOF
    ```

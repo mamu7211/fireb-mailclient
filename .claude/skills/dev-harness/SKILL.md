@@ -26,7 +26,7 @@ If no argument, run `status` to show what's running and available.
 
 2. If not running, start Aspire in background with log capture:
    ```bash
-   cd /home/martin/Workspace/mailclient && dotnet run --project src/Feirb.AppHost > /tmp/feirb-aspire.log 2>&1 &
+   cd /home/martin/Workspace/mailclient && FEIRB_SEED_DATA=true dotnet run --project src/Feirb.AppHost > /tmp/feirb-aspire.log 2>&1 &
    echo $! > /tmp/feirb-aspire.pid
    ```
 
@@ -162,8 +162,8 @@ fi
 ```bash
 CRUNTIME=$(command -v podman &>/dev/null && echo podman || echo docker)
 PG_CONTAINER=$($CRUNTIME ps --format '{{.Names}}' | grep postgres)
-PG_PASS=$($CRUNTIME exec "$PG_CONTAINER" bash -c 'echo $POSTGRES_PASSWORD')
-PGPASSWORD="$PG_PASS" psql -h localhost -U postgres mailclientdb -c '<SQL>'
+PG_PASS=$($CRUNTIME exec "$PG_CONTAINER" printenv POSTGRES_PASSWORD)
+PGPASSWORD="$PG_PASS" psql -h localhost -p 15432 -U postgres mailclientdb -c '<SQL>'
 ```
 
 Useful queries:
