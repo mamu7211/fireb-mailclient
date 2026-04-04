@@ -87,6 +87,7 @@ builder.Services.AddManagedJob<ClassificationJob>("classification");
 // Connection string name follows Aspire convention: "{ollama-resource}-{model-name}" (tag stripped)
 builder.AddOllamaApiClient("feirb-ollama-qwen3").AddChatClient();
 
+
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
