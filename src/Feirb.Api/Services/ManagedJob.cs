@@ -8,7 +8,7 @@ namespace Feirb.Api.Services;
 public abstract class ManagedJob(IServiceScopeFactory scopeFactory, ILogger logger) : IJob
 {
     public const string JobNameKey = "ManagedJobName";
-    private const int _consecutiveFailureThreshold = 3;
+    private const int _consecutiveFailureThreshold = 50;
 
     public async Task Execute(IJobExecutionContext context)
     {

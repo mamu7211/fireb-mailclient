@@ -11,10 +11,10 @@ var postgres = builder.AddPostgres("feirb-postgres")
     .WithPgAdmin()
     .AddDatabase("mailclientdb");
 
-var ollama = builder.AddOllama("feirb-ollama")
-    .WithDataVolume();
+var ollama = builder.AddOllama("feirb-ollama", port: 11434)
+    .WithBindMount("../../.ollama-data", "/root/.ollama");
 
-var qwen = ollama.AddModel("qwen3:4b");
+var qwen = ollama.AddModel("qwen3:0.6b");
 
 var greenmail = builder.AddContainer("feirb-greenmail", "docker.io/greenmail/standalone")
     .WithHttpEndpoint(port: 8080, targetPort: 8080, name: "api")
