@@ -37,7 +37,7 @@ public static class MessageEndpoints
             .OrderByDescending(m => m.Date)
             .Skip(skip)
             .Take(pageSize)
-            .Select(m => new { m.Id, MailboxName = m.Mailbox.Name, m.Mailbox.BadgeColor, m.From, m.Subject, m.Date, HasAttachments = m.Attachments.Any(), Labels = m.Labels.Select(l => new { l.Name, l.Color }).ToList() })
+            .Select(m => new { m.Id, MailboxName = m.Mailbox.Name, m.Mailbox.BadgeColor, m.From, m.Subject, m.Date, HasAttachments = m.Attachments.Any(), Labels = m.Labels.OrderBy(l => l.Name).Select(l => new { l.Name, l.Color }).ToList() })
             .ToListAsync();
 
         var summaryPlaceholder = localizer["SummaryPlaceholder"].Value;
