@@ -167,4 +167,4 @@ Note: Table and column names are PascalCase and must be double-quoted in SQL.
 - After sending mail, run `trigger-job.sh imap-sync` to pull it into the app
 - Ollama model (`qwen3:0.6b`) persists in `.ollama-data/` across cleanups
 - API logs go through Aspire OTLP — use `logs.sh` to query job execution history from DB
-- Auto-disable threshold is 50 consecutive failures (not 3)
+- Auto-disable threshold is 10 consecutive failures

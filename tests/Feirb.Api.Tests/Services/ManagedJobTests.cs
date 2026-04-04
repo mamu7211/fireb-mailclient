@@ -80,12 +80,12 @@ public class ManagedJobTests : IDisposable
     }
 
     [Fact]
-    public async Task Execute_ThreeConsecutiveFailures_AutoDisablesJobAsync()
+    public async Task Execute_TenConsecutiveFailures_AutoDisablesJobAsync()
     {
         var jobSettingsId = SeedJobSettings(enabled: true);
         var job = CreateTestJob(succeeds: false, errorMessage: "Failing");
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 10; i++)
         {
             await job.Execute(CreateJobContext());
         }
@@ -96,12 +96,12 @@ public class ManagedJobTests : IDisposable
     }
 
     [Fact]
-    public async Task Execute_TwoFailuresThenSuccess_DoesNotDisableAsync()
+    public async Task Execute_NineFailuresThenSuccess_DoesNotDisableAsync()
     {
         var jobSettingsId = SeedJobSettings(enabled: true);
 
         var failingJob = CreateTestJob(succeeds: false, errorMessage: "Failing");
-        for (var i = 0; i < 2; i++)
+        for (var i = 0; i < 9; i++)
         {
             await failingJob.Execute(CreateJobContext());
         }
