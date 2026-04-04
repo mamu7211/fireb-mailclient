@@ -1,7 +1,8 @@
 #!/bin/bash
 # Start Aspire AppHost with seed data, capture logs
 set -euo pipefail
-cd /home/martin/Workspace/mailclient
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR/../../.."
 
 if curl -sk https://localhost:7272/health 2>/dev/null; then
     echo "API already running"

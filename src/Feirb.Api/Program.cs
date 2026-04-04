@@ -85,6 +85,7 @@ builder.Services.AddManagedJob<ClassificationJob>("classification");
 
 // AI / LLM — OllamaSharp via Aspire service discovery
 // Connection string name follows Aspire convention: "{ollama-resource}-{model-name}" (tag stripped)
+// Note: OllamaSharp manages its own HttpClient internally, not via IHttpClientFactory
 builder.AddOllamaApiClient("feirb-ollama-qwen3").AddChatClient();
 
 
