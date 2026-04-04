@@ -84,27 +84,30 @@
                         <ValidationMessage For="() => _smtpModel.Port" />
                     </div>
 
-                    <div class="mb-3">
-                        <label for="smtpUsername" class="form-label small fw-medium">@L["LabelSmtpUsername"]</label>
-                        <InputText id="smtpUsername" class="form-control form-control-lg" placeholder="@L["PlaceholderSmtpUsername"]" @bind-Value="_smtpModel.Username" />
-                        <ValidationMessage For="() => _smtpModel.Username" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="smtpPassword" class="form-label small fw-medium">@L["LabelSmtpPassword"]</label>
-                        <InputText id="smtpPassword" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderSmtpPassword"]" @bind-Value="_smtpModel.Password" />
-                        <ValidationMessage For="() => _smtpModel.Password" />
-                    </div>
-
                     <div class="mb-3 form-check form-switch">
                         <InputCheckbox id="smtpUseTls" class="form-check-input" @bind-Value="_smtpModel.UseTls" />
                         <label for="smtpUseTls" class="form-check-label">@L["LabelSmtpUseTls"]</label>
                     </div>
 
                     <div class="mb-3 form-check form-switch">
-                        <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_smtpModel.RequiresAuth" />
+                        <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_smtpModel.RequiresAuth" @bind-Value:after="StateHasChanged" />
                         <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuth"]</label>
                     </div>
+
+                    @if (_smtpModel.RequiresAuth)
+                    {
+                        <div class="mb-3">
+                            <label for="smtpUsername" class="form-label small fw-medium">@L["LabelSmtpUsername"]</label>
+                            <InputText id="smtpUsername" class="form-control form-control-lg" placeholder="@L["PlaceholderSmtpUsername"]" @bind-Value="_smtpModel.Username" />
+                            <ValidationMessage For="() => _smtpModel.Username" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="smtpPassword" class="form-label small fw-medium">@L["LabelSmtpPassword"]</label>
+                            <InputText id="smtpPassword" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderSmtpPassword"]" @bind-Value="_smtpModel.Password" />
+                            <ValidationMessage For="() => _smtpModel.Password" />
+                        </div>
+                    }
 
                     @if (!string.IsNullOrEmpty(_smtpTestMessage))
                     {

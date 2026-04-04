@@ -59,17 +59,20 @@ else if (_model is not null)
                         <ValidationMessage For="() => _model.Port" />
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="smtpUsername" class="form-label">@L["LabelSmtpUsernameMailbox"]</label>
-                        <InputText id="smtpUsername" class="form-control" @bind-Value="_model.Username" />
+                @if (_model.RequiresAuth)
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="smtpUsername" class="form-label">@L["LabelSmtpUsernameMailbox"]</label>
+                            <InputText id="smtpUsername" class="form-control" @bind-Value="_model.Username" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="smtpPassword" class="form-label">@L["LabelSmtpPasswordMailbox"]</label>
+                            <InputText id="smtpPassword" class="form-control" type="password" @bind-Value="_model.Password"
+                                placeholder="@L["PasswordPlaceholderKeep"]" />
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="smtpPassword" class="form-label">@L["LabelSmtpPasswordMailbox"]</label>
-                        <InputText id="smtpPassword" class="form-control" type="password" @bind-Value="_model.Password"
-                            placeholder="@L["PasswordPlaceholderKeep"]" />
-                    </div>
-                </div>
+                }
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="form-check">
@@ -77,7 +80,7 @@ else if (_model is not null)
                             <label for="smtpUseTls" class="form-check-label">@L["LabelSmtpUseTlsMailbox"]</label>
                         </div>
                         <div class="form-check">
-                            <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_model.RequiresAuth" />
+                            <InputCheckbox id="smtpRequiresAuth" class="form-check-input" @bind-Value="_model.RequiresAuth" @bind-Value:after="StateHasChanged" />
                             <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuthMailbox"]</label>
                         </div>
                     </div>
