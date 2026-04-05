@@ -53,5 +53,15 @@ window.markedInterop = {
     toHtml: function (markdown) {
         if (typeof marked === 'undefined') return markdown;
         return marked.parse(markdown);
+    },
+
+    toMarkdown: function (html) {
+        if (typeof TurndownService === 'undefined') return html;
+        var td = new TurndownService({
+            headingStyle: 'atx',
+            codeBlockStyle: 'fenced',
+            emDelimiter: '*'
+        });
+        return td.turndown(html);
     }
 };

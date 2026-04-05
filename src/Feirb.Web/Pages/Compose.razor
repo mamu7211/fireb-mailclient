@@ -127,8 +127,14 @@ else
 
             @* Rich text editor (Quill) *@
             <div style="@(_editorMode == EditorMode.RichText ? "" : "display:none")">
-                <div @ref="_quillEditorRef" data-testid="compose-editor-rich" style="min-height: 250px;"></div>
+                <div @ref="_quillEditorRef" data-testid="compose-editor-rich"
+                     style="min-height: 300px; display: flex; flex-direction: column;"></div>
             </div>
+
+            <style>
+                .ql-container { flex: 1; min-height: 250px; }
+                .ql-editor { min-height: 250px; }
+            </style>
 
             @* Markdown editor *@
             <div style="@(_editorMode == EditorMode.Markdown ? "" : "display:none")">
@@ -236,9 +242,9 @@ else
     {
         if (_editorMode == EditorMode.Markdown) return;
 
-        // Get HTML from Quill and store as markdown source
-        // Note: We store HTML here since we don't do HTML-to-markdown conversion
-        _markdownBody = await Js.InvokeAsync<string>("quillInterop.getHtml");
+        // Convert HTML from Quill to Markdown via Turndown
+        var html = await Js.InvokeAsync<string>("quillInterop.getHtml");
+        _markdownBody = await Js.InvokeAsync<string>("markedInterop.toMarkdown", html);
         _editorMode = EditorMode.Markdown;
     }
 
