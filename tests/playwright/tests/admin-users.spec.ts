@@ -10,7 +10,7 @@ test.describe.serial("Admin Users table", () => {
     await page.waitForLoadState("networkidle");
 
     // If redirected to login, authenticate as admin
-    if (page.url().includes("/login") || page.url().includes("/setup")) {
+    if (page.url().includes("/login") || page.url().includes("/setup") || page.url().includes("/error")) {
       await page.goto("/login");
       await expect(page.locator("#username")).toBeVisible({ timeout: 10000 });
       await page.locator("#username").fill(ADMIN_USERNAME);

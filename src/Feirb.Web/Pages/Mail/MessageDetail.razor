@@ -17,6 +17,14 @@
         <p class="mt-2 text-muted">@L["LoadingMessage"]</p>
     </div>
 }
+else if (_notFound)
+{
+    <StatusMessage Icon="question-circle"
+                   Title="@L["Error404Title"]"
+                   Message="@L["Error404Message"]"
+                   ButtonText="@L["ButtonBackToInbox"]"
+                   ButtonHref="/mail/inbox" />
+}
 else if (!string.IsNullOrEmpty(_errorMessage))
 {
     <div class="alert alert-danger" role="alert">@_errorMessage</div>
@@ -102,13 +110,24 @@ else if (_message is not null)
 
     private MessageDetailResponse? _message;
     private bool _isLoading = true;
+    private bool _notFound;
     private string? _errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _message = await Http.GetFromJsonAsync<MessageDetailResponse>($"/api/mail/messages/{Id}");
+            var response = await Http.GetAsync($"/api/mail/messages/{Id}");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                _notFound = true;
+                return;
+            }
+
+            response.EnsureSuccessStatusCode();
+            _message = await response.Content.ReadFromJsonAsync<MessageDetailResponse>();
+
             if (_message is not null)
             {
                 BreadcrumbOverride.SetLastSegmentLabel(

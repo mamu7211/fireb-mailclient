@@ -102,11 +102,29 @@
   <data name="ErrorRegistrationFailed" xml:space="preserve">
     <value>Registrierung fehlgeschlagen. Bitte versuche es erneut.</value>
   </data>
-  <data name="NotFoundTitle" xml:space="preserve">
+  <data name="Error401Title" xml:space="preserve">
+    <value>Nicht autorisiert</value>
+  </data>
+  <data name="Error401Message" xml:space="preserve">
+    <value>Sie müssen sich anmelden, um auf diese Seite zuzugreifen.</value>
+  </data>
+  <data name="Error403Title" xml:space="preserve">
+    <value>Zugriff verweigert</value>
+  </data>
+  <data name="Error403Message" xml:space="preserve">
+    <value>Sie haben keine Berechtigung, diese Seite anzuzeigen.</value>
+  </data>
+  <data name="Error404Title" xml:space="preserve">
     <value>Nicht gefunden</value>
   </data>
-  <data name="NotFoundMessage" xml:space="preserve">
-    <value>Der gesuchte Inhalt existiert leider nicht.</value>
+  <data name="Error404Message" xml:space="preserve">
+    <value>Die gesuchte Seite existiert nicht.</value>
+  </data>
+  <data name="ErrorBackToDashboard" xml:space="preserve">
+    <value>Zurück zum Dashboard</value>
+  </data>
+  <data name="ErrorGoToLogin" xml:space="preserve">
+    <value>Zur Anmeldung</value>
   </data>
   <data name="LanguageSwitcherLabel" xml:space="preserve">
     <value>Sprache</value>
@@ -1487,5 +1505,11 @@
   </data>
   <data name="NoRulesFound" xml:space="preserve">
     <value>Noch keine Klassifizierungsregeln definiert. Erstellen Sie eine Regel, um loszulegen.</value>
+  </data>
+  <data name="ButtonBackToMailboxes" xml:space="preserve">
+    <value>Zurück zu Postfächern</value>
+  </data>
+  <data name="ButtonBackToInbox" xml:space="preserve">
+    <value>Zurück zum Posteingang</value>
   </data>
 </root>

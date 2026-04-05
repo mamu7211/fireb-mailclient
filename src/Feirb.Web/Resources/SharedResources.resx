@@ -102,11 +102,29 @@
   <data name="ErrorRegistrationFailed" xml:space="preserve">
     <value>Registration failed. Please try again.</value>
   </data>
-  <data name="NotFoundTitle" xml:space="preserve">
+  <data name="Error401Title" xml:space="preserve">
+    <value>Unauthorized</value>
+  </data>
+  <data name="Error401Message" xml:space="preserve">
+    <value>You need to log in to access this page.</value>
+  </data>
+  <data name="Error403Title" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="Error403Message" xml:space="preserve">
+    <value>You don't have permission to view this page.</value>
+  </data>
+  <data name="Error404Title" xml:space="preserve">
     <value>Not Found</value>
   </data>
-  <data name="NotFoundMessage" xml:space="preserve">
-    <value>Sorry, the content you are looking for does not exist.</value>
+  <data name="Error404Message" xml:space="preserve">
+    <value>The page you're looking for doesn't exist.</value>
+  </data>
+  <data name="ErrorBackToDashboard" xml:space="preserve">
+    <value>Back to Dashboard</value>
+  </data>
+  <data name="ErrorGoToLogin" xml:space="preserve">
+    <value>Go to Login</value>
   </data>
   <data name="LanguageSwitcherLabel" xml:space="preserve">
     <value>Language</value>
@@ -1487,5 +1505,11 @@
   </data>
   <data name="NoRulesFound" xml:space="preserve">
     <value>No classification rules defined yet. Create a rule to get started.</value>
+  </data>
+  <data name="ButtonBackToMailboxes" xml:space="preserve">
+    <value>Back to Mailboxes</value>
+  </data>
+  <data name="ButtonBackToInbox" xml:space="preserve">
+    <value>Back to Inbox</value>
   </data>
 </root>
