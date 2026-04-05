@@ -1,0 +1,52 @@
+@page "/error/{Code?}"
+@layout AuthLayout
+@attribute [AllowAnonymous]
+@inject IStringLocalizer<SharedResources> L
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>@_title</PageTitle>
+
+<StatusMessage Icon="@_icon"
+               Title="@_title"
+               Message="@_message"
+               ButtonText="@_buttonText"
+               ButtonHref="@_buttonHref"
+               IsFullPage="true" />
+
+@code {
+    [Parameter] public string? Code { get; set; }
+
+    private string _icon = "question-circle";
+    private string _title = "";
+    private string _message = "";
+    private string _buttonText = "";
+    private string _buttonHref = "/";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var isAuthenticated = authState.User.Identity?.IsAuthenticated == true;
+
+        _buttonText = isAuthenticated ? L["ErrorBackToDashboard"] : L["ErrorGoToLogin"];
+        _buttonHref = isAuthenticated ? "/" : "/login";
+
+        switch (Code)
+        {
+            case "401":
+                _icon = "box-arrow-in-right";
+                _title = L["Error401Title"];
+                _message = L["Error401Message"];
+                break;
+            case "403":
+                _icon = "shield-lock";
+                _title = L["Error403Title"];
+                _message = L["Error403Message"];
+                break;
+            default:
+                _icon = "question-circle";
+                _title = L["Error404Title"];
+                _message = L["Error404Message"];
+                break;
+        }
+    }
+}

@@ -1,0 +1,140 @@
+@using Feirb.Web.Components.UI
+@inject IJSRuntime JS
+
+<InfoHeader Title="StatusMessage" Icon="exclamation-circle" Subtitle="Centered status message with icon, heading, description, and optional action button" />
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Info</Heading>
+    <p>Displays a centered status message with a large icon, heading, description text, and an optional action button. Used for error pages (401, 403, 404) and inline not-found states.</p>
+    <Table Size="TableSize.Small">
+        <TableHeader>
+            <TableColumn>Parameter</TableColumn>
+            <TableColumn>Type</TableColumn>
+            <TableColumn>Default</TableColumn>
+            <TableColumn>Description</TableColumn>
+        </TableHeader>
+        <TableBody>
+            <TableRow><TableCell><code>Icon</code></TableCell><TableCell><code>string</code></TableCell><TableCell>required</TableCell><TableCell>Bootstrap Icon name without <code>bi-</code> prefix</TableCell></TableRow>
+            <TableRow><TableCell><code>Title</code></TableCell><TableCell><code>string</code></TableCell><TableCell>required</TableCell><TableCell>Heading text</TableCell></TableRow>
+            <TableRow><TableCell><code>Message</code></TableCell><TableCell><code>string</code></TableCell><TableCell>required</TableCell><TableCell>Descriptive message below the heading</TableCell></TableRow>
+            <TableRow><TableCell><code>ButtonText</code></TableCell><TableCell><code>string?</code></TableCell><TableCell><code>null</code></TableCell><TableCell>Optional button label</TableCell></TableRow>
+            <TableRow><TableCell><code>ButtonHref</code></TableCell><TableCell><code>string?</code></TableCell><TableCell><code>null</code></TableCell><TableCell>Optional button navigation target</TableCell></TableRow>
+            <TableRow><TableCell><code>IsFullPage</code></TableCell><TableCell><code>bool</code></TableCell><TableCell><code>false</code></TableCell><TableCell>Renders heading as h1 for full-page error display</TableCell></TableRow>
+        </TableBody>
+    </Table>
+</Card>
+
+<Card Class="mb-3 p-4">
+    <Heading Level="HeadingLevel.Small">Preview</Heading>
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <div>
+            <label class="form-label mb-0">Preset:</label>
+            <select class="form-select form-select-sm w-auto" @bind="_preset">
+                <option value="401">401 Unauthorized</option>
+                <option value="403">403 Access Denied</option>
+                <option value="404">404 Not Found</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="showButton" @bind="_showButton" />
+            <label class="form-check-label" for="showButton">Show button</label>
+        </div>
+    </div>
+    @if (_preset == "custom")
+    {
+        <div class="row g-2 mb-3">
+            <div class="col-md-3">
+                <label class="form-label">Icon</label>
+                <select class="form-select form-select-sm" @bind="_customIcon">
+                    @foreach (var name in FeirbIcons.All)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control form-control-sm" @bind="_customTitle" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Message</label>
+                <input type="text" class="form-control form-control-sm" @bind="_customMessage" />
+            </div>
+        </div>
+    }
+    <div class="showcase-preview-area">
+        <StatusMessage Icon="@CurrentIcon"
+                       Title="@CurrentTitle"
+                       Message="@CurrentMessage"
+                       ButtonText="@(_showButton ? CurrentButtonText : null)"
+                       ButtonHref="@(_showButton ? "#" : null)" />
+    </div>
+</Card>
+
+<Card Class="p-4">
+    <Heading Level="HeadingLevel.Small">Code</Heading>
+    <pre><code class="language-xml" @ref="_codeElement"></code></pre>
+</Card>
+
+@code {
+    private string _preset = "404";
+    private bool _showButton = true;
+    private string _customIcon = "info-circle";
+    private string _customTitle = "Custom Status";
+    private string _customMessage = "This is a custom status message.";
+    private ElementReference _codeElement;
+    private string? _lastHighlightedCode;
+
+    private string CurrentIcon => _preset switch
+    {
+        "401" => "box-arrow-in-right",
+        "403" => "shield-lock",
+        "404" => "question-circle",
+        _ => _customIcon
+    };
+
+    private string CurrentTitle => _preset switch
+    {
+        "401" => "Unauthorized",
+        "403" => "Access Denied",
+        "404" => "Not Found",
+        _ => _customTitle
+    };
+
+    private string CurrentMessage => _preset switch
+    {
+        "401" => "You need to log in to access this page.",
+        "403" => "You don't have permission to view this page.",
+        "404" => "The page you're looking for doesn't exist.",
+        _ => _customMessage
+    };
+
+    private string CurrentButtonText => _preset switch
+    {
+        "401" => "Go to Login",
+        "403" => "Back to Dashboard",
+        "404" => "Back to Dashboard",
+        _ => "Action"
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var code = CurrentCode;
+        if (code == _lastHighlightedCode) return;
+        _lastHighlightedCode = code;
+        try { await JS.InvokeVoidAsync("highlightCode", _codeElement, code); }
+        catch (JSException) { }
+    }
+
+    private string CurrentCode
+    {
+        get
+        {
+            var btn = _showButton
+                ? $"\n               ButtonText=\"{CurrentButtonText}\"\n               ButtonHref=\"/\""
+                : "";
+            return $"""<StatusMessage Icon="{CurrentIcon}" Title="{CurrentTitle}" Message="{CurrentMessage}"{btn} />""";
+        }
+    }
+}

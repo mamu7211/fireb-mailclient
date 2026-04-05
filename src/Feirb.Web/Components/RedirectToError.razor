@@ -1,0 +1,8 @@
+@inject NavigationManager Navigation
+
+@code {
+    [Parameter] public string Code { get; set; } = "404";
+
+    protected override void OnInitialized() =>
+        Navigation.NavigateTo($"/error/{Code}", forceLoad: false);
+}

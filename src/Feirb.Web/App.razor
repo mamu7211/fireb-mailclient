@@ -1,10 +1,13 @@
 <SetupGuard>
     <CascadingAuthenticationState>
-        <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+        <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.Error)">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                     <NotAuthorized>
-                        <RedirectToLogin />
+                        @{
+                            var isAuthenticated = context.User.Identity?.IsAuthenticated == true;
+                        }
+                        <RedirectToError Code="@(isAuthenticated ? "403" : "401")" />
                     </NotAuthorized>
                 </AuthorizeRouteView>
                 <FocusOnNavigate RouteData="@routeData" Selector="h1" />

@@ -15,7 +15,15 @@
     <HelpContent>@L["PageHelpEditMailbox"]</HelpContent>
 </InfoHeader>
 
-@if (!string.IsNullOrEmpty(_successMessage))
+@if (_notFound)
+{
+    <StatusMessage Icon="question-circle"
+                   Title="@L["Error404Title"]"
+                   Message="@L["Error404Message"]"
+                   ButtonText="@L["ButtonBackToMailboxes"]"
+                   ButtonHref="/settings/mailboxes" />
+}
+else if (!string.IsNullOrEmpty(_successMessage))
 {
     <div class="alert alert-success alert-dismissible py-2" role="alert">
         @_successMessage
@@ -205,6 +213,7 @@ else if (_model is not null)
 
     private MailboxFormModel? _model;
     private bool _isLoading = true;
+    private bool _notFound;
     private bool _isSaving;
     private bool _isDeleting;
     private bool _showDeleteModal;
@@ -220,17 +229,19 @@ else if (_model is not null)
 
     protected override async Task OnInitializedAsync()
     {
-        _toolbarActions =
-        [
-            new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings/mailboxes"); return Task.CompletedTask; }, "x-lg"),
-            new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg"),
-            new ToolbarAction(L["ButtonDelete"], ButtonVariant.Danger, () => { _showDeleteModal = true; StateHasChanged(); return Task.CompletedTask; }, "trash")
-        ];
-        ToolbarState.AddActions(_toolbarActions);
-
         try
         {
-            var mailbox = await Http.GetFromJsonAsync<MailboxDetailResponse>($"/api/settings/mailboxes/{Id}");
+            var response = await Http.GetAsync($"/api/settings/mailboxes/{Id}");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                _notFound = true;
+                return;
+            }
+
+            response.EnsureSuccessStatusCode();
+            var mailbox = await response.Content.ReadFromJsonAsync<MailboxDetailResponse>();
+
             if (mailbox is not null)
             {
                 _model = new MailboxFormModel
@@ -250,6 +261,14 @@ else if (_model is not null)
                     SmtpRequiresAuth = mailbox.SmtpRequiresAuth,
                 };
             }
+
+            _toolbarActions =
+            [
+                new ToolbarAction(L["ButtonCancel"], ButtonVariant.Warning, () => { Navigation.NavigateTo("/settings/mailboxes"); return Task.CompletedTask; }, "x-lg"),
+                new ToolbarAction(L["ButtonSave"], ButtonVariant.Primary, async () => { await UnsavedChanges.SaveAllAsync(); }, "check-lg"),
+                new ToolbarAction(L["ButtonDelete"], ButtonVariant.Danger, () => { _showDeleteModal = true; StateHasChanged(); return Task.CompletedTask; }, "trash")
+            ];
+            ToolbarState.AddActions(_toolbarActions);
         }
         catch
         {
