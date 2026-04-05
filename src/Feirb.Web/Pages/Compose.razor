@@ -63,15 +63,15 @@ else
             </div>
 
             @* CC / BCC toggle *@
-            @if (!_showCcBcc)
-            {
-                <div class="mb-3">
-                    <button type="button" class="btn btn-link btn-sm p-0" @onclick="() => _showCcBcc = true"
-                            data-testid="compose-show-cc-bcc">
-                        @L["ComposeShowCcBcc"]
-                    </button>
-                </div>
-            }
+            <div class="mb-3">
+                <button type="button"
+                        class="btn btn-sm @(_showCcBcc ? "btn-outline-secondary" : "btn-outline-primary")"
+                        @onclick="() => _showCcBcc = !_showCcBcc"
+                        data-testid="compose-show-cc-bcc">
+                    <Icon Name="@(_showCcBcc ? "chevron-up" : "chevron-down")" />
+                    @L["ComposeShowCcBcc"]
+                </button>
+            </div>
 
             @if (_showCcBcc)
             {
