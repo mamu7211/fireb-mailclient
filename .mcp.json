@@ -6,6 +6,13 @@
         "agent",
         "mcp"
       ]
+    },
+    "browser-use": {
+      "command": "uvx",
+      "args": [
+        "browser-use[cli]",
+        "--mcp"
+      ]
     }
   }
 }

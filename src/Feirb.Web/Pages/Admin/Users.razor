@@ -75,9 +75,9 @@ else
                         <TableCell>@user.CreatedAt.ToString("yyyy-MM-dd")</TableCell>
                         <TableCell>
                             <div class="d-flex gap-1">
-                                <Button Variant="ButtonVariant.Primary" Size="ButtonSize.Small" Icon="pen" OnClick="() => ShowEditModal(user)" Title="@L["ButtonEdit"]" />
-                                <Button Variant="ButtonVariant.Warning" Size="ButtonSize.Small" Icon="lock" OnClick="() => ShowResetPasswordModal(user)" Title="@L["ButtonResetPassword"]" />
-                                <Button Variant="ButtonVariant.Danger" Size="ButtonSize.Small" Icon="trash" OnClick="() => ShowDeleteModal(user)" Disabled="(user.Id == _currentUserId)" Title="@L["ButtonDelete"]" />
+                                <Button Variant="ButtonVariant.Primary" Size="ButtonSize.Small" Icon="pen" OnClick="() => ShowEditModal(user)" Title="@L["ButtonEdit"]" data-testid="edit-user" />
+                                <Button Variant="ButtonVariant.Warning" Size="ButtonSize.Small" Icon="lock" OnClick="() => ShowResetPasswordModal(user)" Title="@L["ButtonResetPassword"]" data-testid="reset-password-user" />
+                                <Button Variant="ButtonVariant.Danger" Size="ButtonSize.Small" Icon="trash" OnClick="() => ShowDeleteModal(user)" Disabled="(user.Id == _currentUserId)" Title="@L["ButtonDelete"]" data-testid="delete-user" />
                             </div>
                         </TableCell>
                     </TableRow>
@@ -90,7 +90,7 @@ else
 @* Create User Modal *@
 @if (_showCreateModal)
 {
-    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" data-testid="create-user-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,17 +102,17 @@ else
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="createUsername" class="form-label">@L["LabelUsername"]</label>
-                            <InputText id="createUsername" class="form-control" @bind-Value="_createModel.Username" />
+                            <InputText id="createUsername" class="form-control" @bind-Value="_createModel.Username" data-testid="create-user-username" />
                             <ValidationMessage For="() => _createModel.Username" />
                         </div>
                         <div class="mb-3">
                             <label for="createEmail" class="form-label">@L["LabelEmail"]</label>
-                            <InputText id="createEmail" class="form-control" type="email" @bind-Value="_createModel.Email" />
+                            <InputText id="createEmail" class="form-control" type="email" @bind-Value="_createModel.Email" data-testid="create-user-email" />
                             <ValidationMessage For="() => _createModel.Email" />
                         </div>
                         <div class="mb-3">
                             <label for="createPassword" class="form-label">@L["LabelPassword"]</label>
-                            <InputText id="createPassword" class="form-control" type="password" @bind-Value="_createModel.Password" />
+                            <InputText id="createPassword" class="form-control" type="password" @bind-Value="_createModel.Password" data-testid="create-user-password" />
                             <ValidationMessage For="() => _createModel.Password" />
                         </div>
                         <div class="mb-3">
@@ -147,7 +147,7 @@ else
 @* Edit User Modal *@
 @if (_showEditModal && _selectedUser is not null)
 {
-    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" data-testid="edit-user-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -186,7 +186,7 @@ else
 @* Delete Confirmation Modal *@
 @if (_showDeleteModal && _selectedUser is not null)
 {
-    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" data-testid="delete-user-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -214,7 +214,7 @@ else
 @* Reset Password Modal *@
 @if (_showResetPasswordModal && _selectedUser is not null)
 {
-    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" data-testid="reset-password-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

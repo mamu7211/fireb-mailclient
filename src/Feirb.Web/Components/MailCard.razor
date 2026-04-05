@@ -2,7 +2,7 @@
 
 @* Card component for displaying mail items across different layout contexts. *@
 <a href="@Href" class="mail-card mail-card-@ModeCss @(IsRead ? "" : "mail-card-unread") @Class"
-   title="@Subject">
+   title="@Subject" data-testid="mail-card">
     <div class="mail-card-body">
         <div class="mail-card-header">
             <PersonChip Name="@SenderName" Email="@SenderEmail" Size="@PersonChipSizeForMode" />

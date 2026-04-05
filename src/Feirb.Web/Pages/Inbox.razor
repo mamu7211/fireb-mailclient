@@ -31,11 +31,11 @@ else if (!string.IsNullOrEmpty(_errorMessage))
 }
 else if (_messages is null || _messages.Items.Count == 0)
 {
-    <p class="text-muted">@L["NoMessagesFound"]</p>
+    <p class="text-muted" data-testid="inbox-empty">@L["NoMessagesFound"]</p>
 }
 else if (UseCardLayout)
 {
-    <div class="d-flex flex-column gap-2">
+    <div class="d-flex flex-column gap-2" data-testid="inbox-card-list">
         @foreach (var msg in _messages.Items)
         {
             <MailCard Mode="MailCardMode.Small"

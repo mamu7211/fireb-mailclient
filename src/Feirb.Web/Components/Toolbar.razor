@@ -3,7 +3,7 @@
 
 @if (ToolbarState.Actions.Count > 0)
 {
-    <div class="toolbar-actions">
+    <div class="toolbar-actions" data-testid="toolbar">
         @foreach (var action in ToolbarState.Actions)
         {
             <Button @key="action" Variant="action.Variant" Size="ButtonSize.Small" Icon="@action.Icon" OnClick="action.OnClickAsync">

@@ -19,17 +19,17 @@
 }
 else if (!string.IsNullOrEmpty(_errorMessage))
 {
-    <div class="alert alert-danger" role="alert">@_errorMessage</div>
+    <div class="alert alert-danger" role="alert" data-testid="message-error">@_errorMessage</div>
 }
 else if (_message is not null)
 {
-    <div class="mb-3">
+    <div class="mb-3" data-testid="message-mailbox">
         <span class="badge" style="background-color: @(_message.MailboxBadgeColor ?? "#6c757d");">
             @_message.MailboxName
         </span>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4" data-testid="message-headers">
         <div class="card-body">
             <dl class="row mb-0">
                 <dt class="col-sm-2">@L["LabelFrom"]</dt>
@@ -59,7 +59,7 @@ else if (_message is not null)
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4" data-testid="message-body">
         <div class="card-body">
             @if (!string.IsNullOrEmpty(_message.BodyHtml))
             {
@@ -79,7 +79,7 @@ else if (_message is not null)
     @if (_message.Attachments.Count > 0)
     {
         <h5>@L["AttachmentsHeading"]</h5>
-        <div class="list-group">
+        <div class="list-group" data-testid="message-attachments">
             @foreach (var attachment in _message.Attachments)
             {
                 <div class="list-group-item d-flex justify-content-between align-items-center">

@@ -1,7 +1,7 @@
 @using Feirb.Web.Components.UI
 @inject NavigationManager Navigation
 
-<div class="nav-item-card" @onclick="Navigate" role="button" tabindex="0">
+<div class="nav-item-card" @onclick="Navigate" role="button" tabindex="0" @attributes="AdditionalAttributes">
     <div class="nav-item-left">
         <Icon Name="@Icon" Size="IconSize.Large" Class="nav-item-icon" />
         <div class="nav-item-text">
@@ -20,6 +20,7 @@
     [Parameter, EditorRequired] public string Title { get; set; } = default!;
     [Parameter] public string? Subtitle { get; set; }
     [Parameter, EditorRequired] public string Href { get; set; } = default!;
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     private void Navigate() => Navigation.NavigateTo(Href);
 }
