@@ -1,10 +1,11 @@
 @inject IStringLocalizer<SharedResources> L
 
-<div class="search-bar">
+<div class="search-bar" data-testid="search-bar">
     <i class="bi bi-search search-icon"></i>
     <input type="text"
            class="form-control"
            placeholder="@L["SearchPlaceholder"]"
            disabled
-           aria-label="@L["SearchPlaceholder"]" />
+           aria-label="@L["SearchPlaceholder"]"
+           data-testid="search-input" />
 </div>

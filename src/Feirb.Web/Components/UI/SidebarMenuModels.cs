@@ -13,7 +13,8 @@ public record SidebarMenuItem(
     string? Href = null,
     Func<Task>? OnClick = null,
     Func<bool>? Visible = null,
-    Microsoft.AspNetCore.Components.Routing.NavLinkMatch? Match = null);
+    Microsoft.AspNetCore.Components.Routing.NavLinkMatch? Match = null,
+    string? TestId = null);
 
 /// <summary>A group of menu items with an optional section header.</summary>
 /// <param name="Items">Menu items in this section.</param>

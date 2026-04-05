@@ -28,7 +28,7 @@ else if (_mailboxes is null || _mailboxes.Count == 0)
 }
 else
 {
-    <div class="d-flex flex-column gap-3">
+    <div class="d-flex flex-column gap-3" data-testid="mailbox-list">
         @foreach (var mailbox in _mailboxes)
         {
             <NavigationItem

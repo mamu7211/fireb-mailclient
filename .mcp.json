@@ -6,6 +6,19 @@
         "agent",
         "mcp"
       ]
+    },
+    "browser-use": {
+      "command": "uvx",
+      "args": [
+        "browser-use[cli]",
+        "--mcp"
+      ]
+    },
+    "postgres": {
+      "command": "bash",
+      "args": [
+        ".claude/skills/dev-harness/postgres-mcp.sh"
+      ]
     }
   }
 }

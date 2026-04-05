@@ -11,7 +11,7 @@
 
 <div class="d-flex">
     <div class="flex-grow-1">
-        <div class="grid-stack" id="dashboard-grid">
+        <div class="grid-stack" id="dashboard-grid" data-testid="dashboard-grid">
             @foreach (var widget in _activeWidgets)
             {
                 <div @key="widget.InstanceId" class="grid-stack-item" gs-id="@widget.InstanceId"

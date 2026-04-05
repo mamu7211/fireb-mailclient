@@ -1,8 +1,9 @@
 @inject IJSRuntime Js
 @inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResources> L
 
-<div class="dropdown">
-    <button class="btn btn-sm @ButtonClass dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+<div class="dropdown" data-testid="language-switcher">
+    <button class="btn btn-sm @ButtonClass dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="@L["AriaChangeLanguage"]" data-testid="language-switcher-button">
         @GetDisplayName(_currentCulture)
     </button>
     <ul class="dropdown-menu dropdown-menu-end">

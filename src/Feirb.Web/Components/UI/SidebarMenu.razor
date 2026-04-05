@@ -21,7 +21,7 @@
                         <li>
                             @if (item.OnClick is not null)
                             {
-                                <button class="sidebar-menu-entry" @onclick="item.OnClick">
+                                <button class="sidebar-menu-entry" @onclick="item.OnClick" data-testid="@item.TestId">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </button>
@@ -33,7 +33,7 @@
                                         ? NavLinkMatch.All
                                         : NavLinkMatch.Prefix);
 
-                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
+                                <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match" data-testid="@item.TestId">
                                     <Icon Name="@item.Icon" />
                                     <span>@item.Label</span>
                                 </NavLink>
@@ -59,7 +59,7 @@
                     <li>
                         @if (item.OnClick is not null)
                         {
-                            <button class="sidebar-menu-entry" @onclick="item.OnClick">
+                            <button class="sidebar-menu-entry" @onclick="item.OnClick" data-testid="@item.TestId">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </button>
@@ -70,7 +70,7 @@
                                 ? NavLinkMatch.All
                                 : NavLinkMatch.Prefix;
 
-                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match">
+                            <NavLink class="sidebar-menu-entry" href="@item.Href" Match="@match" data-testid="@item.TestId">
                                 <Icon Name="@item.Icon" />
                                 <span>@item.Label</span>
                             </NavLink>

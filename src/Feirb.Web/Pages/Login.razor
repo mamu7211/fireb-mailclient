@@ -43,25 +43,25 @@
 
             @if (!string.IsNullOrEmpty(_errorMessage))
             {
-                <div class="alert alert-danger py-2" role="alert">@_errorMessage</div>
+                <div class="alert alert-danger py-2" role="alert" data-testid="login-error">@_errorMessage</div>
             }
 
-            <EditForm Model="_model" OnValidSubmit="HandleLoginAsync" FormName="login">
+            <EditForm Model="_model" OnValidSubmit="HandleLoginAsync" FormName="login" data-testid="login-form">
                 <DataAnnotationsValidator />
 
                 <div class="mb-3">
                     <label for="username" class="form-label small fw-medium">@L["LabelUsername"]</label>
-                    <InputText id="username" class="form-control form-control-lg" placeholder="@L["PlaceholderLoginUsername"]" @bind-Value="_model.Username" />
+                    <InputText id="username" class="form-control form-control-lg" placeholder="@L["PlaceholderLoginUsername"]" @bind-Value="_model.Username" data-testid="login-username" />
                     <ValidationMessage For="() => _model.Username" />
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="form-label small fw-medium">@L["LabelPassword"]</label>
-                    <InputText id="password" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderLoginPassword"]" @bind-Value="_model.Password" />
+                    <InputText id="password" class="form-control form-control-lg" type="password" placeholder="@L["PlaceholderLoginPassword"]" @bind-Value="_model.Password" data-testid="login-password" />
                     <ValidationMessage For="() => _model.Password" />
                 </div>
 
-                <Button Variant="ButtonVariant.Primary" Size="ButtonSize.Large" Type="submit" Disabled="_isSubmitting" Class="w-100">
+                <Button Variant="ButtonVariant.Primary" Size="ButtonSize.Large" Type="submit" Disabled="_isSubmitting" Class="w-100" data-testid="login-submit" aria-label="@L["ButtonLogIn"]">
                     @if (_isSubmitting)
                     {
                         <span class="spinner-border spinner-border-sm me-2" role="status"></span>
@@ -71,11 +71,11 @@
             </EditForm>
 
             <div class="mt-3 text-center">
-                <a href="/reset-password" class="text-muted small">@L["ForgotPassword"]</a>
+                <a href="/reset-password" class="text-muted small" data-testid="forgot-password-link">@L["ForgotPassword"]</a>
             </div>
 
             <p class="mt-4 text-center text-muted mb-0">
-                @L["DontHaveAccount"] <a href="/register">@L["LinkCreateAccount"]</a>
+                @L["DontHaveAccount"] <a href="/register" data-testid="register-link">@L["LinkCreateAccount"]</a>
             </p>
         </div>
     </div>

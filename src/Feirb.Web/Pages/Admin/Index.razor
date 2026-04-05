@@ -8,28 +8,32 @@
     <HelpContent>@L["PageHelpAdmin"]</HelpContent>
 </InfoHeader>
 
-<div class="d-flex flex-column gap-3">
+<div class="d-flex flex-column gap-3" data-testid="admin-nav">
     <NavigationItem
         Icon="people"
         Title="@L["AdminUserMgmtTitle"]"
         Subtitle="@L["AdminUserMgmtSubtitle"]"
-        Href="/admin/user-management" />
+        Href="/admin/user-management"
+        data-testid="admin-nav-users" />
 
     <NavigationItem
         Icon="envelope-arrow-up"
         Title="@L["AdminOutgoingSmtpTitle"]"
         Subtitle="@L["AdminOutgoingSmtpSubtitle"]"
-        Href="/admin/outgoing-smtp" />
+        Href="/admin/outgoing-smtp"
+        data-testid="admin-nav-smtp" />
 
     <NavigationItem
         Icon="clock"
         Title="@L["AdminJobsTitle"]"
         Subtitle="@L["AdminJobsSubtitle"]"
-        Href="/admin/jobs" />
+        Href="/admin/jobs"
+        data-testid="admin-nav-jobs" />
 
     <NavigationItem
         Icon="robot"
         Title="@L["AdminLlmSettingsTitle"]"
         Subtitle="@L["AdminLlmSettingsSubtitle"]"
-        Href="/admin/llm-settings" />
+        Href="/admin/llm-settings"
+        data-testid="admin-nav-llm" />
 </div>

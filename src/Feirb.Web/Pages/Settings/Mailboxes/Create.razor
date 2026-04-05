@@ -22,18 +22,18 @@
     </div>
 }
 
-<TrackedEditForm Model="_model" OnSave="HandleSaveAsync">
+<TrackedEditForm Model="_model" OnSave="HandleSaveAsync" data-testid="mailbox-form">
     <DataAnnotationsValidator />
 
     <ContentSection Icon="info-circle" Title="@L["MailboxSectionGeneral"]" Subtitle="@L["SectionMailboxGeneralSubtitle"]" Class="mb-4">
         <div class="mb-3">
             <label for="name" class="form-label">@L["LabelMailboxName"]</label>
-            <InputText id="name" class="form-control" @bind-Value="_model.Name" placeholder="@L["PlaceholderMailboxName"]" />
+            <InputText id="name" class="form-control" @bind-Value="_model.Name" placeholder="@L["PlaceholderMailboxName"]" data-testid="mailbox-name" />
             <ValidationMessage For="() => _model.Name" />
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">@L["LabelEmailAddress"]</label>
-            <InputText id="email" class="form-control" type="email" @bind-Value="_model.EmailAddress" placeholder="@L["PlaceholderEmailAddress"]" />
+            <InputText id="email" class="form-control" type="email" @bind-Value="_model.EmailAddress" placeholder="@L["PlaceholderEmailAddress"]" data-testid="mailbox-email" />
             <ValidationMessage For="() => _model.EmailAddress" />
         </div>
         <div class="mb-3">
@@ -50,7 +50,7 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <label for="imapHost" class="form-label">@L["LabelImapHost"]</label>
-                <InputText id="imapHost" class="form-control" @bind-Value="_model.ImapHost" placeholder="@L["PlaceholderImapHost"]" />
+                <InputText id="imapHost" class="form-control" @bind-Value="_model.ImapHost" placeholder="@L["PlaceholderImapHost"]" data-testid="mailbox-imap-host" />
                 <ValidationMessage For="() => _model.ImapHost" />
             </div>
             <div class="col-md-4">
@@ -75,7 +75,7 @@
                 <InputCheckbox id="imapUseTls" class="form-check-input" @bind-Value="_model.ImapUseTls" />
                 <label for="imapUseTls" class="form-check-label">@L["LabelImapUseTls"]</label>
             </div>
-            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="TestImapAsync" Disabled="_isTestingImap">
+            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="TestImapAsync" Disabled="_isTestingImap" data-testid="test-imap-button">
                 @if (_isTestingImap)
                 {
                     <span class="spinner-border spinner-border-sm me-1" role="status"></span>
@@ -95,7 +95,7 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <label for="smtpHost" class="form-label">@L["LabelSmtpHostMailbox"]</label>
-                <InputText id="smtpHost" class="form-control" @bind-Value="_model.SmtpHost" placeholder="@L["PlaceholderSmtpHostMailbox"]" />
+                <InputText id="smtpHost" class="form-control" @bind-Value="_model.SmtpHost" placeholder="@L["PlaceholderSmtpHostMailbox"]" data-testid="mailbox-smtp-host" />
                 <ValidationMessage For="() => _model.SmtpHost" />
             </div>
             <div class="col-md-4">
@@ -129,7 +129,7 @@
                     <label for="smtpRequiresAuth" class="form-check-label">@L["LabelSmtpRequiresAuthMailbox"]</label>
                 </div>
             </div>
-            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="TestSmtpAsync" Disabled="_isTestingSmtp">
+            <Button Variant="ButtonVariant.Secondary" Size="ButtonSize.Small" OnClick="TestSmtpAsync" Disabled="_isTestingSmtp" data-testid="test-smtp-button">
                 @if (_isTestingSmtp)
                 {
                     <span class="spinner-border spinner-border-sm me-1" role="status"></span>
